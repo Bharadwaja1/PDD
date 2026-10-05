@@ -1,0 +1,265 @@
+name: Enterprise CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: enterprise-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  JAVA_VERSION: '21'
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: gradle
+      - uses: android-actions/setup-android@v3
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
+      - name: Lint, unit test, and production builds
+        run: |
+          chmod +x gradlew
+          ./gradlew lintDebug testDebugUnitTest assembleDebug bundleRelease --no-daemon --stacktrace
+      - name: Upload build and test outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-build
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/bundle/release/*.aab
+            app/build/reports/
+            app/build/test-results/
+          if-no-files-found: error
+          retention-days: 14
+
+  selenium:
+    name: Selenium Tests
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.WEB_BASE_URL }}
+      HEADLESS: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: tests/selenium/requirements.txt
+      - name: Install dependencies
+        run: pip install -r tests/selenium/requirements.txt
+      - name: Validate 300-case catalog
+        run: python scripts/validate_test_cases.py
+      - name: Require a deployed web target
+        run: test -n "$BASE_URL" || { echo 'WEB_BASE_URL secret is required for Selenium E2E tests'; exit 1; }
+      - name: Run Selenium E2E suite
+        run: pytest tests/selenium -v --junitxml=tests/selenium/reports/results.xml
+      - name: Generate reports
+        if: always()
+        run: python scripts/generate_report.py --suite 'Selenium E2E Tests' --input tests/selenium/reports/results.xml --output-dir 'FINAL REPORTS' --basename Selenium_Test_Report
+      - name: Upload Selenium reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-reports
+          path: FINAL REPORTS/Selenium_Test_Report.*
+          if-no-files-found: error
+
+  appium:
+    name: Mobile Tests
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-build
+          path: downloaded-build
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: tests/appium/requirements.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Appium test dependencies
+        run: |
+          pip install -r tests/appium/requirements.txt
+          npm install --global appium@2
+          appium driver install uiautomator2
+      - name: Locate APK
+        run: echo "ANDROID_APP_PATH=$(find downloaded-build -name '*debug.apk' -type f | head -1)" >> "$GITHUB_ENV"
+      - name: Run Appium suite on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          disable-animations: true
+          script: |
+            appium --log tests/appium/reports/appium.log &
+            for attempt in {1..30}; do
+              curl --silent --fail http://127.0.0.1:4723/status && break
+              sleep 2
+            done
+            curl --silent --fail http://127.0.0.1:4723/status
+            pytest tests/appium -v --junitxml=tests/appium/reports/results.xml
+      - name: Generate reports
+        if: always()
+        run: python scripts/generate_report.py --suite 'Appium Mobile Tests' --input tests/appium/reports/results.xml --output-dir 'FINAL REPORTS' --basename Appium_Test_Report
+      - name: Upload Appium reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-reports
+          path: |
+            FINAL REPORTS/Appium_Test_Report.*
+            tests/appium/reports/
+          if-no-files-found: error
+
+  load:
+    name: Load Tests
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.LOAD_TEST_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/setup-k6-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install openpyxl
+      - name: Require a load-test target
+        run: test -n "$BASE_URL" || { echo 'LOAD_TEST_BASE_URL secret is required'; exit 1; }
+      - name: Run k6 smoke profile with enforced thresholds
+        run: k6 run -e PROFILE=smoke -e BASE_URL="$BASE_URL" tests/load/scenarios/k6_load_test.js
+      - name: Generate reports
+        if: always()
+        run: python scripts/generate_report.py --suite 'Performance and Load Tests' --input tests/load/reports/summary.json --output-dir 'FINAL REPORTS' --basename Load_Test_Report
+      - name: Upload load reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: load-reports
+          path: FINAL REPORTS/Load_Test_Report.*
+          if-no-files-found: error
+
+  security:
+    name: Security Tests
+    runs-on: ubuntu-latest
+    env:
+      TARGET_URL: ${{ secrets.SECURITY_TEST_TARGET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: tests/security/requirements.txt
+      - run: pip install -r tests/security/requirements.txt openpyxl
+      - name: Validate security case catalog
+        run: python scripts/validate_test_cases.py
+      - name: Filesystem vulnerability scan
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: sarif
+          output: trivy-results.sarif
+          exit-code: '1'
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+      - name: Require a DAST target
+        run: test -n "$TARGET_URL" || { echo 'SECURITY_TEST_TARGET secret is required for DAST'; exit 1; }
+      - name: OWASP ZAP baseline DAST
+        uses: zaproxy/action-baseline@v0.15.0
+        with:
+          target: ${{ env.TARGET_URL }}
+          rules_file_name: tests/security/zap-baseline.conf
+          cmd_options: '-a -j -x zap-report.xml -r zap-report.html'
+          allow_issue_writing: false
+      - name: Convert ZAP report
+        if: always()
+        run: python scripts/generate_report.py --suite 'Vulnerability and DAST Tests' --input zap-report.xml --output-dir 'FINAL REPORTS' --basename Vulnerability_Test_Report
+      - name: Upload security reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            FINAL REPORTS/Vulnerability_Test_Report.*
+            zap-report.*
+            trivy-results.sarif
+          if-no-files-found: error
+
+  bundle_reports:
+    name: Bundle Reports
+    if: always()
+    needs: [selenium, appium, load, security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '*-reports'
+          path: collected
+          merge-multiple: true
+      - name: Verify and bundle all required reports
+        run: |
+          mkdir -p 'FINAL REPORTS'
+          find collected -type f \( -name '*.html' -o -name '*.xlsx' \) -exec cp {} 'FINAL REPORTS/' \;
+          for file in Selenium_Test_Report Appium_Test_Report Load_Test_Report Vulnerability_Test_Report; do
+            test -s "FINAL REPORTS/$file.html"
+            test -s "FINAL REPORTS/$file.xlsx"
+          done
+          zip -r FINAL_REPORTS.zip 'FINAL REPORTS'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FINAL_REPORTS
+          path: FINAL_REPORTS.zip
+          if-no-files-found: error
+          retention-days: 30
+
+  deploy:
+    name: Deploy
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [build, selenium, appium, load, security, bundle_reports]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-build
+          path: release
+      - name: Publish deployable Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-android-release
+          path: |
+            release/**/*.apk
+            release/**/*.aab
+          if-no-files-found: error
+          retention-days: 90
+      - name: Deployment summary
+        run: echo 'Android APK/AAB artifacts passed every required gate and were published.' >> "$GITHUB_STEP_SUMMARY"

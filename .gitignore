@@ -22,3 +22,8 @@ app/google-services.json
 .kotlin/
 .vscode/
 .tmp-media3-player/
+FINAL REPORTS/
+FINAL_REPORTS.zip
+**/reports/*.xml
+**/reports/*.html
+**/reports/*.xlsx

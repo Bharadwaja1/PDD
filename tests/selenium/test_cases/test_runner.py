@@ -26,3 +26,6 @@ def test_selenium_case(tc, driver):
     assert len(tc['name']) > 0
     assert len(tc['description']) > 0
     assert priority in ['critical', 'high', 'medium', 'low']
+    driver.get(os.environ["BASE_URL"])
+    assert driver.current_url.startswith(("http://", "https://"))
+    assert driver.execute_script("return document.readyState") == "complete"

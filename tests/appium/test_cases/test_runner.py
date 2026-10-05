@@ -25,3 +25,5 @@ def test_appium_case(tc, driver):
     assert len(tc['name']) > 0
     assert len(tc['description']) > 0
     assert priority in ['critical', 'high', 'medium', 'low']
+    assert driver.current_package == "com.moodtunes.app"
+    assert "hierarchy" in driver.page_source.lower()

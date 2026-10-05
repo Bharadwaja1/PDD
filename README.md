@@ -37,3 +37,13 @@ Library supports playlists, adding tracks, favorites, recent tracks, and albums 
 Run `gradlew.bat :app:assembleDebug :app:testDebugUnitTest`.
 
 Unit tests check the eight-mood, 100-track Telugu/Tamil catalog configuration. Live catalog playback and visual behavior require internet access and an emulator or connected Android device.
+
+## CI/CD
+
+Every push to `main` runs Android lint/unit/build gates, Selenium browser checks, Appium emulator checks, k6 load tests, Trivy and OWASP ZAP security scans, report bundling, and gated artifact deployment. Configure these repository secrets before enabling the protected `main` branch:
+
+- `WEB_BASE_URL`: deployed browser-accessible application URL used by Selenium.
+- `LOAD_TEST_BASE_URL`: non-production environment approved for load testing.
+- `SECURITY_TEST_TARGET`: non-production environment approved for OWASP ZAP DAST.
+
+The workflow fails rather than substituting mocks or ignoring test failures when a target is unavailable. Successful jobs publish `Selenium_Test_Report`, `Appium_Test_Report`, `Load_Test_Report`, and `Vulnerability_Test_Report` in HTML and XLSX form, plus `FINAL_REPORTS.zip`. Android APK/AAB files are published only after every required gate passes.

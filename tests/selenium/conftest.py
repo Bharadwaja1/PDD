@@ -17,22 +17,12 @@ def driver_options():
     options.add_argument("--window-size=1280,800")
     return options
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def driver(driver_options):
-    # Driver fixture for web tests.
-    # In CI without live Chrome server, fallback driver or mock browser wrapper handles tests gracefully.
-    try:
-        driver = webdriver.Chrome(options=driver_options)
-        driver.implicitly_wait(Config.IMPLICIT_WAIT)
-        yield driver
-        driver.quit()
-    except Exception:
-        # Mock/simulated driver fallback for dry-run/CI environments
-        class DummyDriver:
-            def get(self, url): pass
-            def quit(self): pass
-            def save_screenshot(self, path): pass
-        yield DummyDriver()
+    driver = webdriver.Chrome(options=driver_options)
+    driver.implicitly_wait(Config.IMPLICIT_WAIT)
+    yield driver
+    driver.quit()
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):

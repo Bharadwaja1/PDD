@@ -19,24 +19,16 @@ def appium_capabilities():
     }
     return capabilities
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def driver(appium_capabilities):
-    # Appium driver fixture
-    try:
-        from appium import webdriver
-        from appium.options.android import UiAutomator2Options
+    from appium import webdriver
+    from appium.options.android import UiAutomator2Options
 
-        options = UiAutomator2Options()
-        options.load_capabilities(appium_capabilities)
-        driver = webdriver.Remote(AppiumConfig.APPIUM_SERVER_URL, options=options)
-        yield driver
-        driver.quit()
-    except Exception:
-        # Dummy driver fallback for dry-run/CI setup check
-        class DummyAppiumDriver:
-            def quit(self): pass
-            def save_screenshot(self, path): pass
-        yield DummyAppiumDriver()
+    options = UiAutomator2Options()
+    options.load_capabilities(appium_capabilities)
+    driver = webdriver.Remote(AppiumConfig.APPIUM_SERVER_URL, options=options)
+    yield driver
+    driver.quit()
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
