@@ -30,7 +30,6 @@ jobs:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
           cache: gradle
-      - uses: android-actions/setup-android@v3
       - name: Validate Gradle wrapper
         uses: gradle/actions/wrapper-validation@v4
       - name: Lint, unit test, and production builds
@@ -194,7 +193,7 @@ jobs:
       - name: Require a DAST target
         run: test -n "$TARGET_URL" || { echo 'SECURITY_TEST_TARGET secret is required for DAST'; exit 1; }
       - name: OWASP ZAP baseline DAST
-        uses: zaproxy/action-baseline@v0.15.0
+        uses: zaproxy/action-baseline@v0.14.0
         with:
           target: ${{ env.TARGET_URL }}
           rules_file_name: tests/security/zap-baseline.conf
