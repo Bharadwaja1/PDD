@@ -1,0 +1,1812 @@
+test_cases:
+  # Smoke Tests (LOAD-001 to LOAD-050)
+  - id: LOAD-001
+    category: smoke_tests
+    name: Audius API Trending Endpoint Smoke Test
+    description: Verify baseline HTTP 200 response time under 1 VU for Audius trending tracks API
+    priority: critical
+    expected_result: HTTP 200 status code with p(95) duration < 500ms
+  - id: LOAD-002
+    category: smoke_tests
+    name: Spotify OAuth Token Endpoint Smoke Test
+    description: Verify token exchange endpoint response under minimal load
+    priority: critical
+    expected_result: Token endpoint responds within 300ms
+  - id: LOAD-003
+    category: smoke_tests
+    name: Firebase Firestore Rest Auth Smoke Test
+    description: Verify Firestore REST auth endpoint baseline latency
+    priority: high
+    expected_result: Response latency < 400ms
+  - id: LOAD-004
+    category: smoke_tests
+    name: App Static Asset CDN Response Smoke Test
+    description: Verify static asset CDN availability and response headers
+    priority: medium
+    expected_result: HTTP 200 with cache-control headers present
+  - id: LOAD-005
+    category: smoke_tests
+    name: Firebase User Profile Fetch Smoke Test
+    description: Verify single user profile fetch latency
+    priority: high
+    expected_result: Profile returned in < 250ms
+  - id: LOAD-006
+    category: smoke_tests
+    name: Catalog Metadata Endpoint Smoke Test
+    description: Verify metadata endpoint for catalog audio tracks
+    priority: medium
+    expected_result: Catalog metadata returned with HTTP 200
+  - id: LOAD-007
+    category: smoke_tests
+    name: Search API Single Keyword Smoke Test
+    description: Verify search API execution for keyword 'Telugu'
+    priority: high
+    expected_result: Search results returned in < 350ms
+  - id: LOAD-008
+    category: smoke_tests
+    name: Mood Recommendation Endpoint Smoke Test
+    description: Verify mood mix recommendation endpoint latency
+    priority: high
+    expected_result: Recommendation JSON payload in < 300ms
+  - id: LOAD-009
+    category: smoke_tests
+    name: Health Check Endpoint Smoke Test
+    description: Verify backend service health check probe
+    priority: critical
+    expected_result: HTTP 200 status 'ok'
+  - id: LOAD-010
+    category: smoke_tests
+    name: User Playlist List Endpoint Smoke Test
+    description: Verify playlist listing API response
+    priority: medium
+    expected_result: User playlists array returned
+  - id: LOAD-011
+    category: smoke_tests
+    name: User Mood History Fetch Smoke Test
+    description: Verify history collection fetch response
+    priority: medium
+    expected_result: History array payload returned
+  - id: LOAD-012
+    category: smoke_tests
+    name: User Journal Sync Smoke Test
+    description: Verify POST request latency for saving journal entry
+    priority: medium
+    expected_result: HTTP 200/201 ack received
+  - id: LOAD-013
+    category: smoke_tests
+    name: Audio Streaming Chunk Response Smoke Test
+    description: Verify partial HTTP 206 content response for audio streaming
+    priority: high
+    expected_result: HTTP 206 status with byte-range headers
+  - id: LOAD-014
+    category: smoke_tests
+    name: User Preferences Update Smoke Test
+    description: Verify PUT request for updating user preferences
+    priority: medium
+    expected_result: Preferences updated in < 300ms
+  - id: LOAD-015
+    category: smoke_tests
+    name: Public Playlist View Smoke Test
+    description: Verify public playlist detail fetch response
+    priority: low
+    expected_result: Public playlist details returned
+  - id: LOAD-016
+    category: smoke_tests
+    name: Liked Songs Sync Smoke Test
+    description: Verify POST request for syncing liked song IDs
+    priority: medium
+    expected_result: Sync acknowledged in < 250ms
+  - id: LOAD-017
+    category: smoke_tests
+    name: Spotify User Me Profile Smoke Test
+    description: Verify Spotify /v1/me user endpoint latency
+    priority: medium
+    expected_result: User profile JSON returned in < 300ms
+  - id: LOAD-018
+    category: smoke_tests
+    name: Audius API Search Track Smoke Test
+    description: Verify Audius /tracks/search API baseline latency
+    priority: medium
+    expected_result: Track search response in < 400ms
+  - id: LOAD-019
+    category: smoke_tests
+    name: Firebase Auth Refresh Token Smoke Test
+    description: Verify Firebase token refresh endpoint latency
+    priority: high
+    expected_result: New ID token issued in < 350ms
+  - id: LOAD-020
+    category: smoke_tests
+    name: CORS Preflight OPTIONS Request Smoke Test
+    description: Verify CORS preflight response headers and latency
+    priority: low
+    expected_result: HTTP 204 with Access-Control-Allow-Origin
+  - id: LOAD-021
+    category: smoke_tests
+    name: Single Track Details Fetch Smoke Test
+    description: Verify fetching metadata for track ID 1
+    priority: low
+    expected_result: Track object returned
+  - id: LOAD-022
+    category: smoke_tests
+    name: Artist Profile Endpoint Smoke Test
+    description: Verify artist details endpoint latency
+    priority: low
+    expected_result: Artist profile returned
+  - id: LOAD-023
+    category: smoke_tests
+    name: Album Tracks Endpoint Smoke Test
+    description: Verify fetching tracks belonging to album
+    priority: low
+    expected_result: Album tracks array returned
+  - id: LOAD-024
+    category: smoke_tests
+    name: Mood Categories Configuration Smoke Test
+    description: Verify fetching mood categories JSON configuration
+    priority: low
+    expected_result: Mood categories array returned
+  - id: LOAD-025
+    category: smoke_tests
+    name: App Config Options Endpoint Smoke Test
+    description: Verify remote configuration parameters endpoint
+    priority: low
+    expected_result: Remote config parameters returned
+  - id: LOAD-026
+    category: smoke_tests
+    name: User Session Start Probe Smoke Test
+    description: Verify session initialization ping
+    priority: low
+    expected_result: Session probe acknowledged
+  - id: LOAD-027
+    category: smoke_tests
+    name: User Session End Probe Smoke Test
+    description: Verify session check-in completion probe
+    priority: low
+    expected_result: Session check-in saved
+  - id: LOAD-028
+    category: smoke_tests
+    name: Offline Cache Revalidation Smoke Test
+    description: Verify HTTP 304 Not Modified conditional GET
+    priority: low
+    expected_result: HTTP 304 returned when ETag matches
+  - id: LOAD-029
+    category: smoke_tests
+    name: Rate Limit Headers Inspection Smoke Test
+    description: Verify presence of X-RateLimit response headers
+    priority: low
+    expected_result: Rate limit headers present
+  - id: LOAD-030
+    category: smoke_tests
+    name: TLS Handshake Latency Smoke Test
+    description: Verify SSL/TLS handshake overhead
+    priority: medium
+    expected_result: TLS handshake time < 100ms
+  - id: LOAD-031
+    category: smoke_tests
+    name: DNS Resolution Latency Smoke Test
+    description: Verify hostname resolution timing
+    priority: low
+    expected_result: DNS lookup < 50ms
+  - id: LOAD-032
+    category: smoke_tests
+    name: Connection Keep-Alive Smoke Test
+    description: Verify HTTP connection reuse on consecutive requests
+    priority: low
+    expected_result: TCP connection reused across iterations
+  - id: LOAD-033
+    category: smoke_tests
+    name: Gzip Compression Response Smoke Test
+    description: Verify Content-Encoding gzip in API responses
+    priority: low
+    expected_result: Payload compressed with gzip
+  - id: LOAD-034
+    category: smoke_tests
+    name: JSON Response Payload Format Smoke Test
+    description: Verify valid JSON Content-Type header
+    priority: low
+    expected_result: Content-Type application/json
+  - id: LOAD-035
+    category: smoke_tests
+    name: Unauthenticated Endpoint 401 Smoke Test
+    description: Verify 401 Unauthorized code on protected resource without token
+    priority: high
+    expected_result: HTTP 401 returned
+  - id: LOAD-036
+    category: smoke_tests
+    name: Invalid Route 404 Smoke Test
+    description: Verify 404 Not Found on invalid API URL
+    priority: low
+    expected_result: HTTP 404 returned cleanly
+  - id: LOAD-037
+    category: smoke_tests
+    name: Invalid Method 405 Smoke Test
+    description: Verify 405 Method Not Allowed on invalid HTTP method
+    priority: low
+    expected_result: HTTP 405 returned
+  - id: LOAD-038
+    category: smoke_tests
+    name: Payload Size Limit Test
+    description: Verify API handles 10KB request body payload
+    priority: low
+    expected_result: Body processed within limits
+  - id: LOAD-039
+    category: smoke_tests
+    name: Request Header Size Test
+    description: Verify API handles custom user headers
+    priority: low
+    expected_result: Request accepted
+  - id: LOAD-040
+    category: smoke_tests
+    name: Single User Multithread Request
+    description: Verify concurrent requests from single user context
+    priority: medium
+    expected_result: Concurrent requests handle state cleanly
+  - id: LOAD-041
+    category: smoke_tests
+    name: Audius App Name Header Test
+    description: Verify app_name parameter passed in Audius API query
+    priority: low
+    expected_result: Request accepted by Audius host
+  - id: LOAD-042
+    category: smoke_tests
+    name: Spotify Bearer Auth Format Test
+    description: Verify Bearer prefix in Spotify authorization header
+    priority: medium
+    expected_result: Header parsed successfully
+  - id: LOAD-043
+    category: smoke_tests
+    name: Firestore Rest Document Batch Fetch
+    description: Verify batch read of user collections
+    priority: medium
+    expected_result: Collection documents array returned
+  - id: LOAD-044
+    category: smoke_tests
+    name: API Response Time P90 Metric
+    description: Verify p(90) response time threshold
+    priority: medium
+    expected_result: p(90) < 400ms
+  - id: LOAD-045
+    category: smoke_tests
+    name: API Response Time P99 Metric
+    description: Verify p(99) response time threshold
+    priority: medium
+    expected_result: p(99) < 800ms
+  - id: LOAD-046
+    category: smoke_tests
+    name: Error Rate Zero Verification
+    description: Verify 0% http_req_failed in smoke scenario
+    priority: critical
+    expected_result: http_req_failed rate == 0.00
+  - id: LOAD-047
+    category: smoke_tests
+    name: Iteration Count Verification
+    description: Verify exact execution of designated iteration count
+    priority: low
+    expected_result: Target iterations completed
+  - id: LOAD-048
+    category: smoke_tests
+    name: Virtual User Allocation
+    description: Verify 1-5 VUs initialized in smoke profile
+    priority: low
+    expected_result: VUs executed smoothly
+  - id: LOAD-049
+    category: smoke_tests
+    name: Summary Export JSON Format
+    description: Verify k6 JSON summary report generation
+    priority: low
+    expected_result: Summary JSON exported
+  - id: LOAD-050
+    category: smoke_tests
+    name: Summary Export HTML Format
+    description: Verify k6 HTML summary report generation
+    priority: low
+    expected_result: Summary HTML report exported
+
+  # Normal Load Tests (LOAD-051 to LOAD-100)
+  - id: LOAD-051
+    category: load_tests
+    name: Normal User Traffic Load Scenario (20 VUs)
+    description: Verify steady 20 VUs load over 2 minutes
+    priority: critical
+    expected_result: Error rate < 1% and p(95) < 500ms
+  - id: LOAD-052
+    category: load_tests
+    name: Search API Normal Load Scenario
+    description: Verify search queries execution under 20 VUs
+    priority: high
+    expected_result: p(95) duration < 500ms
+  - id: LOAD-053
+    category: load_tests
+    name: Home Feed Render API Load
+    description: Verify Home feed requests under steady load
+    priority: high
+    expected_result: Feed payload latency < 450ms
+  - id: LOAD-054
+    category: load_tests
+    name: Mood Playlist Fetch Under Load
+    description: Verify mood playlist requests under 20 VUs
+    priority: high
+    expected_result: Mood queue returned in < 450ms
+  - id: LOAD-055
+    category: load_tests
+    name: Firebase Firestore Document Writes Load
+    description: Verify concurrent state sync writes under steady load
+    priority: high
+    expected_result: Firestore write latency < 500ms
+  - id: LOAD-056
+    category: load_tests
+    name: Concurrent User Login Authentication Load
+    description: Verify 15 concurrent login requests per second
+    priority: critical
+    expected_result: Auth throughput sustained without failure
+  - id: LOAD-057
+    category: load_tests
+    name: User Playlist CRUD Operations Load
+    description: Verify creating and adding tracks to playlists under load
+    priority: medium
+    expected_result: Playlist operations succeed under load
+  - id: LOAD-058
+    category: load_tests
+    name: Audius API Proxy Throughput Load
+    description: Verify Audius API proxy throughput under load
+    priority: medium
+    expected_result: Audius proxy maintains > 50 req/sec
+  - id: LOAD-059
+    category: load_tests
+    name: Spotify Token Refresh Load
+    description: Verify refreshing Spotify tokens for 20 VUs
+    priority: medium
+    expected_result: Token refreshes succeed without 429
+  - id: LOAD-060
+    category: load_tests
+    name: Liked Songs Sync Concurrent Write Load
+    description: Verify concurrent liked songs set updates
+    priority: medium
+    expected_result: Sets merged without race conditions
+  - id: LOAD-061
+    category: load_tests
+    name: Mood Check-in History Insertion Load
+    description: Verify logging mood sessions under steady load
+    priority: medium
+    expected_result: Mood sessions saved cleanly
+  - id: LOAD-062
+    category: load_tests
+    name: Journal Entry Creation Load
+    description: Verify writing journal entries under steady load
+    priority: medium
+    expected_result: Journal entries written cleanly
+  - id: LOAD-063
+    category: load_tests
+    name: User Profile Update Concurrent Load
+    description: Verify concurrent profile updates
+    priority: low
+    expected_result: Profile updates processed
+  - id: LOAD-064
+    category: load_tests
+    name: Static Asset CDN Bandwidth Load
+    description: Verify CDN bandwidth delivery under 20 VUs
+    priority: low
+    expected_result: Full asset throughput maintained
+  - id: LOAD-065
+    category: load_tests
+    name: Audio File Range Request Load
+    description: Verify range requests for audio chunks under load
+    priority: high
+    expected_result: Audio chunk streaming sustained
+  - id: LOAD-066
+    category: load_tests
+    name: Steady Ramp Up to 30 VUs
+    description: Verify linear ramp up from 0 to 30 VUs over 1 minute
+    priority: medium
+    expected_result: Response time increases linearly without spike
+  - id: LOAD-067
+    category: load_tests
+    name: Steady Ramp Down from 30 VUs
+    description: Verify linear ramp down from 30 to 0 VUs
+    priority: low
+    expected_result: Active connections close cleanly
+  - id: LOAD-068
+    category: load_tests
+    name: User Session Duration Distribution
+    description: Verify user session think time distribution (1-5s delay)
+    priority: low
+    expected_result: Natural user pacing simulated
+  - id: LOAD-069
+    category: load_tests
+    name: Token Validation Cache Hit Ratio
+    description: Verify token validation cache efficiency under load
+    priority: medium
+    expected_result: Cache hit ratio > 80%
+  - id: LOAD-070
+    category: load_tests
+    name: Database Connection Pool Utilization
+    description: Verify DB pool utilization remains < 75%
+    priority: high
+    expected_result: No DB connection timeouts
+  - id: LOAD-071
+    category: load_tests
+    name: API Gateway Request Distribution
+    description: Verify balanced request distribution across instances
+    priority: low
+    expected_result: Load evenly distributed
+  - id: LOAD-072
+    category: load_tests
+    name: HTTP Keep-Alive Persistence Load
+    description: Verify persistent HTTP connections sustained under load
+    priority: low
+    expected_result: Zero dropped connections
+  - id: LOAD-073
+    category: load_tests
+    name: Search Index Query Performance
+    description: Verify search index lookup duration under load
+    priority: medium
+    expected_result: Index lookup < 100ms
+  - id: LOAD-074
+    category: load_tests
+    name: Firestore Read Operations Quota
+    description: Verify read quota management under 30 VUs
+    priority: medium
+    expected_result: Read quota within limits
+  - id: LOAD-075
+    category: load_tests
+    name: Firestore Write Operations Quota
+    description: Verify write quota management under 30 VUs
+    priority: medium
+    expected_result: Write quota within limits
+  - id: LOAD-076
+    category: load_tests
+    name: Error Rate Threshold Verification
+    description: Verify error rate stays strictly below 1%
+    priority: critical
+    expected_result: http_req_failed < 0.01
+  - id: LOAD-077
+    category: load_tests
+    name: Latency P95 Threshold Verification
+    description: Verify p(95) latency stays strictly below 500ms
+    priority: critical
+    expected_result: http_req_duration p(95) < 500ms
+  - id: LOAD-078
+    category: load_tests
+    name: Latency P99 Threshold Verification
+    description: Verify p(99) latency stays strictly below 1000ms
+    priority: high
+    expected_result: http_req_duration p(99) < 1000ms
+  - id: LOAD-079
+    category: load_tests
+    name: HTTP Request Rate Metric
+    description: Verify total http_reqs throughput metric
+    priority: low
+    expected_result: Throughput metric recorded
+  - id: LOAD-080
+    category: load_tests
+    name: Network Data Received Metric
+    description: Verify data_received throughput metric
+    priority: low
+    expected_result: Bytes received recorded
+  - id: LOAD-081
+    category: load_tests
+    name: Network Data Sent Metric
+    description: Verify data_sent throughput metric
+    priority: low
+    expected_result: Bytes sent recorded
+  - id: LOAD-082
+    category: load_tests
+    name: Request Duration Min Max Spread
+    description: Verify min/max latency spread
+    priority: low
+    expected_result: Latency spread within expected variance
+  - id: LOAD-083
+    category: load_tests
+    name: User Scenario Mix Realism
+    description: Verify weighted mix (60% browse, 30% play, 10% settings)
+    priority: medium
+    expected_result: Realistic user mix executed
+  - id: LOAD-084
+    category: load_tests
+    name: Auth Header Parsing Under Load
+    description: Verify JWT parsing performance for 30 VUs
+    priority: medium
+    expected_result: Zero auth parsing failures
+  - id: LOAD-085
+    category: load_tests
+    name: SSL Session Resumption
+    description: Verify SSL session resumption reduces handshake overhead
+    priority: low
+    expected_result: Handshake duration minimized
+  - id: LOAD-086
+    category: load_tests
+    name: Response Body Decompression Throughput
+    description: Verify CPU overhead of gzip decompression under load
+    priority: low
+    expected_result: Low CPU overhead maintained
+  - id: LOAD-087
+    category: load_tests
+    name: Memory Usage Stabilized Baseline
+    description: Verify server memory remains stable over 2 minute run
+    priority: high
+    expected_result: Zero memory leaks
+  - id: LOAD-088
+    category: load_tests
+    name: CPU Utilization Baseline
+    description: Verify CPU utilization stays < 60% during load test
+    priority: high
+    expected_result: CPU load balanced
+  - id: LOAD-089
+    category: load_tests
+    name: Load Test Trigger Via Workflow Dispatch
+    description: Verify k6 workflow dispatch execution
+    priority: high
+    expected_result: k6 test executed from workflow dispatch
+  - id: LOAD-090
+    category: load_tests
+    name: Load Test Artifact Upload
+    description: Verify k6-test-results artifact contains JSON report
+    priority: medium
+    expected_result: Artifact uploaded
+  - id: LOAD-091
+    category: load_tests
+    name: Step Summary Performance Table
+    description: Verify performance summary table in $GITHUB_STEP_SUMMARY
+    priority: medium
+    expected_result: Summary table generated
+  - id: LOAD-092
+    category: load_tests
+    name: Custom Threshold 'http_req_connecting'
+    description: Verify connection setup threshold < 100ms
+    priority: low
+    expected_result: Threshold met
+  - id: LOAD-093
+    category: load_tests
+    name: Custom Threshold 'http_req_tls_handshaking'
+    description: Verify TLS handshake threshold < 150ms
+    priority: low
+    expected_result: Threshold met
+  - id: LOAD-094
+    category: load_tests
+    name: Custom Threshold 'http_req_sending'
+    description: Verify upload duration threshold < 50ms
+    priority: low
+    expected_result: Threshold met
+  - id: LOAD-095
+    category: load_tests
+    name: Custom Threshold 'http_req_waiting'
+    description: Verify TTFB (time to first byte) threshold < 350ms
+    priority: high
+    expected_result: TTFB threshold met
+  - id: LOAD-096
+    category: load_tests
+    name: Custom Threshold 'http_req_receiving'
+    description: Verify download duration threshold < 100ms
+    priority: low
+    expected_result: Threshold met
+  - id: LOAD-097
+    category: load_tests
+    name: Iteration Duration Metric
+    description: Verify full scenario iteration duration
+    priority: low
+    expected_result: Iteration duration recorded
+  - id: LOAD-098
+    category: load_tests
+    name: Abort On Critical Failure Safeguard
+    description: Verify k6 aborts if error rate exceeds 20%
+    priority: critical
+    expected_result: Safeguard abort mechanism functional
+  - id: LOAD-099
+    category: load_tests
+    name: Environment Target URL Parameter
+    description: Verify BASE_URL environment variable parameterization
+    priority: high
+    expected_result: Target URL configured dynamically
+  - id: LOAD-100
+    category: load_tests
+    name: Load Test Clean Teardown
+    description: Verify teardown function closes remaining sessions
+    priority: medium
+    expected_result: Teardown executed successfully
+
+  # Stress Tests (LOAD-101 to LOAD-150)
+  - id: LOAD-101
+    category: stress_tests
+    name: Stress Test Ramp Up to 100 VUs
+    description: Verify system stability when scaling from 0 to 100 VUs
+    priority: critical
+    expected_result: System handles load without crashing
+  - id: LOAD-102
+    category: stress_tests
+    name: Search API High Concurrency Stress
+    description: Verify search API under 100 concurrent VUs
+    priority: high
+    expected_result: Search API queue handles traffic without 5xx
+  - id: LOAD-103
+    category: stress_tests
+    name: Authentication API Stress
+    description: Verify login/signup throughput at 50 requests/sec
+    priority: critical
+    expected_result: Auth service maintains availability
+  - id: LOAD-104
+    category: stress_tests
+    name: Firestore Write Bottleneck Stress
+    description: Verify database write queue under high concurrency
+    priority: high
+    expected_result: DB write queue recovers after peak
+  - id: LOAD-105
+    category: stress_tests
+    name: Audius API Rate Limit Resilience Stress
+    description: Verify app handles HTTP 429 Too Many Requests gracefully
+    priority: medium
+    expected_result: 429 handled with exponential backoff
+  - id: LOAD-106
+    category: stress_tests
+    name: Memory Limits Under 100 VUs
+    description: Verify server memory consumption during peak stress
+    priority: high
+    expected_result: Memory consumption stays below OOM threshold
+  - id: LOAD-107
+    category: stress_tests
+    name: CPU Ceiling Performance Under Stress
+    description: Verify behavior when CPU hits 90% utilization
+    priority: high
+    expected_result: Requests queue without connection drop
+  - id: LOAD-108
+    category: stress_tests
+    name: Graceful Degradation Under Stress
+    description: Verify optional recommendations degrade gracefully
+    priority: medium
+    expected_result: Non-essential widgets return cached data
+  - id: LOAD-109
+    category: stress_tests
+    name: Recovery Time After Stress Peak
+    description: Verify latency returns to baseline within 30s after stress peak
+    priority: critical
+    expected_result: Rapid latency recovery
+  - id: LOAD-110
+    category: stress_tests
+    name: Auto-Scaling Trigger Verification
+    description: Verify auto-scaler spawns new backend pods under stress
+    priority: medium
+    expected_result: New pods spawned
+  - id: LOAD-111
+    category: stress_tests
+    name: Connection Backlog Queue Stress
+    description: Verify TCP backlog queue behavior under max connections
+    priority: low
+    expected_result: No TCP SYN drop
+  - id: LOAD-112
+    category: stress_tests
+    name: Thread Pool Saturation Stress
+    description: Verify thread pool exhaustion handling
+    priority: high
+    expected_result: 503 or queue rejection handled
+  - id: LOAD-113
+    category: stress_tests
+    name: Static File Server High Throughput Stress
+    description: Verify serving 500 static file downloads/sec
+    priority: low
+    expected_result: Static files served
+  - id: LOAD-114
+    category: stress_tests
+    name: Audio Cache File Descriptor Limit Stress
+    description: Verify open file descriptor limit under high file stream load
+    priority: medium
+    expected_result: File descriptors released
+  - id: LOAD-115
+    category: stress_tests
+    name: Heavy Search Keyword Concurrency Stress
+    description: Verify wildcard search strings under 100 VUs
+    priority: medium
+    expected_result: Complex queries handled
+  - id: LOAD-116
+    category: stress_tests
+    name: Concurrent Playlist Creation Stress
+    description: Verify 100 simultaneous playlist creation requests
+    priority: medium
+    expected_result: All playlists created
+  - id: LOAD-117
+    category: stress_tests
+    name: Concurrent Mood Session History Writes Stress
+    description: Verify concurrent mood session insertions
+    priority: medium
+    expected_result: All sessions logged
+  - id: LOAD-118
+    category: stress_tests
+    name: Concurrent User Profile Edits Stress
+    description: Verify concurrent profile updates
+    priority: low
+    expected_result: Updates processed safely
+  - id: LOAD-119
+    category: stress_tests
+    name: Spotify OAuth Exchange Peak Stress
+    description: Verify token exchange requests under stress
+    priority: medium
+    expected_result: Requests handled
+  - id: LOAD-120
+    category: stress_tests
+    name: Firebase Auth ID Token Verification Stress
+    description: Verify JWT validation under 100 VUs
+    priority: high
+    expected_result: Tokens verified
+  - id: LOAD-121
+    category: stress_tests
+    name: Network Bandwidth Saturation Stress
+    description: Verify behavior near network link capacity
+    priority: low
+    expected_result: Saturation managed
+  - id: LOAD-122
+    category: stress_tests
+    name: HTTP 500 Internal Error Rate Measurement
+    description: Verify 500 error rate stays < 2% under stress
+    priority: critical
+    expected_result: Error rate < 2%
+  - id: LOAD-123
+    category: stress_tests
+    name: HTTP 502 Bad Gateway Rate Measurement
+    description: Verify gateway error rate stays < 1% under stress
+    priority: high
+    expected_result: Error rate < 1%
+  - id: LOAD-124
+    category: stress_tests
+    name: HTTP 503 Service Unavailable Measurement
+    description: Verify service unavailable rate stays < 1%
+    priority: high
+    expected_result: Error rate < 1%
+  - id: LOAD-125
+    category: stress_tests
+    name: HTTP 504 Gateway Timeout Measurement
+    description: Verify gateway timeout rate stays < 1%
+    priority: high
+    expected_result: Timeout rate < 1%
+  - id: LOAD-126
+    category: stress_tests
+    name: Database Deadlock Resistance Stress
+    description: Verify no DB deadlocks occur during concurrent writes
+    priority: critical
+    expected_result: Zero DB deadlocks
+  - id: LOAD-127
+    category: stress_tests
+    name: Redis Cache Saturation Stress
+    description: Verify Redis memory eviction policy under stress
+    priority: medium
+    expected_result: Eviction policy maintains cache
+  - id: LOAD-128
+    category: stress_tests
+    name: API Gateway Rate Limiter Throttle
+    description: Verify rate limiter returns 429 on extreme overload
+    priority: high
+    expected_result: 429 status code returned
+  - id: LOAD-129
+    category: stress_tests
+    name: Manual Trigger Only Security Guard
+    description: Verify stress profile is not run on pull_request triggers
+    priority: critical
+    expected_result: Manual workflow_dispatch required
+  - id: LOAD-130
+    category: stress_tests
+    name: Stress Test Profile Input Selection
+    description: Verify workflow dispatch input 'stress' maps to stress profile
+    priority: high
+    expected_result: Stress profile selected
+  - id: LOAD-131
+    category: stress_tests
+    name: Sustained 100 VU Hold Stage
+    description: Verify holding 100 VUs for 2 minutes
+    priority: high
+    expected_result: Hold stage completed
+  - id: LOAD-132
+    category: stress_tests
+    name: Memory Garbage Collection Overhead
+    description: Verify JVM/Node GC pauses stay < 200ms during stress
+    priority: medium
+    expected_result: Low GC overhead
+  - id: LOAD-133
+    category: stress_tests
+    name: Connection Reset Error Rate
+    description: Verify ECONNRESET rate < 0.5%
+    priority: medium
+    expected_result: Minimal connection resets
+  - id: LOAD-134
+    category: stress_tests
+    name: Request Timeout Threshold 5000ms
+    description: Verify individual request hard timeout at 5s
+    priority: medium
+    expected_result: Requests timing out > 5s aborted
+  - id: LOAD-135
+    category: stress_tests
+    name: Error Log Output Compression
+    description: Verify error logs remain concise under stress
+    priority: low
+    expected_result: Concise log summary
+  - id: LOAD-136
+    category: stress_tests
+    name: Response Body Sample Verification
+    description: Verify non-error response bodies remain valid JSON
+    priority: medium
+    expected_result: Valid JSON payloads
+  - id: LOAD-137
+    category: stress_tests
+    name: Stress Test Execution Duration Tracking
+    description: Verify total stress run duration recorded
+    priority: low
+    expected_result: Duration logged
+  - id: LOAD-138
+    category: stress_tests
+    name: System Metric Correlator Logging
+    description: Verify k6 tags associate metrics with stress stage
+    priority: low
+    expected_result: Stage tags present
+  - id: LOAD-139
+    category: stress_tests
+    name: Stress Stage Ramp Down Recovery
+    description: Verify smooth ramp down from 100 to 0 VUs
+    priority: medium
+    expected_result: Clean ramp down
+  - id: LOAD-140
+    category: stress_tests
+    name: Post Stress Health Probe
+    description: Verify health probe returns 'ok' post stress test
+    priority: critical
+    expected_result: Health check passes
+  - id: LOAD-141
+    category: stress_tests
+    name: Stress Test HTML Report Generation
+    description: Verify HTML report includes stress graphs
+    priority: medium
+    expected_result: HTML report created
+  - id: LOAD-142
+    category: stress_tests
+    name: Stress Test JSON Summary Generation
+    description: Verify JSON summary exported
+    priority: medium
+    expected_result: JSON file generated
+  - id: LOAD-143
+    category: stress_tests
+    name: Stress Test Artifact Upload Verification
+    description: Verify artifact uploaded even if thresholds fail
+    priority: high
+    expected_result: Artifact uploaded
+  - id: LOAD-144
+    category: stress_tests
+    name: Step Summary Stress Failure Notice
+    description: Verify step summary lists failed thresholds if any
+    priority: high
+    expected_result: Failed thresholds listed
+  - id: LOAD-145
+    category: stress_tests
+    name: Non-Destructive Target Verification
+    description: Verify stress targets test environment, not production
+    priority: critical
+    expected_result: Non-production URL targeted
+  - id: LOAD-146
+    category: stress_tests
+    name: Custom Header Isolation
+    description: Verify stress traffic tagged with X-Test-Runner header
+    priority: low
+    expected_result: Test traffic tagged
+  - id: LOAD-147
+    category: stress_tests
+    name: Client Side CPU Utilization k6
+    description: Verify k6 runner CPU utilization < 80%
+    priority: low
+    expected_result: k6 runner healthy
+  - id: LOAD-148
+    category: stress_tests
+    name: Client Side Memory Utilization k6
+    description: Verify k6 runner memory < 1GB
+    priority: low
+    expected_result: k6 runner memory healthy
+  - id: LOAD-149
+    category: stress_tests
+    name: Stress Test Retry Disabled
+    description: Verify 0 retries configured for stress test
+    priority: medium
+    expected_result: Zero retries enforced
+  - id: LOAD-150
+    category: stress_tests
+    name: Final Status Summary Report
+    description: Verify concise final status output
+    priority: high
+    expected_result: Final summary printed
+
+  # Spike Tests (LOAD-151 to LOAD-200)
+  - id: LOAD-151
+    category: spike_tests
+    name: Instant Traffic Spike 0 to 150 VUs (10s)
+    description: Verify sudden surge from 0 to 150 VUs within 10 seconds
+    priority: critical
+    expected_result: System absorbs spike without crash
+  - id: LOAD-152
+    category: spike_tests
+    name: Search API Traffic Spike
+    description: Verify sudden 10x surge in search queries
+    priority: high
+    expected_result: Search API queue manages surge
+  - id: LOAD-153
+    category: spike_tests
+    name: Home Feed Render Traffic Spike
+    description: Verify sudden surge on Home feed endpoint
+    priority: high
+    expected_result: Home feed served
+  - id: LOAD-154
+    category: spike_tests
+    name: Login Auth Endpoint Traffic Spike
+    description: Verify 50 simultaneous login requests in 1 second
+    priority: critical
+    expected_result: Auth endpoint queue handles requests
+  - id: LOAD-155
+    category: spike_tests
+    name: Audio Stream Chunk Request Spike
+    description: Verify sudden 100 concurrent audio stream start requests
+    priority: high
+    expected_result: Audio streams served
+  - id: LOAD-156
+    category: spike_tests
+    name: Spike Recovery Interval Duration
+    description: Verify response times recover within 15 seconds after spike drops
+    priority: critical
+    expected_result: Rapid recovery post spike
+  - id: LOAD-157
+    category: spike_tests
+    name: Spike Test Manual Trigger Enforcement
+    description: Verify spike test is restricted to workflow_dispatch
+    priority: critical
+    expected_result: Manual trigger enforced
+  - id: LOAD-158
+    category: spike_tests
+    name: Spike Profile Selection
+    description: Verify workflow dispatch input 'spike' selects spike profile
+    priority: high
+    expected_result: Spike profile active
+  - id: LOAD-159
+    category: spike_tests
+    name: Connection Reset Resistance During Spike
+    description: Verify server does not forcibly close active TCP sockets
+    priority: medium
+    expected_result: Active connections maintained
+  - id: LOAD-160
+    category: spike_tests
+    name: Database Connection Pool Expansion
+    description: Verify DB pool expands dynamically during surge
+    priority: medium
+    expected_result: Connection pool expands
+  - id: LOAD-161
+    category: spike_tests
+    name: API Gateway Buffer Queue Surge
+    description: Verify gateway request buffering during spike
+    priority: medium
+    expected_result: Buffer queue functional
+  - id: LOAD-162
+    category: spike_tests
+    name: Static Asset CDN Cache Spike Hit Rate
+    description: Verify CDN handles 100% of static asset surge
+    priority: low
+    expected_result: CDN absorbs surge
+  - id: LOAD-163
+    category: spike_tests
+    name: Circuit Breaker Activation Verification
+    description: Verify circuit breaker opens if backend dependency fails
+    priority: medium
+    expected_result: Circuit breaker opens cleanly
+  - id: LOAD-164
+    category: spike_tests
+    name: Circuit Breaker Recovery Verification
+    description: Verify circuit breaker closes after traffic normalizes
+    priority: medium
+    expected_result: Circuit breaker closes cleanly
+  - id: LOAD-165
+    category: spike_tests
+    name: User Profile Fetch Surge
+    description: Verify 150 concurrent user profile requests
+    priority: low
+    expected_result: Profiles returned
+  - id: LOAD-166
+    category: spike_tests
+    name: Liked Songs Sync Surge
+    description: Verify 100 concurrent liked song sync requests
+    priority: low
+    expected_result: Sync requests processed
+  - id: LOAD-167
+    category: spike_tests
+    name: Mood Session Logging Surge
+    description: Verify 100 concurrent mood session logs
+    priority: low
+    expected_result: Mood sessions logged
+  - id: LOAD-168
+    category: spike_tests
+    name: Journal Entry Creation Surge
+    description: Verify 100 concurrent journal creations
+    priority: low
+    expected_result: Journal entries saved
+  - id: LOAD-169
+    category: spike_tests
+    name: Playlist Creation Surge
+    description: Verify 100 concurrent playlist creations
+    priority: low
+    expected_result: Playlists created
+  - id: LOAD-170
+    category: spike_tests
+    name: Spotify OAuth Exchange Surge
+    description: Verify 50 concurrent token exchange requests
+    priority: low
+    expected_result: Token exchanges handled
+  - id: LOAD-171
+    category: spike_tests
+    name: Audius API Search Surge
+    description: Verify 100 concurrent Audius search requests
+    priority: low
+    expected_result: Audius searches handled
+  - id: LOAD-172
+    category: spike_tests
+    name: Firebase Firestore Write Queue Surge
+    description: Verify Firestore write queue during surge
+    priority: medium
+    expected_result: Firestore writes queued
+  - id: LOAD-173
+    category: spike_tests
+    name: Spike Duration 30 Seconds
+    description: Verify holding spike peak for 30 seconds
+    priority: medium
+    expected_result: Peak stage completed
+  - id: LOAD-174
+    category: spike_tests
+    name: Instant Ramp Down 150 to 0 VUs (10s)
+    description: Verify rapid traffic drop off
+    priority: medium
+    expected_result: Connections closed cleanly
+  - id: LOAD-175
+    category: spike_tests
+    name: Error Rate Threshold Under Spike
+    description: Verify http_req_failed stays < 5% during extreme spike
+    priority: high
+    expected_result: Error rate < 5%
+  - id: LOAD-176
+    category: spike_tests
+    name: Latency P95 Under Spike
+    description: Verify http_req_duration p(95) < 1500ms during spike
+    priority: high
+    expected_result: p(95) < 1500ms
+  - id: LOAD-177
+    category: spike_tests
+    name: Memory Spike Residual Verification
+    description: Verify memory returns to baseline after spike
+    priority: high
+    expected_result: Memory reclaimed post spike
+  - id: LOAD-178
+    category: spike_tests
+    name: CPU Spike Residual Verification
+    description: Verify CPU returns to baseline after spike
+    priority: high
+    expected_result: CPU load normalized
+  - id: LOAD-179
+    category: spike_tests
+    name: Spike Test Step Summary Notice
+    description: Verify step summary generated
+    priority: medium
+    expected_result: Step summary created
+  - id: LOAD-180
+    category: spike_tests
+    name: Spike Test Artifact Upload
+    description: Verify k6 report artifacts uploaded
+    priority: medium
+    expected_result: Artifacts uploaded
+  - id: LOAD-181
+    category: spike_tests
+    name: HTTP 503 Rate During Spike
+    description: Verify 503 Rate < 3% during peak spike
+    priority: medium
+    expected_result: 503 rate within limit
+  - id: LOAD-182
+    category: spike_tests
+    name: Log File Size Boundary Check
+    description: Verify log output size is throttled during spike
+    priority: low
+    expected_result: Throttled logging output
+  - id: LOAD-183
+    category: spike_tests
+    name: Thread Lock Contention Check
+    description: Verify low thread lock contention during spike
+    priority: low
+    expected_result: Low thread lock contention
+  - id: LOAD-184
+    category: spike_tests
+    name: Socket Exhaustion Defense
+    description: Verify TIME_WAIT socket reuse on OS level
+    priority: low
+    expected_result: TIME_WAIT sockets reused
+  - id: LOAD-185
+    category: spike_tests
+    name: Edge Load Balancer Spike Handling
+    description: Verify load balancer distributes spike
+    priority: low
+    expected_result: Load balanced
+  - id: LOAD-186
+    category: spike_tests
+    name: Spike Test JSON Summary Schema
+    description: Verify k6 JSON summary output
+    priority: low
+    expected_result: Valid JSON report
+  - id: LOAD-187
+    category: spike_tests
+    name: Spike Test HTML Report Schema
+    description: Verify k6 HTML summary output
+    priority: low
+    expected_result: Valid HTML report
+  - id: LOAD-188
+    category: spike_tests
+    name: Retry Count 0 Enforced
+    description: Verify no retries on spike test
+    priority: medium
+    expected_result: 0 retries
+  - id: LOAD-189
+    category: spike_tests
+    name: Post Spike Health Probe Verification
+    description: Verify backend health probe passes after spike
+    priority: critical
+    expected_result: Health check passes
+  - id: LOAD-190
+    category: spike_tests
+    name: Spike Test Target Environment Check
+    description: Verify test targets non-prod system
+    priority: critical
+    expected_result: Non-prod target
+  - id: LOAD-191
+    category: spike_tests
+    name: Request Headers Verification Spike
+    description: Verify request headers preserved during spike
+    priority: low
+    expected_result: Headers intact
+  - id: LOAD-192
+    category: spike_tests
+    name: Response Headers Verification Spike
+    description: Verify response headers preserved during spike
+    priority: low
+    expected_result: Response headers intact
+  - id: LOAD-193
+    category: spike_tests
+    name: TLS Session Reuse Ratio Spike
+    description: Verify TLS session reuse during spike
+    priority: low
+    expected_result: High TLS session reuse
+  - id: LOAD-194
+    category: spike_tests
+    name: DNS Cache Reuse Spike
+    description: Verify k6 DNS caching during spike
+    priority: low
+    expected_result: DNS cache active
+  - id: LOAD-195
+    category: spike_tests
+    name: Abort Threshold Safeguard Spike
+    description: Verify abort trigger if error rate > 30%
+    priority: high
+    expected_result: Safeguard functional
+  - id: LOAD-196
+    category: spike_tests
+    name: HTTP Method POST Spike
+    description: Verify POST endpoints under surge
+    priority: medium
+    expected_result: POST endpoints handle surge
+  - id: LOAD-197
+    category: spike_tests
+    name: HTTP Method GET Spike
+    description: Verify GET endpoints under surge
+    priority: medium
+    expected_result: GET endpoints handle surge
+  - id: LOAD-198
+    category: spike_tests
+    name: HTTP Method PUT Spike
+    description: Verify PUT endpoints under surge
+    priority: low
+    expected_result: PUT endpoints handle surge
+  - id: LOAD-199
+    category: spike_tests
+    name: HTTP Method DELETE Spike
+    description: Verify DELETE endpoints under surge
+    priority: low
+    expected_result: DELETE endpoints handle surge
+  - id: LOAD-200
+    category: spike_tests
+    name: Final Summary Console Format Spike
+    description: Verify concise console status output
+    priority: high
+    expected_result: Concise summary printed
+
+  # Soak Tests (LOAD-201 to LOAD-250)
+  - id: LOAD-201
+    category: soak_tests
+    name: Extended Endurance Soak Scenario (15 VUs, 1 Hour)
+    description: Verify system stability under 15 VUs over an extended 1 hour duration
+    priority: critical
+    expected_result: Zero memory leaks or performance degradation over 1 hour
+  - id: LOAD-202
+    category: soak_tests
+    name: Memory Leak Detection Over Time
+    description: Verify process memory heap remains flat throughout soak run
+    priority: critical
+    expected_result: Heap memory utilization remains bounded
+  - id: LOAD-203
+    category: soak_tests
+    name: Database Connection Leak Detection
+    description: Verify open database handles are returned to pool
+    priority: high
+    expected_result: Zero DB connection leaks
+  - id: LOAD-204
+    category: soak_tests
+    name: Open File Descriptor Leak Detection
+    description: Verify OS file handles stay constant during soak test
+    priority: high
+    expected_result: File handles stay constant
+  - id: LOAD-205
+    category: soak_tests
+    name: Socket Leak Detection
+    description: Verify socket connections closed cleanly over time
+    priority: high
+    expected_result: Zero unclosed socket leaks
+  - id: LOAD-206
+    category: soak_tests
+    name: Response Time Drift Over Time
+    description: Verify p(95) latency does not drift upwards over duration
+    priority: high
+    expected_result: Latency remains flat across all 15-minute segments
+  - id: LOAD-207
+    category: soak_tests
+    name: Error Rate Consistency Over Time
+    description: Verify error rate stays < 0.5% throughout soak run
+    priority: high
+    expected_result: Error rate remains < 0.5%
+  - id: LOAD-208
+    category: soak_tests
+    name: Garbage Collection Pause Duration Drift
+    description: Verify GC pause times do not increase over time
+    priority: medium
+    expected_result: GC pauses remain low
+  - id: LOAD-209
+    category: soak_tests
+    name: Firestore Read Quota Endurance
+    description: Verify quota management over extended operation
+    priority: medium
+    expected_result: Quota bounds respected
+  - id: LOAD-210
+    category: soak_tests
+    name: Firestore Write Quota Endurance
+    description: Verify write quota bounds over time
+    priority: medium
+    expected_result: Quota bounds respected
+  - id: LOAD-211
+    category: soak_tests
+    name: Audius API Proxy Endurance
+    description: Verify proxy stability over extended period
+    priority: low
+    expected_result: Proxy functional
+  - id: LOAD-212
+    category: soak_tests
+    name: Spotify Token Refresh Cycle Endurance
+    description: Verify periodic token refresh execution every 50 minutes
+    priority: medium
+    expected_result: Tokens refreshed seamlessly
+  - id: LOAD-213
+    category: soak_tests
+    name: Session Token Cleanup Endurance
+    description: Verify expired session tokens purged from DB/cache
+    priority: medium
+    expected_result: Expired tokens purged
+  - id: LOAD-214
+    category: soak_tests
+    name: Temporary File Cleanup Endurance
+    description: Verify temp WAV audio files purged from storage
+    priority: medium
+    expected_result: Temp files cleaned
+  - id: LOAD-215
+    category: soak_tests
+    name: Log File Rotation Endurance
+    description: Verify server log rotation handles long runs without disk full
+    priority: medium
+    expected_result: Logs rotated cleanly
+  - id: LOAD-216
+    category: soak_tests
+    name: Soak Profile Selection
+    description: Verify workflow dispatch input 'soak' selects soak profile
+    priority: high
+    expected_result: Soak profile active
+  - id: LOAD-217
+    category: soak_tests
+    name: Soak Test Manual Trigger Enforcement
+    description: Verify soak test requires manual workflow_dispatch
+    priority: critical
+    expected_result: Manual trigger enforced
+  - id: LOAD-218
+    category: soak_tests
+    name: Soak Test 15 VU Configuration
+    description: Verify 15 VUs configured for soak profile
+    priority: low
+    expected_result: 15 VUs active
+  - id: LOAD-219
+    category: soak_tests
+    name: Soak Test Ramp Up 2 Minutes
+    description: Verify 2 minute gradual ramp up to 15 VUs
+    priority: low
+    expected_result: Ramp up completed
+  - id: LOAD-220
+    category: soak_tests
+    name: Soak Test Hold 56 Minutes
+    description: Verify 56 minute steady hold stage
+    priority: low
+    expected_result: Hold stage completed
+  - id: LOAD-221
+    category: soak_tests
+    name: Soak Test Ramp Down 2 Minutes
+    description: Verify 2 minute gradual ramp down to 0 VUs
+    priority: low
+    expected_result: Ramp down completed
+  - id: LOAD-222
+    category: soak_tests
+    name: Continuous User Registration Flow Soak
+    description: Verify periodic user signups during soak test
+    priority: low
+    expected_result: Signups succeed
+  - id: LOAD-223
+    category: soak_tests
+    name: Continuous Search Query Execution Soak
+    description: Verify search execution over 1 hour
+    priority: low
+    expected_result: Searches succeed
+  - id: LOAD-224
+    category: soak_tests
+    name: Continuous Mood Session Logging Soak
+    description: Verify mood logging over 1 hour
+    priority: low
+    expected_result: Sessions logged
+  - id: LOAD-225
+    category: soak_tests
+    name: Continuous Journal Entry Writing Soak
+    description: Verify journal writes over 1 hour
+    priority: low
+    expected_result: Journal entries written
+  - id: LOAD-226
+    category: soak_tests
+    name: Continuous Playlist Creation Soak
+    description: Verify playlist creation over 1 hour
+    priority: low
+    expected_result: Playlists created
+  - id: LOAD-227
+    category: soak_tests
+    name: Continuous Audio Chunk Range Stream Soak
+    description: Verify audio chunk range requests over 1 hour
+    priority: medium
+    expected_result: Audio streams sustained
+  - id: LOAD-228
+    category: soak_tests
+    name: CPU Temperature / Thermal Throttling Check
+    description: Verify server CPU thermal stability
+    priority: low
+    expected_result: Thermal stability maintained
+  - id: LOAD-229
+    category: soak_tests
+    name: Redis Memory Frag Ratio Check
+    description: Verify Redis memory fragmentation ratio < 1.5
+    priority: low
+    expected_result: Low fragmentation
+  - id: LOAD-230
+    category: soak_tests
+    name: Database Index Health Check
+    description: Verify database index performance stays optimal
+    priority: medium
+    expected_result: Index lookups fast
+  - id: LOAD-231
+    category: soak_tests
+    name: HTTP Keep-Alive Pool Stability
+    description: Verify HTTP connection pool handles long duration
+    priority: low
+    expected_result: Connection pool stable
+  - id: LOAD-232
+    category: soak_tests
+    name: TLS Cache Retention
+    description: Verify TLS session cache retention over time
+    priority: low
+    expected_result: TLS session cache effective
+  - id: LOAD-233
+    category: soak_tests
+    name: k6 Runner Memory Stability
+    description: Verify k6 runner process memory flat over 1 hour
+    priority: medium
+    expected_result: k6 runner memory flat
+  - id: LOAD-234
+    category: soak_tests
+    name: k6 Summary Report Aggregation
+    description: Verify metric aggregation across full 1 hour dataset
+    priority: medium
+    expected_result: Aggregated metrics generated
+  - id: LOAD-235
+    category: soak_tests
+    name: Step Summary Soak Test Performance Table
+    description: Verify step summary table for soak test
+    priority: medium
+    expected_result: Summary table posted
+  - id: LOAD-236
+    category: soak_tests
+    name: Soak Artifact Upload Verification
+    description: Verify k6 JSON/HTML artifacts uploaded
+    priority: medium
+    expected_result: Artifacts uploaded
+  - id: LOAD-237
+    category: soak_tests
+    name: Post Soak Backend Health Probe
+    description: Verify health check passes post soak run
+    priority: critical
+    expected_result: Health check passes
+  - id: LOAD-238
+    category: soak_tests
+    name: Non-Production Environment Target Check
+    description: Verify test targets non-prod system
+    priority: critical
+    expected_result: Non-prod target
+  - id: LOAD-239
+    category: soak_tests
+    name: Soak Test Abort Threshold
+    description: Verify abort trigger if error rate > 10%
+    priority: high
+    expected_result: Safeguard functional
+  - id: LOAD-240
+    category: soak_tests
+    name: 0 Retries Enforced Soak Test
+    description: Verify zero retries on soak test
+    priority: medium
+    expected_result: 0 retries
+  - id: LOAD-241
+    category: soak_tests
+    name: HTTP 200 Rate Maintenance
+    description: Verify > 99.5% HTTP 200 response rate
+    priority: high
+    expected_result: "Greater than 99.5% 200 status"
+  - id: LOAD-242
+    category: soak_tests
+    name: Data Received Rate Consistency
+    description: Verify steady data_received rate over time
+    priority: low
+    expected_result: Steady data rate
+  - id: LOAD-243
+    category: soak_tests
+    name: Data Sent Rate Consistency
+    description: Verify steady data_sent rate over time
+    priority: low
+    expected_result: Steady data rate
+  - id: LOAD-244
+    category: soak_tests
+    name: Request Count Metric Aggregation
+    description: Verify total http_reqs metric count
+    priority: low
+    expected_result: Metric count recorded
+  - id: LOAD-245
+    category: soak_tests
+    name: Custom Threshold 'http_req_duration' P95
+    description: Verify p(95) < 500ms across 1 hour run
+    priority: high
+    expected_result: Threshold met
+  - id: LOAD-246
+    category: soak_tests
+    name: Custom Threshold 'http_req_failed' Rate
+    description: Verify failed rate < 0.005 across 1 hour run
+    priority: high
+    expected_result: Threshold met
+  - id: LOAD-247
+    category: soak_tests
+    name: Console Output Formatting Soak
+    description: Verify concise console logging during 1 hour run
+    priority: low
+    expected_result: Minimal console output
+  - id: LOAD-248
+    category: soak_tests
+    name: Soak Stage Tracking Tags
+    description: Verify metrics tagged with stage names
+    priority: low
+    expected_result: Metrics tagged
+  - id: LOAD-249
+    category: soak_tests
+    name: Soak Test Completion Notification
+    description: Verify completion notice on step summary
+    priority: low
+    expected_result: Notice posted
+  - id: LOAD-250
+    category: soak_tests
+    name: Final Summary Status Soak
+    description: Verify concise status summary printed
+    priority: high
+    expected_result: Status printed
+
+  # API Performance (LOAD-251 to LOAD-300)
+  - id: LOAD-251
+    category: api_performance
+    name: Audius API Search Performance Benchmark
+    description: Verify Audius API search endpoint latency benchmark (< 300ms)
+    priority: high
+    expected_result: Latency < 300ms
+  - id: LOAD-252
+    category: api_performance
+    name: Audius API Trending Tracks Benchmark
+    description: Verify Audius trending API response time (< 250ms)
+    priority: high
+    expected_result: Latency < 250ms
+  - id: LOAD-253
+    category: api_performance
+    name: Audius API Track Stream Redirect Benchmark
+    description: Verify stream redirect URL resolution latency (< 200ms)
+    priority: medium
+    expected_result: Latency < 200ms
+  - id: LOAD-254
+    category: api_performance
+    name: Spotify OAuth Authorize URL Generation Benchmark
+    description: Verify PKCE authorize URL construction benchmark (< 10ms)
+    priority: medium
+    expected_result: URL constructed in < 10ms
+  - id: LOAD-255
+    category: api_performance
+    name: Spotify OAuth Token Exchange API Benchmark
+    description: Verify Spotify token exchange API response time (< 350ms)
+    priority: high
+    expected_result: Token returned in < 350ms
+  - id: LOAD-256
+    category: api_performance
+    name: Spotify User Profile API Benchmark
+    description: Verify Spotify /v1/me endpoint latency (< 250ms)
+    priority: medium
+    expected_result: Profile returned in < 250ms
+  - id: LOAD-257
+    category: api_performance
+    name: Firebase Auth SignIn With Email Benchmark
+    description: Verify Firebase authentication REST latency (< 400ms)
+    priority: critical
+    expected_result: Auth token issued in < 400ms
+  - id: LOAD-258
+    category: api_performance
+    name: Firebase Auth SignUp With Email Benchmark
+    description: Verify Firebase account creation REST latency (< 500ms)
+    priority: critical
+    expected_result: Account created in < 500ms
+  - id: LOAD-259
+    category: api_performance
+    name: Firebase Auth Password Reset Email Benchmark
+    description: Verify password reset API latency (< 450ms)
+    priority: medium
+    expected_result: Email triggered in < 450ms
+  - id: LOAD-260
+    category: api_performance
+    name: Firestore Read Document Benchmark
+    description: Verify single document read latency (< 150ms)
+    priority: high
+    expected_result: Document returned in < 150ms
+  - id: LOAD-261
+    category: api_performance
+    name: Firestore Write Document Benchmark
+    description: Verify single document set/merge latency (< 200ms)
+    priority: high
+    expected_result: Document written in < 200ms
+  - id: LOAD-262
+    category: api_performance
+    name: Firestore Query Collection Benchmark
+    description: Verify filtered collection query latency (< 250ms)
+    priority: medium
+    expected_result: Query documents returned in < 250ms
+  - id: LOAD-263
+    category: api_performance
+    name: Mood Recommendation Algorithm Latency
+    description: Verify local mood filtering algorithm execution time (< 15ms)
+    priority: medium
+    expected_result: Filtering completes in < 15ms
+  - id: LOAD-264
+    category: api_performance
+    name: Demo Audio PCM WAV Generator Latency
+    description: Verify DemoAudio.write 32s WAV synthesis duration (< 100ms)
+    priority: high
+    expected_result: WAV file generated in < 100ms
+  - id: LOAD-265
+    category: api_performance
+    name: Local Preference JSON Serializer Latency
+    description: Verify state JSON serialization time (< 10ms)
+    priority: low
+    expected_result: JSON string created in < 10ms
+  - id: LOAD-266
+    category: api_performance
+    name: Local Preference JSON Deserializer Latency
+    description: Verify state JSON parsing time (< 15ms)
+    priority: low
+    expected_result: State object created in < 15ms
+  - id: LOAD-267
+    category: api_performance
+    name: Search Query Keyword Matcher Latency
+    description: Verify 300-item song catalog filter time (< 5ms)
+    priority: low
+    expected_result: Matcher returns in < 5ms
+  - id: LOAD-268
+    category: api_performance
+    name: API Profile Execution Trigger
+    description: Verify workflow dispatch input 'api' selects API profile
+    priority: high
+    expected_result: API profile active
+  - id: LOAD-269
+    category: api_performance
+    name: API Profile 10 VUs Load
+    description: Verify 10 VUs for API benchmark profile
+    priority: medium
+    expected_result: 10 VUs active
+  - id: LOAD-270
+    category: api_performance
+    name: API Benchmark Duration 1 Minute
+    description: Verify 1 minute execution duration
+    priority: low
+    expected_result: 1 minute run completed
+  - id: LOAD-271
+    category: api_performance
+    name: API Benchmark Threshold 'http_req_failed' < 0.005
+    description: Verify error rate threshold < 0.5%
+    priority: high
+    expected_result: Threshold met
+  - id: LOAD-272
+    category: api_performance
+    name: API Benchmark Threshold 'http_req_duration' P95 < 300ms
+    description: Verify strict 300ms p(95) threshold
+    priority: high
+    expected_result: Threshold met
+  - id: LOAD-273
+    category: api_performance
+    name: API Benchmark Threshold 'http_req_duration' P99 < 600ms
+    description: Verify strict 600ms p(99) threshold
+    priority: medium
+    expected_result: Threshold met
+  - id: LOAD-274
+    category: api_performance
+    name: API Benchmark TTFB Threshold P95 < 200ms
+    description: Verify TTFB threshold < 200ms
+    priority: medium
+    expected_result: Threshold met
+  - id: LOAD-275
+    category: api_performance
+    name: Audius API Host Fallback Benchmark
+    description: Verify resolving backup Audius API host if primary slow
+    priority: medium
+    expected_result: Backup host resolved in < 300ms
+  - id: LOAD-276
+    category: api_performance
+    name: Spotify Refresh Token Grant Benchmark
+    description: Verify grant_type=refresh_token API latency (< 250ms)
+    priority: medium
+    expected_result: New token returned in < 250ms
+  - id: LOAD-277
+    category: api_performance
+    name: Firebase Firestore Document Batch Write Benchmark
+    description: Verify batch write latency (< 350ms)
+    priority: medium
+    expected_result: Batch committed in < 350ms
+  - id: LOAD-278
+    category: api_performance
+    name: Local SharedPrefs Read Benchmark
+    description: Verify key lookup latency (< 2ms)
+    priority: low
+    expected_result: Key returned in < 2ms
+  - id: LOAD-279
+    category: api_performance
+    name: Local SharedPrefs Write Benchmark
+    description: Verify apply() write commit latency (< 5ms)
+    priority: low
+    expected_result: Write committed in < 5ms
+  - id: LOAD-280
+    category: api_performance
+    name: Media3 ExoPlayer Audio Attribute Build Benchmark
+    description: Verify ExoPlayer AudioAttributes builder latency (< 1ms)
+    priority: low
+    expected_result: Builder returns in < 1ms
+  - id: LOAD-281
+    category: api_performance
+    name: Media3 MediaItem Metadata Construction Benchmark
+    description: Verify MediaItem construction latency (< 2ms)
+    priority: low
+    expected_result: MediaItem created in < 2ms
+  - id: LOAD-282
+    category: api_performance
+    name: Jetpack Compose Recomposition Rate Metric
+    description: Verify zero unnecessary recompositions during state update
+    priority: medium
+    expected_result: Single recomposition frame
+  - id: LOAD-283
+    category: api_performance
+    name: API Payload Size Response Inspection
+    description: Verify API response size < 50KB for track searches
+    priority: low
+    expected_result: Payload size < 50KB
+  - id: LOAD-284
+    category: api_performance
+    name: API Gzip Compression Savings Metric
+    description: "Verify gzip compression saves over 60% bandwidth"
+    priority: low
+    expected_result: "Compression ratio greater than 60%"
+  - id: LOAD-285
+    category: api_performance
+    name: API HTTP 304 Cache Validation Efficiency
+    description: Verify 304 response payload size < 1KB
+    priority: low
+    expected_result: Payload size < 1KB
+  - id: LOAD-286
+    category: api_performance
+    name: API JSON Parser Throughput Metric
+    description: "Verify JSON parsing rate over 10000 objects/sec"
+    priority: low
+    expected_result: Throughput target met
+  - id: LOAD-287
+    category: api_performance
+    name: API Connection Pool Re-use Efficiency Metric
+    description: "Verify high HTTP connection reuse rate"
+    priority: low
+    expected_result: "Connection reuse rate over 95%"
+  - id: LOAD-288
+    category: api_performance
+    name: API Response Header Overhead Metric
+    description: Verify HTTP headers size < 1KB
+    priority: low
+    expected_result: Header size < 1KB
+  - id: LOAD-289
+    category: api_performance
+    name: API Benchmark JSON Report Generation
+    description: Verify k6 JSON summary generated for API profile
+    priority: medium
+    expected_result: JSON report generated
+  - id: LOAD-290
+    category: api_performance
+    name: API Benchmark HTML Report Generation
+    description: Verify k6 HTML summary generated for API profile
+    priority: medium
+    expected_result: HTML report generated
+  - id: LOAD-291
+    category: api_performance
+    name: API Benchmark Artifact Upload
+    description: Verify k6-test-results artifact uploaded
+    priority: medium
+    expected_result: Artifact uploaded
+  - id: LOAD-292
+    category: api_performance
+    name: Step Summary API Benchmark Table
+    description: Verify step summary table posted
+    priority: medium
+    expected_result: Summary table posted
+  - id: LOAD-293
+    category: api_performance
+    name: API Benchmark Retry 0 Enforced
+    description: Verify 0 retries on API benchmark
+    priority: low
+    expected_result: 0 retries
+  - id: LOAD-294
+    category: api_performance
+    name: API Benchmark Target Non-Prod URL
+    description: Verify test targets non-production URL
+    priority: critical
+    expected_result: Non-prod URL targeted
+  - id: LOAD-295
+    category: api_performance
+    name: API Benchmark Auth Header Sanitization
+    description: Verify authorization headers masked in reports
+    priority: critical
+    expected_result: Auth headers masked
+  - id: LOAD-296
+    category: api_performance
+    name: k6 Virtual User Iteration Rate
+    description: Verify iterations/sec rate metric recorded
+    priority: low
+    expected_result: Iteration rate logged
+  - id: LOAD-297
+    category: api_performance
+    name: k6 Virtual User Sleep Interval
+    description: Verify 500ms pacing delay between API calls
+    priority: low
+    expected_result: 500ms delay enforced
+  - id: LOAD-298
+    category: api_performance
+    name: Post Benchmark System Health Check
+    description: Verify health check passes post API benchmark
+    priority: critical
+    expected_result: Health check passes
+  - id: LOAD-299
+    category: api_performance
+    name: API Benchmark Completion Time
+    description: Verify test completes within 1 minute 15 seconds total
+    priority: low
+    expected_result: Execution time < 75s
+  - id: LOAD-300
+    category: api_performance
+    name: Final API Benchmark Status Summary
+    description: Verify final status output printed to console
+    priority: high
+    expected_result: Status printed

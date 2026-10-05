@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.App" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">#071D29</item>
+        <item name="android:statusBarColor">#071D29</item>
+        <item name="android:navigationBarColor">#071D29</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowSplashScreenBackground">#071D29</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/moodtunes_logo</item>
+    </style>
+</resources>

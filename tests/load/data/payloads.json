@@ -1,0 +1,8 @@
+{
+  "test_user": {
+    "email": "loadtest@moodtunes.app",
+    "password": "LoadTestPass123!"
+  },
+  "search_keywords": ["Telugu", "Calm", "Vennela", "Melody", "Rock"],
+  "moods": ["Happy", "Sad", "Calm", "Angry", "Stressed", "Energetic", "Tired", "Neutral"]
+}

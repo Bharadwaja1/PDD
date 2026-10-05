@@ -1,0 +1,14 @@
+{
+  "name": "moodtunes-load-tests",
+  "version": "1.0.0",
+  "description": "k6 load testing suite for MoodTunes",
+  "main": "scenarios/k6_load_test.js",
+  "scripts": {
+    "test:smoke": "k6 run -e PROFILE=smoke scenarios/k6_load_test.js",
+    "test:load": "k6 run -e PROFILE=load scenarios/k6_load_test.js",
+    "test:stress": "k6 run -e PROFILE=stress scenarios/k6_load_test.js",
+    "test:spike": "k6 run -e PROFILE=spike scenarios/k6_load_test.js",
+    "test:soak": "k6 run -e PROFILE=soak scenarios/k6_load_test.js",
+    "test:api": "k6 run -e PROFILE=api scenarios/k6_load_test.js"
+  }
+}

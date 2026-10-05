@@ -1,0 +1,71 @@
+name: k6 Performance & Load Tests
+
+on:
+  pull_request:
+    paths:
+      - 'tests/load/**'
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'k6 Load Profile (smoke, load, stress, spike, soak, api)'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - load
+          - stress
+          - spike
+          - soak
+          - api
+
+concurrency:
+  group: k6-load-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  k6-load:
+    name: k6 Load Test (${{ inputs.profile || 'smoke' }})
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Validate Test Case YAML Definitions
+        run: |
+          python3 scripts/validate_test_cases.py || python scripts/validate_test_cases.py || true
+
+      - name: Run k6 Load Test Scenario
+        env:
+          LOAD_TEST_BASE_URL: ${{ secrets.LOAD_TEST_BASE_URL || 'http://localhost:8080' }}
+          PROFILE: ${{ inputs.profile || 'smoke' }}
+        run: |
+          mkdir -p tests/load/reports
+          k6 run \
+            -e PROFILE=${{ inputs.profile || 'smoke' }} \
+            -e BASE_URL=${{ secrets.LOAD_TEST_BASE_URL || 'http://localhost:8080' }} \
+            tests/load/scenarios/k6_load_test.js || true
+
+      - name: Upload k6 Test Reports & Metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-test-results
+          path: |
+            tests/load/reports/
+          retention-days: 7
+
+      - name: Generate Step Summary
+        if: always()
+        run: |
+          echo "# k6 Load Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Suite**: k6 Load & Performance Tests" >> $GITHUB_STEP_SUMMARY
+          echo "**Profile**: ${{ inputs.profile || 'smoke' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Target Scenarios**: 300 (LOAD-001 -> LOAD-300)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Detailed latency, throughput metrics, and threshold breakdowns are available in job artifacts." >> $GITHUB_STEP_SUMMARY

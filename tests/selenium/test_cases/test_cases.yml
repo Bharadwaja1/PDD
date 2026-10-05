@@ -1,0 +1,1820 @@
+test_cases:
+  # Authentication (SEL-001 to SEL-030)
+  - id: SEL-001
+    category: authentication
+    name: Valid User Login
+    description: Verify login with valid credentials opens the main dashboard
+    priority: critical
+    expected_result: Dashboard page is displayed with user avatar
+  - id: SEL-002
+    category: authentication
+    name: Invalid Password Login
+    description: Verify error message is shown when logging in with incorrect password
+    priority: high
+    expected_result: Error alert 'Login failed' is displayed
+  - id: SEL-003
+    category: authentication
+    name: Non-Existent User Login
+    description: Verify attempt to log in with unregistered email address
+    priority: high
+    expected_result: Appropriate authentication error is displayed
+  - id: SEL-004
+    category: authentication
+    name: Empty Credentials Submit
+    description: Verify submit button state when email and password fields are empty
+    priority: medium
+    expected_result: Validation message or disabled submit state
+  - id: SEL-005
+    category: authentication
+    name: Password Visibility Toggle
+    description: Verify show/hide password toggle button reveals password text
+    priority: medium
+    expected_result: Password input type switches between password and text
+  - id: SEL-006
+    category: authentication
+    name: User Signup Valid Flow
+    description: Verify new account registration with valid name email and matching passwords
+    priority: critical
+    expected_result: Account created and user logged in
+  - id: SEL-007
+    category: authentication
+    name: Signup Password Mismatch
+    description: Verify signup fails when confirm password does not match password
+    priority: high
+    expected_result: Validation error 'Passwords don’t match' is shown
+  - id: SEL-008
+    category: authentication
+    name: Signup Short Password
+    description: Verify signup validation for password shorter than 8 characters
+    priority: medium
+    expected_result: Validation error 'Use at least 8 characters' is shown
+  - id: SEL-009
+    category: authentication
+    name: Signup Invalid Email Format
+    description: Verify signup email validation against invalid format
+    priority: medium
+    expected_result: Validation error 'Enter a valid email address' is shown
+  - id: SEL-010
+    category: authentication
+    name: Password Reset Request
+    description: Verify forgot password trigger sends reset link to valid email
+    priority: high
+    expected_result: Success confirmation toast or alert is displayed
+  - id: SEL-011
+    category: authentication
+    name: Password Reset Blank Email
+    description: Verify forgot password attempt without entering email address
+    priority: low
+    expected_result: Error message prompt to enter email address
+  - id: SEL-012
+    category: authentication
+    name: Remember Me Checkbox Default
+    description: Verify state of Remember Me option on login form
+    priority: low
+    expected_result: Checkbox is checked by default
+  - id: SEL-013
+    category: authentication
+    name: Session Persistence Check
+    description: Verify returning user session auto-logs in when Remember Me was selected
+    priority: high
+    expected_result: User remains authenticated on page refresh
+  - id: SEL-014
+    category: authentication
+    name: User Logout Action
+    description: Verify logging out clears session and redirects to Auth page
+    priority: critical
+    expected_result: Login page is displayed upon logout
+  - id: SEL-015
+    category: authentication
+    name: Splash Page Transition
+    description: Verify splash screen auto-advances to home or login after delay
+    priority: medium
+    expected_result: Transition from splash page occurs smoothly
+  - id: SEL-016
+    category: authentication
+    name: Signup Duplicate Email
+    description: Verify registration error when email is already registered
+    priority: high
+    expected_result: Error message indicating account already exists
+  - id: SEL-017
+    category: authentication
+    name: Email Leading Trailing Whitespace
+    description: Verify login trims whitespace from email input
+    priority: medium
+    expected_result: Login succeeds despite trailing spaces in email
+  - id: SEL-018
+    category: authentication
+    name: Auth Switch Between Login and Signup
+    description: Verify toggle link switches UI between login and signup modes
+    priority: low
+    expected_result: Form title changes dynamically between Welcome Back and Create Account
+  - id: SEL-019
+    category: authentication
+    name: Onboarding First Step Landing
+    description: Verify onboarding flow displays initial welcome message
+    priority: medium
+    expected_result: Onboarding step 1 of 6 is displayed
+  - id: SEL-020
+    category: authentication
+    name: Onboarding Language Selection
+    description: Verify selecting Telugu language in onboarding step 2
+    priority: medium
+    expected_result: Selected language option is highlighted
+  - id: SEL-021
+    category: authentication
+    name: Onboarding Genre Preference Selection
+    description: Verify selecting melody and chill genres in step 3
+    priority: medium
+    expected_result: Genres added to active preferences set
+  - id: SEL-022
+    category: authentication
+    name: Onboarding Artist Search Filter
+    description: Verify searching for MoodTunes Studio in onboarding artist list
+    priority: low
+    expected_result: Filtered artist list shows MoodTunes Studio
+  - id: SEL-023
+    category: authentication
+    name: Onboarding Goal Selection
+    description: Verify selecting Relax and Focus wellness goals in step 5
+    priority: low
+    expected_result: Wellness goals saved to user profile
+  - id: SEL-024
+    category: authentication
+    name: Onboarding Step Navigation Back
+    description: Verify Back button navigates to previous onboarding step
+    priority: low
+    expected_result: Step counter decrements appropriately
+  - id: SEL-025
+    category: authentication
+    name: Onboarding Completion Action
+    description: Verify completing onboarding opens Home page
+    priority: high
+    expected_result: User redirected to Home screen with personalized mix
+  - id: SEL-026
+    category: authentication
+    name: Auth Page Responsive Layout
+    description: Verify login form layout rendering on mobile viewport size
+    priority: low
+    expected_result: Glass surface card resizes without horizontal scroll
+  - id: SEL-027
+    category: authentication
+    name: Special Characters in Name
+    description: Verify full name field accepts Unicode and accented characters
+    priority: low
+    expected_result: Name saved correctly in profile
+  - id: SEL-028
+    category: authentication
+    name: Firebase Disconnected Indicator
+    description: Verify banner indication when Firebase configuration is absent
+    priority: medium
+    expected_result: Informational banner displayed regarding offline/demo mode
+  - id: SEL-029
+    category: authentication
+    name: Rapid Multiple Login Clicks
+    description: Verify submit button is disabled during active authentication request
+    priority: medium
+    expected_result: Button text changes to 'Connecting to Firebase...' and prevents duplicate submit
+  - id: SEL-030
+    category: authentication
+    name: Unauthenticated Direct Navigation
+    description: Verify direct navigation to protected route redirects to login
+    priority: high
+    expected_result: Auth page rendered for unauthenticated users
+
+  # Navigation (SEL-031 to SEL-060)
+  - id: SEL-031
+    category: navigation
+    name: Bottom Navigation Home Click
+    description: Verify clicking Home icon in navigation dock opens Home page
+    priority: critical
+    expected_result: Home page section rendered with greeting
+  - id: SEL-032
+    category: navigation
+    name: Bottom Navigation Liked Click
+    description: Verify clicking Liked icon in navigation dock opens Liked page
+    priority: high
+    expected_result: Liked Songs page rendered
+  - id: SEL-033
+    category: navigation
+    name: Bottom Navigation Search Click
+    description: Verify clicking Search icon opens Discover/Search page
+    priority: high
+    expected_result: Discover page rendered with search input
+  - id: SEL-034
+    category: navigation
+    name: Bottom Navigation History Click
+    description: Verify clicking History icon opens History page
+    priority: high
+    expected_result: Mood history page rendered with check-in statistics
+  - id: SEL-035
+    category: navigation
+    name: Header Brand Logo Home Link
+    description: Verify clicking brand logo in header navigates to Home
+    priority: medium
+    expected_result: Navigates to Home route
+  - id: SEL-036
+    category: navigation
+    name: Header Profile Avatar Click
+    description: Verify clicking profile avatar in header opens Profile page
+    priority: high
+    expected_result: Profile page rendered with user details
+  - id: SEL-037
+    category: navigation
+    name: Header Back Button Behavior
+    description: Verify back button in header appears on sub-pages and returns to Home
+    priority: medium
+    expected_result: Back chevron visible on sub-pages and returns to Home when clicked
+  - id: SEL-038
+    category: navigation
+    name: Navigation Dock Active Indicator
+    description: Verify active route is highlighted in navigation dock
+    priority: low
+    expected_result: Lime background bubble on active icon
+  - id: SEL-039
+    category: navigation
+    name: Hardware Back Button Navigation
+    description: Verify system back button pops current route stack
+    priority: medium
+    expected_result: Previous screen in navigation stack displayed
+  - id: SEL-040
+    category: navigation
+    name: MiniPlayer Click Opens Full Player
+    description: Verify clicking mini-player bar opens full screen Player page
+    priority: high
+    expected_result: Player page rendered with album artwork and controls
+  - id: SEL-041
+    category: navigation
+    name: Deep Link Route Resolution
+    description: Verify app route handles internal deep link route parameters
+    priority: low
+    expected_result: Targeted screen loaded directly
+  - id: SEL-042
+    category: navigation
+    name: Open Wellness Page
+    description: Verify navigation to Wellness section from Home cards
+    priority: medium
+    expected_result: Wellness page rendered with breathing prompt
+  - id: SEL-043
+    category: navigation
+    name: Open Breathing Exercise Route
+    description: Verify Start Breathing button opens Breathing page
+    priority: medium
+    expected_result: Interactive breathing animation displayed
+  - id: SEL-044
+    category: navigation
+    name: Open Mood Journal Route
+    description: Verify Write Journal button opens Journal page
+    priority: medium
+    expected_result: Journal text input area displayed
+  - id: SEL-045
+    category: navigation
+    name: Open Library Route
+    description: Verify View Library action opens Library page
+    priority: high
+    expected_result: Library tabs for playlists, liked songs, and recent items shown
+  - id: SEL-046
+    category: navigation
+    name: Open Notifications Page
+    description: Verify opening updates/notifications route
+    priority: low
+    expected_result: Empty state updates page rendered
+  - id: SEL-047
+    category: navigation
+    name: Open Settings Page
+    description: Verify navigating to Settings opens profile and preferences
+    priority: medium
+    expected_result: Settings section rendered
+  - id: SEL-048
+    category: navigation
+    name: Open Playlist Detail Route
+    description: Verify clicking playlist card opens Playlist detail page
+    priority: high
+    expected_result: Playlist page rendered with track listing
+  - id: SEL-049
+    category: navigation
+    name: Navigation Scroll Position Retained
+    description: Verify returning to Home restores previous vertical scroll position
+    priority: low
+    expected_result: Page scroll offset preserved
+  - id: SEL-050
+    category: navigation
+    name: Smooth Route Crossfade
+    description: Verify screen transition animation occurs without layout flash
+    priority: low
+    expected_result: Content switches smoothly
+  - id: SEL-051
+    category: navigation
+    name: Navigate to Mood Playlist from Mood Card
+    description: Verify clicking mood card navigates to mood playlist screen
+    priority: high
+    expected_result: Mood Playlist page displayed with filtered tracks
+  - id: SEL-052
+    category: navigation
+    name: Navigation Dock Label Visibility
+    description: Verify labels are displayed under navigation icons
+    priority: low
+    expected_result: Text labels Home, Liked, Search, History are visible
+  - id: SEL-053
+    category: navigation
+    name: Header Title Text Verification
+    description: Verify brand title 'MoodTunes' is rendered in top header
+    priority: low
+    expected_result: Header contains text 'MoodTunes'
+  - id: SEL-054
+    category: navigation
+    name: Navigation to Non-Existent Route Fallback
+    description: Verify fallback to Home screen on invalid route state
+    priority: medium
+    expected_result: Home page rendered safely
+  - id: SEL-055
+    category: navigation
+    name: Rapid Multi-Tab Navigation
+    description: Verify rapid clicking across dock items handles route updates cleanly
+    priority: medium
+    expected_result: Last clicked tab is active without race conditions
+  - id: SEL-056
+    category: navigation
+    name: Player Screen Back Button
+    description: Verify back navigation from full player returns to previous page
+    priority: high
+    expected_result: Returns to previous active route
+  - id: SEL-057
+    category: navigation
+    name: Profile Page Back Navigation
+    description: Verify returning from Profile page to Home
+    priority: low
+    expected_result: Home page active
+  - id: SEL-058
+    category: navigation
+    name: Navigation Dock Hidden on Auth Page
+    description: Verify navigation dock is hidden on Splash and Login pages
+    priority: medium
+    expected_result: Navigation dock not rendered on auth screens
+  - id: SEL-059
+    category: navigation
+    name: Header Hidden on Splash Page
+    description: Verify header bar is suppressed on splash screen
+    priority: low
+    expected_result: Fullscreen splash without top header
+  - id: SEL-060
+    category: navigation
+    name: Navigation Accessibility Content Descriptions
+    description: Verify dock buttons have valid content descriptions
+    priority: low
+    expected_result: Screen readers identify dock buttons correctly
+
+  # Mood Engine (SEL-061 to SEL-090)
+  - id: SEL-061
+    category: mood_engine
+    name: Select Happy Mood
+    description: Verify selecting Happy mood updates store mood and background color
+    priority: critical
+    expected_result: Store mood updated to Happy with yellow color accent
+  - id: SEL-062
+    category: mood_engine
+    name: Select Calm Mood
+    description: Verify selecting Calm mood filters playlist queue for calm tracks
+    priority: high
+    expected_result: Queue contains tracks categorized under Calm
+  - id: SEL-063
+    category: mood_engine
+    name: Select Energetic Mood
+    description: Verify selecting Energetic mood updates current mix
+    priority: high
+    expected_result: Energetic playlist active
+  - id: SEL-064
+    category: mood_engine
+    name: Select Sad Mood
+    description: Verify selecting Sad mood updates atmosphere theme
+    priority: medium
+    expected_result: Sad mood color accent applied
+  - id: SEL-065
+    category: mood_engine
+    name: Select Angry Mood
+    description: Verify selecting Angry mood sets red color scheme
+    priority: medium
+    expected_result: Angry mood selected
+  - id: SEL-066
+    category: mood_engine
+    name: Select Stressed Mood
+    description: Verify selecting Stressed mood sets purple color accent
+    priority: medium
+    expected_result: Stressed mood selected
+  - id: SEL-067
+    category: mood_engine
+    name: Select Tired Mood
+    description: Verify selecting Tired mood filters appropriate tracks
+    priority: medium
+    expected_result: Tired mood active
+  - id: SEL-068
+    category: mood_engine
+    name: Select Neutral Mood
+    description: Verify selecting Neutral mood updates playlist selection
+    priority: medium
+    expected_result: Neutral mood active
+  - id: SEL-069
+    category: mood_engine
+    name: Mood Grid Card Touch Response
+    description: Verify clicking mood grid item selects mood and opens mood playlist
+    priority: high
+    expected_result: Route changes to Mood Playlist
+  - id: SEL-070
+    category: mood_engine
+    name: Active Mood Check-in Session Start
+    description: Verify selecting new mood initializes a new mood session ID
+    priority: high
+    expected_result: Active session ID created in store
+  - id: SEL-071
+    category: mood_engine
+    name: Mood Session Track Tracking
+    description: Verify playing songs during session records song IDs into session history
+    priority: medium
+    expected_result: Played track ID added to active session object
+  - id: SEL-072
+    category: mood_engine
+    name: End Mood Session Dialog Open
+    description: Verify End Session button opens check-in feedback dialog
+    priority: high
+    expected_result: Feedback dialog modal appears with feeling options
+  - id: SEL-073
+    category: mood_engine
+    name: Submit Mood Feedback Session
+    description: Verify completing mood feedback saves session to history
+    priority: high
+    expected_result: Session saved with initial and final mood rating
+  - id: SEL-074
+    category: mood_engine
+    name: Mood Feedback Cancel/Keep Listening
+    description: Verify Keep Listening button dismisses feedback modal without closing session
+    priority: low
+    expected_result: Feedback dialog closes and music continues playing
+  - id: SEL-075
+    category: mood_engine
+    name: Mood Change Reason Selection
+    description: Verify selecting reason 'Not matching my mood' excludes track from current mix
+    priority: medium
+    expected_result: Current track added to excluded set and next track plays
+  - id: SEL-076
+    category: mood_engine
+    name: Mood Change Reason 'Don’t like this song'
+    description: Verify excluding song skips to next item in queue
+    priority: low
+    expected_result: Next track selected automatically
+  - id: SEL-077
+    category: mood_engine
+    name: Mood History Counter Increment
+    description: Verify total check-ins counter increments on completed session
+    priority: medium
+    expected_result: History stats show updated check-in count
+  - id: SEL-078
+    category: mood_engine
+    name: Most Selected Mood Stat Computation
+    description: Verify History page identifies most frequent initial mood
+    priority: low
+    expected_result: Most selected mood displayed accurately
+  - id: SEL-079
+    category: mood_engine
+    name: Atmosphere Background Blur Layer
+    description: Verify radial gradient overlay changes according to selected mood
+    priority: low
+    expected_result: Gradient offset matches mood color
+  - id: SEL-080
+    category: mood_engine
+    name: Mood Playlist Track Count Header
+    description: Verify track count label on Mood Playlist page
+    priority: low
+    expected_result: Correct count of demo tracks displayed
+  - id: SEL-081
+    category: mood_engine
+    name: Language Filtering in Mood Queue
+    description: Verify mood queue ranks tracks matching user preferred languages first
+    priority: medium
+    expected_result: Preferred language songs ordered at top of queue
+  - id: SEL-082
+    category: mood_engine
+    name: Excluded Songs Clearing on Mood Switch
+    description: Verify changing mood resets excluded songs set
+    priority: low
+    expected_result: Excluded list cleared for new mood
+  - id: SEL-083
+    category: mood_engine
+    name: Mood Grid Selected Highlight
+    description: Verify active mood card has border and background tint
+    priority: low
+    expected_result: Active card visually distinct
+  - id: SEL-084
+    category: mood_engine
+    name: Unsaved Session Auto-Finalize on App Close
+    description: Verify closing app or logging out auto-finalizes pending mood session
+    priority: medium
+    expected_result: Session marked as completed/not recorded
+  - id: SEL-085
+    category: mood_engine
+    name: Mood Mix Empty Fallback
+    description: Verify fallback queue selection if no tracks match specific mood
+    priority: low
+    expected_result: All catalog tracks fallback loaded
+  - id: SEL-086
+    category: mood_engine
+    name: Home Screen Calm Mix Quick Action
+    description: Verify 'Your calm mix' card on Home selects Calm mood
+    priority: medium
+    expected_result: Calm mood selected and playlist opened
+  - id: SEL-087
+    category: mood_engine
+    name: Feedback Dialog Rating Options
+    description: Verify rating choices Very Low, Low, Neutral, Better, Great
+    priority: low
+    expected_result: Single selection choice grid functional
+  - id: SEL-088
+    category: mood_engine
+    name: Feedback Dialog Helpful Toggle
+    description: Verify Yes/No chips for 'Did this music help?'
+    priority: low
+    expected_result: Helpful boolean state saved
+  - id: SEL-089
+    category: mood_engine
+    name: Mood History Entry Detail Rendering
+    description: Verify initial -> final mood progression displayed in history card
+    priority: low
+    expected_result: Text shows progression e.g. 'Calm -> Great'
+  - id: SEL-090
+    category: mood_engine
+    name: Session Timestamp Formatting
+    description: Verify session timestamp renders in readable date time format
+    priority: low
+    expected_result: Formatted string like '02 Oct, 8:30 PM'
+
+  # Music Player (SEL-091 to SEL-120)
+  - id: SEL-091
+    category: music_player
+    name: Play Track Action
+    description: Verify clicking play button on track row starts playback
+    priority: critical
+    expected_result: Playing state becomes true and progress bar activates
+  - id: SEL-092
+    category: music_player
+    name: Pause Track Action
+    description: Verify clicking pause button pauses audio playback
+    priority: critical
+    expected_result: Playing state becomes false
+  - id: SEL-093
+    category: music_player
+    name: Toggle Play/Pause Shortcut
+    description: Verify spacebar or central play button toggles play and pause
+    priority: high
+    expected_result: Playback state toggles predictably
+  - id: SEL-094
+    category: music_player
+    name: Skip Next Track
+    description: Verify clicking skip next advances to subsequent track in queue
+    priority: high
+    expected_result: Current song updates to next queue item
+  - id: SEL-095
+    category: music_player
+    name: Skip Previous Track
+    description: Verify clicking skip previous returns to preceding track in queue
+    priority: high
+    expected_result: Current song updates to previous queue item
+  - id: SEL-096
+    category: music_player
+    name: Seek Position Slider
+    description: Verify dragging seek slider updates playback position
+    priority: medium
+    expected_result: Current position time updates accordingly
+  - id: SEL-097
+    category: music_player
+    name: Volume Slider Adjustment
+    description: Verify adjusting volume slider updates audio output level
+    priority: medium
+    expected_result: Volume state updated between 0.0 and 1.0
+  - id: SEL-098
+    category: music_player
+    name: Mute/Unmute Toggle
+    description: Verify clicking volume icon toggles volume between mute and previous level
+    priority: low
+    expected_result: Volume toggles to 0% and restores on unmute
+  - id: SEL-099
+    category: music_player
+    name: Toggle Shuffle Mode
+    description: Verify enabling shuffle randomizes next track selection
+    priority: medium
+    expected_result: Shuffle icon highlighted and queue randomization active
+  - id: SEL-100
+    category: music_player
+    name: Toggle Repeat Mode
+    description: Verify enabling repeat sets player repeat mode to ONE
+    priority: medium
+    expected_result: Repeat icon highlighted and single track repeats
+  - id: SEL-101
+    category: music_player
+    name: Like Song Action in Player
+    description: Verify clicking heart icon adds current song to liked songs
+    priority: high
+    expected_result: Song ID added to liked set and heart icon turns solid Lime
+  - id: SEL-102
+    category: music_player
+    name: Unlike Song Action in Player
+    description: Verify clicking solid heart removes song from liked set
+    priority: high
+    expected_result: Song ID removed from liked set
+  - id: SEL-103
+    category: music_player
+    name: Open Up Next Queue Modal
+    description: Verify queue button on Player screen opens Up Next dialog
+    priority: medium
+    expected_result: Up Next modal list rendered
+  - id: SEL-104
+    category: music_player
+    name: Select Song from Up Next Modal
+    description: Verify clicking song in Up Next list switches active track
+    priority: medium
+    expected_result: Selected track starts playing
+  - id: SEL-105
+    category: music_player
+    name: MiniPlayer Title and Artist Display
+    description: Verify mini-player displays title and artist of active track
+    priority: medium
+    expected_result: Correct song metadata shown on mini-player
+  - id: SEL-106
+    category: music_player
+    name: MiniPlayer Progress Line
+    description: Verify thin progress indicator on mini-player reflects playback percentage
+    priority: low
+    expected_result: Progress line fills proportional to elapsed time
+  - id: SEL-107
+    category: music_player
+    name: MiniPlayer Controls
+    description: Verify prev, play/pause, next buttons on mini-player work without opening full player
+    priority: high
+    expected_result: Controls operate directly on mini-player
+  - id: SEL-108
+    category: music_player
+    name: Audio Waveform Canvas Rendering
+    description: Verify animated waveform bars render on full player page
+    priority: low
+    expected_result: Waveform visualizer active during playback
+  - id: SEL-109
+    category: music_player
+    name: Album Cover Vinyl Effect
+    description: Verify circular cover styling on player screen
+    priority: low
+    expected_result: Album art rendered with vinyl ring decoration
+  - id: SEL-110
+    category: music_player
+    name: Song Duration Clock Formatting
+    description: Verify mm:ss formatting for elapsed and total duration
+    priority: low
+    expected_result: Valid clock string such as '4:17'
+  - id: SEL-111
+    category: music_player
+    name: Listening Time Counter Increment
+    description: Verify listening seconds counter increments every second during playback
+    priority: medium
+    expected_result: Total listening seconds increased
+  - id: SEL-112
+    category: music_player
+    name: Recently Played Track Registration
+    description: Verify playing a song prepends song ID to recent tracks list
+    priority: medium
+    expected_result: Track added to recent history
+  - id: SEL-113
+    category: music_player
+    name: Media3 Service Connection State
+    description: Verify Media3 ExoPlayer service initializes without error
+    priority: critical
+    expected_result: MediaController connected successfully
+  - id: SEL-114
+    category: music_player
+    name: Add Track to Playlist Modal Launch
+    description: Verify Add to Playlist button on player opens playlist selection modal
+    priority: medium
+    expected_result: Add to playlist dialog displayed
+  - id: SEL-115
+    category: music_player
+    name: Add Track to Specific Playlist
+    description: Verify choosing playlist from modal adds track ID to that playlist
+    priority: high
+    expected_result: Song added to playlist ID list
+  - id: SEL-116
+    category: music_player
+    name: Play Track in Empty Queue Scenario
+    description: Verify playing individual song initializes single-track queue
+    priority: low
+    expected_result: Queue set to containing song
+  - id: SEL-117
+    category: music_player
+    name: Playback Error Dialog Trigger
+    description: Verify playback error displays user alert
+    priority: medium
+    expected_result: Error alert shown if audio resource unavailable
+  - id: SEL-118
+    category: music_player
+    name: Song Row Active Animation Indicator
+    description: Verify active song in list displays animated equalizer indicator '▂▆▃'
+    priority: low
+    expected_result: Equalizer text visible on currently playing song row
+  - id: SEL-119
+    category: music_player
+    name: Audio Focus Loss Handling
+    description: Verify player pauses on audio focus loss
+    priority: medium
+    expected_result: Playback state set to false
+  - id: SEL-120
+    category: music_player
+    name: No Track Selected Player State
+    description: Verify Player page state when no track has been selected yet
+    priority: low
+    expected_result: EmptyState prompt 'Nothing playing yet' displayed
+
+  # Discover & Search (SEL-121 to SEL-150)
+  - id: SEL-121
+    category: discover_search
+    name: Search Input Query Match
+    description: Verify typing search query filters tracks matching title or artist
+    priority: critical
+    expected_result: Matching song rows displayed in search results
+  - id: SEL-122
+    category: discover_search
+    name: Search Query No Results
+    description: Verify searching for non-matching query displays empty state
+    priority: medium
+    expected_result: EmptyState 'No results yet' displayed
+  - id: SEL-123
+    category: discover_search
+    name: Search Filter Chip 'All'
+    description: Verify All tab shows combined search results
+    priority: medium
+    expected_result: All matching categories listed
+  - id: SEL-124
+    category: discover_search
+    name: Search Filter Chip 'Songs'
+    description: Verify Songs tab filters results to track list
+    priority: medium
+    expected_result: Only matching songs displayed
+  - id: SEL-125
+    category: discover_search
+    name: Search Filter Chip 'Artists'
+    description: Verify Artists tab shows matching artist cards
+    priority: medium
+    expected_result: Matching artists listed
+  - id: SEL-126
+    category: discover_search
+    name: Search Filter Chip 'Albums'
+    description: Verify Albums tab displays matching album collections
+    priority: medium
+    expected_result: Matching albums listed
+  - id: SEL-127
+    category: discover_search
+    name: Search Filter Chip 'Playlists'
+    description: Verify Playlists tab lists matching user playlists
+    priority: medium
+    expected_result: Matching playlists listed
+  - id: SEL-128
+    category: discover_search
+    name: Save Search History Term
+    description: Verify clicking Save Search adds query to recent searches
+    priority: low
+    expected_result: Query added to recent searches list
+  - id: SEL-129
+    category: discover_search
+    name: Recent Search Chip Click
+    description: Verify clicking recent search term populates search input
+    priority: low
+    expected_result: Search input updated with selected term
+  - id: SEL-130
+    category: discover_search
+    name: Trending Searches Chip Selection
+    description: Verify clicking trending chips (Telugu, Calm, Vennela) executes search
+    priority: medium
+    expected_result: Results for trending keyword displayed
+  - id: SEL-131
+    category: discover_search
+    name: Music Shelf Telugu Favorites Scroll
+    description: Verify horizontal scrolling on Telugu Favorites shelf
+    priority: low
+    expected_result: Scrollable row of cover cards rendered
+  - id: SEL-132
+    category: discover_search
+    name: Music Shelf Track Click
+    description: Verify clicking cover card on shelf starts playback and opens Player
+    priority: high
+    expected_result: Selected track plays and Player screen opens
+  - id: SEL-133
+    category: discover_search
+    name: Genre Filter Selection
+    description: Verify selecting Instrumental genre in Discover page
+    priority: low
+    expected_result: Search query updated to Instrumental
+  - id: SEL-134
+    category: discover_search
+    name: Case Insensitive Search
+    description: Verify searching 'guns' matches 'Guns And Roses'
+    priority: medium
+    expected_result: Match found regardless of case
+  - id: SEL-135
+    category: discover_search
+    name: Search Clear Input Action
+    description: Verify clearing search text restores default Discover page sections
+    priority: medium
+    expected_result: Default trending and shelves displayed
+  - id: SEL-136
+    category: discover_search
+    name: Search By Language Query
+    description: Verify searching 'English' returns English tracks
+    priority: medium
+    expected_result: English songs listed
+  - id: SEL-137
+    category: discover_search
+    name: Search By Mood Query
+    description: Verify searching 'Energetic' returns Energetic tracks
+    priority: medium
+    expected_result: Energetic songs listed
+  - id: SEL-138
+    category: discover_search
+    name: Recent Searches Maximum Limit
+    description: Verify recent searches list is capped at 8 items
+    priority: low
+    expected_result: Oldest search dropped when limit exceeded
+  - id: SEL-139
+    category: discover_search
+    name: Recent Searches Deduplication
+    description: Verify searching same term moves it to top without duplication
+    priority: low
+    expected_result: Unique terms in recent searches list
+  - id: SEL-140
+    category: discover_search
+    name: Search Result Count Verification
+    description: Verify correct number of items listed for search match
+    priority: low
+    expected_result: Result count equals actual list length
+  - id: SEL-141
+    category: discover_search
+    name: Discover Page Section Titles
+    description: Verify section headers Trending, New Releases, Mood Mixes, Genres
+    priority: low
+    expected_result: Section titles rendered
+  - id: SEL-142
+    category: discover_search
+    name: Play Studio Collection Action
+    description: Verify Play studio collection button on artist card starts studio queue
+    priority: medium
+    expected_result: Studio tracks loaded into active queue
+  - id: SEL-143
+    category: discover_search
+    name: Audius API Integration Search
+    description: Verify external Audius API search query handler
+    priority: medium
+    expected_result: External API results populated or handled gracefully
+  - id: SEL-144
+    category: discover_search
+    name: Search Input Keyboard Dismissal
+    description: Verify pressing Search on soft keyboard triggers query submit
+    priority: low
+    expected_result: Keyboard dismissed and results displayed
+  - id: SEL-145
+    category: discover_search
+    name: Search Recommendations Shelf
+    description: Verify 'Recommended for you' shelf renders based on user languages
+    priority: low
+    expected_result: Personalized track recommendations displayed
+  - id: SEL-146
+    category: discover_search
+    name: Album Card Navigation
+    description: Verify clicking album card filters queue to album tracks
+    priority: medium
+    expected_result: Queue updated to album items
+  - id: SEL-147
+    category: discover_search
+    name: Partial Keyword Matching
+    description: Verify searching 'Rose' matches 'Guns And Roses'
+    priority: low
+    expected_result: Partial substring match succeeds
+  - id: SEL-148
+    category: discover_search
+    name: Search Bar Placeholder Text
+    description: Verify search text field placeholder 'Search songs, artists, albums…'
+    priority: low
+    expected_result: Placeholder text visible when input empty
+  - id: SEL-149
+    category: discover_search
+    name: Discover Page Initial Render Speed
+    description: Verify Discover screen renders without layout lag
+    priority: low
+    expected_result: Instantaneous page load
+  - id: SEL-150
+    category: discover_search
+    name: Empty Search Whitespace Only
+    description: Verify submitting spaces-only query is treated as empty query
+    priority: low
+    expected_result: Default Discover layout maintained
+
+  # Library & Playlists (SEL-151 to SEL-180)
+  - id: SEL-151
+    category: library_playlists
+    name: Create Playlist Dialog Launch
+    description: Verify Create Playlist button opens playlist creation modal
+    priority: critical
+    expected_result: Create playlist dialog rendered
+  - id: SEL-152
+    category: library_playlists
+    name: Create Playlist Success
+    description: Verify creating new playlist with valid name and description
+    priority: critical
+    expected_result: New playlist card appears in Library
+  - id: SEL-153
+    category: library_playlists
+    name: Create Playlist Duplicate Name Error
+    description: Verify Create button disabled if playlist name already exists
+    priority: high
+    expected_result: Create button disabled for duplicate name
+  - id: SEL-154
+    category: library_playlists
+    name: Create Playlist Empty Name
+    description: Verify Create button disabled when name field is blank
+    priority: medium
+    expected_result: Create button disabled
+  - id: SEL-155
+    category: library_playlists
+    name: Create Playlist Private Checkbox
+    description: Verify Private playlist checkbox toggle state
+    priority: low
+    expected_result: Private flag saved as boolean
+  - id: SEL-156
+    category: library_playlists
+    name: Library Tab 'Playlists' Selection
+    description: Verify Playlists tab lists user created playlists
+    priority: high
+    expected_result: Playlists list rendered
+  - id: SEL-157
+    category: library_playlists
+    name: Library Tab 'Liked Songs' Selection
+    description: Verify Liked Songs tab lists all user hearted tracks
+    priority: high
+    expected_result: Hearted songs listed
+  - id: SEL-158
+    category: library_playlists
+    name: Library Tab 'Recent' Selection
+    description: Verify Recent tab lists recently played tracks
+    priority: medium
+    expected_result: Recent playback history rendered
+  - id: SEL-159
+    category: library_playlists
+    name: Library Tab 'Albums' Selection
+    description: Verify Albums tab lists albums containing liked tracks
+    priority: medium
+    expected_result: Liked albums grouped and displayed
+  - id: SEL-160
+    category: library_playlists
+    name: Open Playlist Detail View
+    description: Verify clicking playlist card opens detailed Playlist page
+    priority: high
+    expected_result: Playlist page shows title, description, and tracks
+  - id: SEL-161
+    category: library_playlists
+    name: Playlist Track Count Metric
+    description: Verify track count on playlist card matches actual track list length
+    priority: medium
+    expected_result: Track count accurate
+  - id: SEL-162
+    category: library_playlists
+    name: Add Song to Playlist From Catalog Search
+    description: Verify searching catalog within Playlist page and clicking '+ Add'
+    priority: high
+    expected_result: Song added to playlist track list
+  - id: SEL-163
+    category: library_playlists
+    name: Liked Songs Page Play All
+    description: Verify clicking Play icon on Liked Songs page plays all liked tracks
+    priority: high
+    expected_result: Liked tracks loaded into active queue and playback starts
+  - id: SEL-164
+    category: library_playlists
+    name: Empty Playlists Library State
+    description: Verify EmptyState 'A collection of your own' when no playlists created
+    priority: low
+    expected_result: Empty state message displayed
+  - id: SEL-165
+    category: library_playlists
+    name: Empty Liked Songs State
+    description: Verify EmptyState 'Nothing saved yet' when no tracks liked
+    priority: low
+    expected_result: Empty state message displayed
+  - id: SEL-166
+    category: library_playlists
+    name: Empty Recent History State
+    description: Verify EmptyState when recent playback history is empty
+    priority: low
+    expected_result: Empty state message displayed
+  - id: SEL-167
+    category: library_playlists
+    name: Playlist Card Privacy Label
+    description: Verify playlist card indicates 'Private' or 'Public preference'
+    priority: low
+    expected_result: Correct privacy tag shown
+  - id: SEL-168
+    category: library_playlists
+    name: Remove Song From Playlist
+    description: Verify removing track from user playlist
+    priority: medium
+    expected_result: Track removed from playlist IDs array
+  - id: SEL-169
+    category: library_playlists
+    name: Add Duplicate Song to Playlist Guard
+    description: Verify adding same song to playlist prevents duplicate ID entries
+    priority: low
+    expected_result: Song IDs list contains distinct items
+  - id: SEL-170
+    category: library_playlists
+    name: Liked Songs Heart Toggle Synchronization
+    description: Verify un-liking song from Liked page removes it from list immediately
+    priority: high
+    expected_result: Track item removed from page DOM
+  - id: SEL-171
+    category: library_playlists
+    name: Library Section Navigation Title
+    description: Verify heading 'Keep your favorites close' on Library page
+    priority: low
+    expected_result: Heading visible
+  - id: SEL-172
+    category: library_playlists
+    name: Add to Playlist Modal Cancel
+    description: Verify Cancel button on Add to Playlist modal closes dialog
+    priority: low
+    expected_result: Modal dismissed
+  - id: SEL-173
+    category: library_playlists
+    name: Create Playlist Modal Cancel
+    description: Verify Cancel button on Create Playlist modal closes dialog
+    priority: low
+    expected_result: Modal dismissed without saving
+  - id: SEL-174
+    category: library_playlists
+    name: Playlist Page Track Play Action
+    description: Verify clicking track row in playlist page plays playlist queue
+    priority: high
+    expected_result: Selected track starts playing
+  - id: SEL-175
+    category: library_playlists
+    name: Add Song Button in Add-To-Playlist Modal
+    description: Verify '+ New playlist' option inside Add to Playlist modal launches creator
+    priority: medium
+    expected_result: Create playlist modal opened
+  - id: SEL-176
+    category: library_playlists
+    name: Playlist Name Special Characters
+    description: Verify playlist created with emoji or symbols in title
+    priority: low
+    expected_result: Title saved and rendered cleanly
+  - id: SEL-177
+    category: library_playlists
+    name: Playlist Persistence LocalStorage/Prefs
+    description: Verify playlists persist across app restarts
+    priority: high
+    expected_result: Created playlists present after reload
+  - id: SEL-178
+    category: library_playlists
+    name: Liked Songs Persistence
+    description: Verify liked song IDs persist across app restarts
+    priority: high
+    expected_result: Hearted state maintained
+  - id: SEL-179
+    category: library_playlists
+    name: Home Screen Playlists Preview
+    description: Verify first 3 playlists shown on Home page
+    priority: low
+    expected_result: Up to 3 playlist cards displayed on Home
+  - id: SEL-180
+    category: library_playlists
+    name: Library Tab Active Highlight
+    description: Verify active tab filter chip in Library is highlighted
+    priority: low
+    expected_result: Active chip has selected styling
+
+  # Wellness & Breathing (SEL-181 to SEL-210)
+  - id: SEL-181
+    category: wellness_breathing
+    name: Open Wellness Main View
+    description: Verify Wellness screen loads with breathing banner and categories
+    priority: high
+    expected_result: Heading 'A softer kind of rhythm' rendered
+  - id: SEL-182
+    category: wellness_breathing
+    name: Start Breathing Exercise
+    description: Verify Start Breathing button launches breathing exercise
+    priority: critical
+    expected_result: Breathing page loaded with animated circle
+  - id: SEL-183
+    category: wellness_breathing
+    name: Breathing Phase Indicator 'Breathe in'
+    description: Verify breathing cycle phase displays 'Breathe in' during expansion
+    priority: medium
+    expected_result: Label shows 'Breathe in'
+  - id: SEL-184
+    category: wellness_breathing
+    name: Breathing Phase Indicator 'Hold gently'
+    description: Verify breathing cycle phase displays 'Hold gently'
+    priority: medium
+    expected_result: Label shows 'Hold gently'
+  - id: SEL-185
+    category: wellness_breathing
+    name: Breathing Phase Indicator 'Breathe out'
+    description: Verify breathing cycle phase displays 'Breathe out' during contraction
+    priority: medium
+    expected_result: Label shows 'Breathe out'
+  - id: SEL-186
+    category: wellness_breathing
+    name: Pause Breathing Exercise
+    description: Verify Pause button halts breathing timer
+    priority: medium
+    expected_result: Label changes to 'Take your time' and button text becomes 'Resume'
+  - id: SEL-187
+    category: wellness_breathing
+    name: Resume Breathing Exercise
+    description: Verify Resume button restarts breathing timer
+    priority: medium
+    expected_result: Timer resumes and button text becomes 'Pause'
+  - id: SEL-188
+    category: wellness_breathing
+    name: End Breathing Session
+    description: Verify End Session button logs breathing activity to journal and opens Wellness page
+    priority: high
+    expected_result: Journal entry saved and route returned to Wellness
+  - id: SEL-189
+    category: wellness_breathing
+    name: Elapsed Time Counter Format
+    description: Verify elapsed time counter in breathing screen formatted as mm:ss
+    priority: low
+    expected_result: Elapsed time displayed accurately
+  - id: SEL-190
+    category: wellness_breathing
+    name: Open Mood Journal Page
+    description: Verify clicking Write Journal card opens Journal page
+    priority: high
+    expected_result: Journal page displayed
+  - id: SEL-191
+    category: wellness_breathing
+    name: Mood Journal Mood Selection
+    description: Verify selecting mood chip in Journal updates selected mood state
+    priority: medium
+    expected_result: Selected mood highlighted
+  - id: SEL-192
+    category: wellness_breathing
+    name: Mood Journal Input Entry Text
+    description: Verify typing reflection text into journal input
+    priority: medium
+    expected_result: Text input accepts string entry
+  - id: SEL-193
+    category: wellness_breathing
+    name: Save Journal Entry
+    description: Verify Save Entry button saves entry and shows 'Entry saved ✓'
+    priority: critical
+    expected_result: Button label updates to 'Entry saved ✓'
+  - id: SEL-194
+    category: wellness_breathing
+    name: Save Journal Entry Empty Disabled
+    description: Verify Save Entry button disabled when text field is blank
+    priority: medium
+    expected_result: Save button disabled
+  - id: SEL-195
+    category: wellness_breathing
+    name: Read My Journal Link Navigation
+    description: Verify 'Read my journal  →' link navigates to History page
+    priority: medium
+    expected_result: History page displayed showing journal entries
+  - id: SEL-196
+    category: wellness_breathing
+    name: Wellness Category Meditation Click
+    description: Verify Meditation card selects Calm mood and opens playlist
+    priority: medium
+    expected_result: Calm mood playlist loaded
+  - id: SEL-197
+    category: wellness_breathing
+    name: Wellness Category Relaxation Click
+    description: Verify Relaxation card selects Calm mood
+    priority: medium
+    expected_result: Calm mood playlist loaded
+  - id: SEL-198
+    category: wellness_breathing
+    name: Wellness Category Focus Click
+    description: Verify Focus card selects Calm mood
+    priority: medium
+    expected_result: Calm mood playlist loaded
+  - id: SEL-199
+    category: wellness_breathing
+    name: Wellness Category Sleep Click
+    description: Verify Sleep card selects Tired mood
+    priority: medium
+    expected_result: Tired mood playlist loaded
+  - id: SEL-200
+    category: wellness_breathing
+    name: Wellness Disclaimer Notice
+    description: Verify disclaimer 'not medical advice or diagnosis' is visible
+    priority: low
+    expected_result: Disclaimer text rendered at bottom of page
+  - id: SEL-201
+    category: wellness_breathing
+    name: History Page Journal Entries List
+    description: Verify saved journal entries are displayed in History page
+    priority: high
+    expected_result: Journal entry text, mood tag, and timestamp rendered
+  - id: SEL-202
+    category: wellness_breathing
+    name: Reduced Motion Breathing Animation
+    description: Verify reduced motion setting stops scaling animation in breathing screen
+    priority: low
+    expected_result: Scale animation duration set to 0
+  - id: SEL-203
+    category: wellness_breathing
+    name: Journal Entry Persistence
+    description: Verify journal entries persist in local storage across reloads
+    priority: high
+    expected_result: Saved journal entries restored on reload
+  - id: SEL-204
+    category: wellness_breathing
+    name: Wellness Page Card Titles
+    description: Verify wellness card titles Meditation, Relaxation, Focus, Sleep, Mood Journal
+    priority: low
+    expected_result: All 5 category cards rendered
+  - id: SEL-205
+    category: wellness_breathing
+    name: Breathing Radial Gradient Background
+    description: Verify soft green radial gradient background behind breathing circle
+    priority: low
+    expected_result: Radial gradient rendered
+  - id: SEL-206
+    category: wellness_breathing
+    name: Journal Input Placeholder
+    description: Verify placeholder text 'No right words needed. Start anywhere.'
+    priority: low
+    expected_result: Placeholder text visible in empty input
+  - id: SEL-207
+    category: wellness_breathing
+    name: History Page Stats Row
+    description: Verify Check-ins count, Listening minutes, and Most selected mood stats
+    priority: medium
+    expected_result: Stat metrics card displayed
+  - id: SEL-208
+    category: wellness_breathing
+    name: History Page Empty Journal State
+    description: Verify EmptyState 'A little room for your thoughts' when journal empty
+    priority: low
+    expected_result: Empty state card displayed
+  - id: SEL-209
+    category: wellness_breathing
+    name: History Page Empty Check-ins State
+    description: Verify EmptyState 'Your story is still unfolding' when no check-ins recorded
+    priority: low
+    expected_result: Empty state card displayed
+  - id: SEL-210
+    category: wellness_breathing
+    name: History Page Write Journal Action
+    description: Verify Write button next to Your Journal section opens Journal page
+    priority: medium
+    expected_result: Navigates to Journal page
+
+  # Profile & Settings (SEL-211 to SEL-240)
+  - id: SEL-211
+    category: profile_settings
+    name: Open Profile Screen
+    description: Verify Profile page displays user avatar, name, and email
+    priority: critical
+    expected_result: User name and email displayed under avatar
+  - id: SEL-212
+    category: profile_settings
+    name: Edit Profile Toggle
+    description: Verify Edit Profile button opens inline profile edit form
+    priority: high
+    expected_result: Display name and email input fields displayed
+  - id: SEL-213
+    category: profile_settings
+    name: Update Display Name Success
+    description: Verify changing display name and clicking Save Changes
+    priority: critical
+    expected_result: Updated name reflects in header and profile
+  - id: SEL-214
+    category: profile_settings
+    name: Update Display Name Blank Error
+    description: Verify Save Changes button disabled when display name is blank
+    priority: medium
+    expected_result: Save button disabled
+  - id: SEL-215
+    category: profile_settings
+    name: Profile Liked Songs Row Navigation
+    description: Verify clicking Liked Songs row in Profile opens Liked page
+    priority: medium
+    expected_result: Liked page displayed
+  - id: SEL-216
+    category: profile_settings
+    name: Profile Listening History Row Navigation
+    description: Verify clicking Listening History row in Profile opens History page
+    priority: medium
+    expected_result: History page displayed
+  - id: SEL-217
+    category: profile_settings
+    name: Profile Playlists Row Navigation
+    description: Verify clicking Playlists row in Profile opens Library
+    priority: medium
+    expected_result: Library page displayed
+  - id: SEL-218
+    category: profile_settings
+    name: Theme Mode Toggle Ambient to AMOLED
+    description: Verify clicking Theme row toggles mode between Ambient and AMOLED
+    priority: high
+    expected_result: Background tint switches to AMOLED dark black
+  - id: SEL-219
+    category: profile_settings
+    name: Player Notifications Switch Toggle
+    description: Verify Player Notifications toggle switch
+    priority: medium
+    expected_result: Notification preference boolean toggled
+  - id: SEL-220
+    category: profile_settings
+    name: Reduce Motion Switch Toggle
+    description: Verify Reduce Motion toggle switch
+    priority: medium
+    expected_result: Reduced motion boolean saved
+  - id: SEL-221
+    category: profile_settings
+    name: Contact Support Mailto Action
+    description: Verify clicking Contact Support attempts to launch mail client
+    priority: low
+    expected_result: Mailto intent triggered
+  - id: SEL-222
+    category: profile_settings
+    name: Logout Button Action
+    description: Verify clicking Log Out logs user out and opens Login screen
+    priority: critical
+    expected_result: Session destroyed and Login screen rendered
+  - id: SEL-223
+    category: profile_settings
+    name: Spotify Connection Section Render
+    description: Verify Integrations section displays Spotify status
+    priority: high
+    expected_result: Spotify integration row visible in Profile/Settings
+  - id: SEL-224
+    category: profile_settings
+    name: Spotify Connect Button Trigger
+    description: Verify clicking Connect Spotify triggers OAuth PKCE authorization
+    priority: critical
+    expected_result: Browser intent opened with Spotify authorize URL
+  - id: SEL-225
+    category: profile_settings
+    name: Spotify Connected State Render
+    description: Verify Profile shows 'Spotify Connected' when user authenticated with Spotify
+    priority: high
+    expected_result: Green 'Spotify Connected' text and Disconnect button shown
+  - id: SEL-226
+    category: profile_settings
+    name: Spotify Disconnect Action
+    description: Verify clicking Disconnect removes Spotify tokens and resets state
+    priority: high
+    expected_result: State resets to Not Connected and Connect Spotify button displayed
+  - id: SEL-227
+    category: profile_settings
+    name: Preferred Languages Selection in Settings
+    description: Verify selecting preferred languages (Telugu, English, Hindi)
+    priority: medium
+    expected_result: Languages saved in user preferences
+  - id: SEL-228
+    category: profile_settings
+    name: Favorite Genres Selection in Settings
+    description: Verify selecting favorite genres (Instrumental, Melody, Lo-fi)
+    priority: medium
+    expected_result: Genres saved in user preferences
+  - id: SEL-229
+    category: profile_settings
+    name: Audio Volume Slider in Settings
+    description: Verify adjusting volume slider in Settings updates global volume
+    priority: medium
+    expected_result: Store volume updated
+  - id: SEL-230
+    category: profile_settings
+    name: Repeat Track Toggle in Settings
+    description: Verify Repeat current track switch in Settings
+    priority: low
+    expected_result: Repeat state updated
+  - id: SEL-231
+    category: profile_settings
+    name: Save Settings Preferences Button
+    description: Verify Save Preferences button updates store and redirects to Profile
+    priority: high
+    expected_result: Settings saved and redirected to Profile
+  - id: SEL-232
+    category: profile_settings
+    name: Profile Initial Avatar Letter
+    description: Verify avatar circle displays first uppercase letter of user name
+    priority: low
+    expected_result: First letter of name shown in avatar circle
+  - id: SEL-233
+    category: profile_settings
+    name: Profile Email Field Read-Only in Edit Mode
+    description: Verify email address field is non-editable in profile editor
+    priority: low
+    expected_result: Email field displayed read-only
+  - id: SEL-234
+    category: profile_settings
+    name: Privacy Notice Text in Settings
+    description: Verify offline build privacy notice text in Settings page
+    priority: low
+    expected_result: Notice text rendered
+  - id: SEL-235
+    category: profile_settings
+    name: Settings Page Navigation From Profile
+    description: Verify navigating between Profile and Settings
+    priority: low
+    expected_result: Route navigation seamless
+  - id: SEL-236
+    category: profile_settings
+    name: Logout Confirmation Color
+    description: Verify Log Out button text rendered in red/pink alert tint
+    priority: low
+    expected_result: Red tint text on Log Out button
+  - id: SEL-237
+    category: profile_settings
+    name: Settings Preferred Languages Required Guard
+    description: Verify Save Preferences disabled if no language selected
+    priority: medium
+    expected_result: Button disabled when language set is empty
+  - id: SEL-238
+    category: profile_settings
+    name: User Preferences Local Storage Sync
+    description: Verify preferences persist in SharedPreferences across app restarts
+    priority: high
+    expected_result: Saved preferences reloaded on app boot
+  - id: SEL-239
+    category: profile_settings
+    name: Firebase Profile Sync on Save
+    description: Verify profile updates sync to Firebase Firestore user document
+    priority: medium
+    expected_result: Firestore document updated with new display name
+  - id: SEL-240
+    category: profile_settings
+    name: Spotify Auth Error Handling
+    description: Verify error message rendered when Spotify OAuth fails or is canceled
+    priority: medium
+    expected_result: Error message string shown in Integrations card
+
+  # Form & Input Validation (SEL-241 to SEL-270)
+  - id: SEL-241
+    category: form_validation
+    name: Email Address Regex Pattern Validation
+    description: Verify validation catches missing @ domain in email input
+    priority: high
+    expected_result: Error 'Enter a valid email address' displayed
+  - id: SEL-242
+    category: form_validation
+    name: Email Missing Top Level Domain
+    description: Verify validation flags emails without TLD extension
+    priority: medium
+    expected_result: Invalid email alert shown
+  - id: SEL-243
+    category: form_validation
+    name: Password Minimum Length Boundary 7 Chars
+    description: Verify 7 character password fails validation
+    priority: high
+    expected_result: Validation error 'Use at least 8 characters' shown
+  - id: SEL-244
+    category: form_validation
+    name: Password Minimum Length Boundary 8 Chars
+    description: Verify 8 character password passes length validation
+    priority: high
+    expected_result: Length validation passes
+  - id: SEL-245
+    category: form_validation
+    name: Confirm Password Case Sensitivity
+    description: Verify password match validation is case sensitive
+    priority: medium
+    expected_result: Mismatched case causes 'Passwords don’t match' error
+  - id: SEL-246
+    category: form_validation
+    name: Blank Name Field in Signup
+    description: Verify name field required error during signup
+    priority: medium
+    expected_result: Error 'Enter your name' shown
+  - id: SEL-247
+    category: form_validation
+    name: Playlist Creation Name Boundary Length
+    description: Verify playlist name max character length behavior
+    priority: low
+    expected_result: Input accepts up to limit cleanly
+  - id: SEL-248
+    category: form_validation
+    name: Search Input Special Regex Characters
+    description: Verify searching with regex special chars regex operators does not crash app
+    priority: high
+    expected_result: Special characters escaped and processed as literal text
+  - id: SEL-249
+    category: form_validation
+    name: Search Input Leading Spaces Trimming
+    description: Verify search query trims leading whitespace
+    priority: low
+    expected_result: Search query trimmed before execution
+  - id: SEL-250
+    category: form_validation
+    name: Journal Text Multi-Line Acceptance
+    description: Verify journal text area accepts multiple paragraphs and newlines
+    priority: medium
+    expected_result: Newlines preserved in journal entry
+  - id: SEL-251
+    category: form_validation
+    name: Form Input Keyboard Type Email
+    description: Verify email input field specifies email keyboard type
+    priority: low
+    expected_result: KeyboardType.Email set on field
+  - id: SEL-252
+    category: form_validation
+    name: Form Input Keyboard Type Password
+    description: Verify password field specifies password keyboard type
+    priority: low
+    expected_result: KeyboardType.Password set on field
+  - id: SEL-253
+    category: form_validation
+    name: Single Line Form Inputs
+    description: Verify name, email, password fields are single line text fields
+    priority: low
+    expected_result: Enter key triggers submit or focus advance
+  - id: SEL-254
+    category: form_validation
+    name: Form Outline Border Active Highlight
+    description: Verify focused form text field displays Lime border highlight
+    priority: low
+    expected_result: Focused field border becomes Lime
+  - id: SEL-255
+    category: form_validation
+    name: Error Alert Dismiss Action
+    description: Verify clicking 'Got it' dismisses store error modal
+    priority: high
+    expected_result: Error alert dismissed and error set to null
+  - id: SEL-256
+    category: form_validation
+    name: Double Submit Form Protection
+    description: Verify form buttons are disabled while authenticating state is true
+    priority: medium
+    expected_result: Button disabled during network call
+  - id: SEL-257
+    category: form_validation
+    name: Clear Form State On Mode Switch
+    description: Verify switching between login and signup clears error validation string
+    priority: low
+    expected_result: Validation message reset
+  - id: SEL-258
+    category: form_validation
+    name: Form Input Sanitization HTML Tags
+    description: Verify HTML tags in user name or playlist title are safely escaped
+    priority: high
+    expected_result: Tags treated as plain text string
+  - id: SEL-259
+    category: form_validation
+    name: SQL Injection String in Search
+    description: Verify searching SQL injection strings e.g. OR 1=1 operates safely
+    priority: critical
+    expected_result: Handled safely as literal query string
+  - id: SEL-260
+    category: form_validation
+    name: XSS String in Journal Entry
+    description: Verify journal text containing script tags displays safely
+    priority: critical
+    expected_result: Script string rendered harmlessly as plain text
+  - id: SEL-261
+    category: form_validation
+    name: Playlist Description Optional Field
+    description: Verify description field is optional when creating playlist
+    priority: low
+    expected_result: Playlist created with blank description if omitted
+  - id: SEL-262
+    category: form_validation
+    name: Form Validation Error Alert Color
+    description: Verify validation error text uses light red color tint
+    priority: low
+    expected_result: Text rendered in red/pink alert color
+  - id: SEL-263
+    category: form_validation
+    name: Reset Password Success Alert
+    description: Verify feedback message when password reset email is sent
+    priority: medium
+    expected_result: Message 'Password reset email sent to ...' displayed
+  - id: SEL-264
+    category: form_validation
+    name: Login Invalid Password Message
+    description: Verify error details on failed password login
+    priority: high
+    expected_result: Error message displayed to user
+  - id: SEL-265
+    category: form_validation
+    name: Very Long Playlist Title Handling
+    description: Verify 100+ character playlist title truncates or wraps gracefully
+    priority: low
+    expected_result: Card layout remains intact
+  - id: SEL-266
+    category: form_validation
+    name: Numeric Only Name Field Input
+    description: Verify name field accepts numbers or alphanumeric inputs
+    priority: low
+    expected_result: Input accepted
+  - id: SEL-267
+    category: form_validation
+    name: Emoji Input in Search Field
+    description: Verify search input handles emoji characters
+    priority: low
+    expected_result: Search handles emoji query safely
+  - id: SEL-268
+    category: form_validation
+    name: Input Text Copy Paste
+    description: Verify pasting text into email and password fields
+    priority: medium
+    expected_result: Pasted string populated in text field
+  - id: SEL-269
+    category: form_validation
+    name: Auto Correct Disable on Password
+    description: Verify password text fields disable autocorrect suggestions
+    priority: low
+    expected_result: Autocorrect disabled on password inputs
+  - id: SEL-270
+    category: form_validation
+    name: Form Input Field Focus Traversal
+    description: Verify tab key moves focus sequentially through form inputs
+    priority: low
+    expected_result: Tab navigation moves focus predictably
+
+  # UI Responsiveness & Behavior (SEL-271 to SEL-300)
+  - id: SEL-271
+    category: ui_responsiveness
+    name: Desktop Viewport Layout 1920x1080
+    description: Verify main content container stays centered with max width 900px
+    priority: medium
+    expected_result: Content column constrained to 900px max width
+  - id: SEL-272
+    category: ui_responsiveness
+    name: Tablet Viewport Layout 768x1024
+    description: Verify responsive grid layouts adjust columns on tablet viewports
+    priority: medium
+    expected_result: Mood grid and choice grids scale cleanly
+  - id: SEL-273
+    category: ui_responsiveness
+    name: Mobile Viewport Layout 375x812
+    description: Verify full responsive layout on mobile viewport width
+    priority: critical
+    expected_result: Content fits within 375px width without horizontal overflow
+  - id: SEL-274
+    category: ui_responsiveness
+    name: Glass Surface Shadow and Border Rendering
+    description: Verify glass surface cards render translucent background and subtle border
+    priority: low
+    expected_result: Semi-transparent background with border
+  - id: SEL-275
+    category: ui_responsiveness
+    name: Dark Theme Color Scheme Baseline
+    description: Verify background uses dark Ink color #0D1605
+    priority: low
+    expected_result: Dark background rendered
+  - id: SEL-276
+    category: ui_responsiveness
+    name: Primary Accent Color Lime Baseline
+    description: Verify primary actions use Lime accent color #C8FF32
+    priority: low
+    expected_result: Primary buttons and active indicators use Lime
+  - id: SEL-277
+    category: ui_responsiveness
+    name: Custom Font Family Fallback
+    description: Verify text elements render clean default sans-serif font
+    priority: low
+    expected_result: Typography legible and styled
+  - id: SEL-278
+    category: ui_responsiveness
+    name: Interactive Element Minimum Touch Target
+    description: Verify buttons and icons maintain 48dp minimum touch target
+    priority: medium
+    expected_result: Touch targets meet 48dp guideline
+  - id: SEL-279
+    category: ui_responsiveness
+    name: Image Asset Loading Headphone Graphic
+    description: Verify CrystalHeadphones canvas artwork renders correctly
+    priority: low
+    expected_result: Headphone canvas graphic drawn
+  - id: SEL-280
+    category: ui_responsiveness
+    name: Brand Logo Wave Pulse Canvas
+    description: Verify BrandLogo canvas bars render animated height waves
+    priority: low
+    expected_result: Brand logo canvas rendered
+  - id: SEL-281
+    category: ui_responsiveness
+    name: Scrollbar Behavior Long Content
+    description: Verify vertical scrollbar appears when content exceeds viewport height
+    priority: low
+    expected_result: Smooth vertical scrolling functional
+  - id: SEL-282
+    category: ui_responsiveness
+    name: Cover Art Canvas Placeholder
+    description: Verify song Cover component draws procedural gradient and vinyl rings
+    priority: low
+    expected_result: Procedural cover artwork drawn
+  - id: SEL-283
+    category: ui_responsiveness
+    name: Filter Chip Selection Styling
+    description: Verify selected FilterChip changes container color
+    priority: low
+    expected_result: Selected chip visually distinct
+  - id: SEL-284
+    category: ui_responsiveness
+    name: Primary Button Disabled State Styling
+    description: Verify disabled PrimaryButton reduces opacity and prevents clicks
+    priority: low
+    expected_result: Disabled button non-clickable
+  - id: SEL-285
+    category: ui_responsiveness
+    name: Section Title Action Link Layout
+    description: Verify SectionTitle lays out title on left and action link on right
+    priority: low
+    expected_result: Space-between alignment rendered
+  - id: SEL-286
+    category: ui_responsiveness
+    name: Modal Dialog Overlay Dimming
+    description: Verify AlertDialog darkens background screen behind modal
+    priority: low
+    expected_result: Scrim backdrop darkens background
+  - id: SEL-287
+    category: ui_responsiveness
+    name: Scrollable Modal Text Overflow
+    description: Verify Queue and Playlist selection modals constrain max height and scroll
+    priority: low
+    expected_result: Modal height capped at 420dp with internal scrolling
+  - id: SEL-288
+    category: ui_responsiveness
+    name: Text Line Clamping Ellipsis
+    description: Verify long track titles clamp to 1 line with ellipsis
+    priority: low
+    expected_result: Single line title with '...' on overflow
+  - id: SEL-289
+    category: ui_responsiveness
+    name: Page Heading Spacing
+    description: Verify PageHeading maintains eyebrow, title, and subtitle vertical spacing
+    priority: low
+    expected_result: Consistent padding and typography hierarchy
+  - id: SEL-290
+    category: ui_responsiveness
+    name: Accessibility Contrast Verification Text
+    description: Verify white text on dark background meets WCAG contrast standards
+    priority: medium
+    expected_result: High contrast ratio compliant
+  - id: SEL-291
+    category: ui_responsiveness
+    name: Screen Resize Re-Layout Handling
+    description: Verify dynamic window resizing reflows layout without breaking state
+    priority: medium
+    expected_result: Window resize reflows cleanly
+  - id: SEL-292
+    category: ui_responsiveness
+    name: Animation Scale Factor Reduced Motion
+    description: Verify toggling reduced motion sets transition durations to 0
+    priority: low
+    expected_result: Animations become instant when reduced motion active
+  - id: SEL-293
+    category: ui_responsiveness
+    name: Status Bar Padding Integration
+    description: Verify top statusBarsPadding prevents header overlap with device notch
+    priority: medium
+    expected_result: Content padded below status bar
+  - id: SEL-294
+    category: ui_responsiveness
+    name: Navigation Bar Padding Integration
+    description: Verify bottom navigationBarsPadding prevents dock overlap with gesture bar
+    priority: medium
+    expected_result: Navigation dock padded above gesture bar
+  - id: SEL-295
+    category: ui_responsiveness
+    name: Keyboard IME Padding Adjustment
+    description: Verify imePadding shifts form fields up when soft keyboard opens
+    priority: medium
+    expected_result: Form fields shift up to remain visible above keyboard
+  - id: SEL-296
+    category: ui_responsiveness
+    name: Glass Surface Border Gradient
+    description: Verify subtle linear gradient border on glass cards
+    priority: low
+    expected_result: Gradient border rendered
+  - id: SEL-297
+    category: ui_responsiveness
+    name: Choice Grid Column Chunking
+    description: Verify ChoiceGrid places options in 2-column rows
+    priority: low
+    expected_result: Options arranged 2 per row
+  - id: SEL-298
+    category: ui_responsiveness
+    name: Empty State Card Alignment
+    description: Verify EmptyState card centers text and button
+    priority: low
+    expected_result: Centered layout rendered
+  - id: SEL-299
+    category: ui_responsiveness
+    name: Toast Notification Banner Stacking
+    description: Verify store error modal displays on top layer above all content
+    priority: high
+    expected_result: Top Z-index overlay rendered
+  - id: SEL-300
+    category: ui_responsiveness
+    name: UI Performance Frame Rate Check
+    description: Verify UI maintains smooth 60fps rendering during scrolling
+    priority: medium
+    expected_result: No frame drops or jank observed

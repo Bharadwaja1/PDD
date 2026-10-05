@@ -1,0 +1,1820 @@
+test_cases:
+  # Authentication Security (SEC-001 to SEC-040)
+  - id: SEC-001
+    category: authentication_security
+    name: Password Hash Algorithm Verification
+    description: Verify Firebase Auth uses bcrypt or PBKDF2 strong password hashing
+    priority: critical
+    expected_result: Plaintext passwords never stored or logged
+  - id: SEC-002
+    category: authentication_security
+    name: Brute Force Password Throttling
+    description: Verify authentication blocks rapid repeated failed login attempts
+    priority: critical
+    expected_result: Account temporarily locked or throttled after 5 failed attempts
+  - id: SEC-003
+    category: authentication_security
+    name: Credential Transmission TLS 1.3
+    description: Verify login credentials sent strictly over HTTPS TLS 1.2 or 1.3
+    priority: critical
+    expected_result: Unencrypted HTTP credentials rejected
+  - id: SEC-004
+    category: authentication_security
+    name: Auth Error Message Generic Response
+    description: Verify login error does not distinguish between bad email vs bad password
+    priority: high
+    expected_result: Generic error 'Login failed' returned without user enumeration
+  - id: SEC-005
+    category: authentication_security
+    name: Password Reset Token Expiration
+    description: Verify password reset link token expires after standard duration
+    priority: high
+    expected_result: Expired reset tokens rejected
+  - id: SEC-006
+    category: authentication_security
+    name: Password Reset Token One-Time Use
+    description: Verify password reset link token cannot be re-used after invocation
+    priority: high
+    expected_result: Re-used reset token rejected
+  - id: SEC-007
+    category: authentication_security
+    name: Spotify OAuth PKCE Code Verifier Randomness
+    description: Verify Spotify PKCE code verifier uses SecureRandom with 64 bytes entropy
+    priority: critical
+    expected_result: Cryptographically secure high-entropy verifier generated
+  - id: SEC-008
+    category: authentication_security
+    name: Spotify OAuth PKCE S256 Method
+    description: Verify code_challenge uses SHA-256 (S256) instead of plain text
+    priority: critical
+    expected_result: S256 code_challenge_method enforced
+  - id: SEC-009
+    category: authentication_security
+    name: Spotify OAuth State CSRF Protection
+    description: Verify state parameter generated and validated on OAuth callback
+    priority: critical
+    expected_result: Mismatched state param rejects authorization callback
+  - id: SEC-010
+    category: authentication_security
+    name: Client Secret Absence Verification
+    description: Verify Spotify Client Secret is absent from APK, BuildConfig, and source
+    priority: critical
+    expected_result: Zero Client Secret strings in binary
+  - id: SEC-011
+    category: authentication_security
+    name: Password Input Field Masking
+    description: Verify password text fields mask input characters by default
+    priority: medium
+    expected_result: PasswordVisualTransformation applied
+  - id: SEC-012
+    category: authentication_security
+    name: Password Field Copy Cut Prevention
+    description: Verify password field context menu restricts copy operations
+    priority: low
+    expected_result: Copy menu action suppressed on password field
+  - id: SEC-013
+    category: authentication_security
+    name: Password Minimum Entropy Requirement
+    description: Verify password validation enforces minimum length of 8 characters
+    priority: medium
+    expected_result: Short passwords blocked
+  - id: SEC-014
+    category: authentication_security
+    name: Login Form Auto-Complete Attribute
+    description: Verify password field uses appropriate auto-complete attributes
+    priority: low
+    expected_result: Password autofill flags set
+  - id: SEC-015
+    category: authentication_security
+    name: Account Registration Email Verification
+    description: Verify registration process supports email verification check
+    priority: medium
+    expected_result: Email verification flag stored
+  - id: SEC-016
+    category: authentication_security
+    name: Credential Leak Logcat Inspection
+    description: Verify Android Logcat contains zero plaintext user credentials
+    priority: critical
+    expected_result: No passwords or private tokens printed in Logcat
+  - id: SEC-017
+    category: authentication_security
+    name: Session Invalidation On Password Change
+    description: Verify changing password revokes existing active session tokens
+    priority: high
+    expected_result: Old session tokens invalidated
+  - id: SEC-018
+    category: authentication_security
+    name: Multi-Factor Auth Readines Check
+    description: Verify auth architecture accommodates MFA step-up
+    priority: low
+    expected_result: MFA parameters handled if enabled
+  - id: SEC-019
+    category: authentication_security
+    name: Remember Me Secure Storage
+    description: Verify login state flags stored securely in EncryptedSharedPreferences
+    priority: high
+    expected_result: Private shared preferences restricted to app UID
+  - id: SEC-020
+    category: authentication_security
+    name: Account Deletion Complete Data Purge
+    description: Verify deleting user account purges user record and Firestore documents
+    priority: high
+    expected_result: User data deleted completely
+  - id: SEC-021
+    category: authentication_security
+    name: Unauthenticated Access To User Profile
+    description: Verify unauthenticated request to user profile API fails
+    priority: critical
+    expected_result: HTTP 401 Unauthorized
+  - id: SEC-022
+    category: authentication_security
+    name: Unauthenticated Access To Mood History
+    description: Verify unauthenticated request to mood history collection fails
+    priority: critical
+    expected_result: HTTP 401 Unauthorized
+  - id: SEC-023
+    category: authentication_security
+    name: Unauthenticated Access To User Journal
+    description: Verify unauthenticated request to journal entries fails
+    priority: critical
+    expected_result: HTTP 401 Unauthorized
+  - id: SEC-024
+    category: authentication_security
+    name: Unauthenticated Access To User Playlists
+    description: Verify unauthenticated request to private playlists fails
+    priority: critical
+    expected_result: HTTP 401 Unauthorized
+  - id: SEC-025
+    category: authentication_security
+    name: OAuth Token Response Cache Control
+    description: Verify token endpoint sets Cache-Control no-store header
+    priority: high
+    expected_result: Token responses uncached
+  - id: SEC-026
+    category: authentication_security
+    name: Session Cookie HttpOnly Flag
+    description: Verify authentication cookies set HttpOnly flag
+    priority: high
+    expected_result: HttpOnly attribute present
+  - id: SEC-027
+    category: authentication_security
+    name: Session Cookie Secure Flag
+    description: Verify authentication cookies set Secure flag
+    priority: high
+    expected_result: Secure attribute present
+  - id: SEC-028
+    category: authentication_security
+    name: Session Cookie SameSite Attribute
+    description: Verify authentication cookies set SameSite=Lax or Strict
+    priority: high
+    expected_result: SameSite attribute present
+  - id: SEC-029
+    category: authentication_security
+    name: JWT Signature Algorithm Verification
+    description: Verify JWT tokens signed using RS256 or HS256 algorithm
+    priority: critical
+    expected_result: Unsigned or 'none' algorithm JWTs rejected
+  - id: SEC-030
+    category: authentication_security
+    name: JWT Expiration Claim Validation
+    description: Verify server validates 'exp' claim in JWT tokens
+    priority: critical
+    expected_result: Expired JWTs rejected
+  - id: SEC-031
+    category: authentication_security
+    name: JWT Audience Claim Validation
+    description: Verify server validates 'aud' claim in JWT tokens
+    priority: high
+    expected_result: Invalid audience JWTs rejected
+  - id: SEC-032
+    category: authentication_security
+    name: JWT Issuer Claim Validation
+    description: Verify server validates 'iss' claim in JWT tokens
+    priority: high
+    expected_result: Invalid issuer JWTs rejected
+  - id: SEC-033
+    category: authentication_security
+    name: OAuth Authorization Code Single Use
+    description: Verify Spotify authorization code cannot be exchanged twice
+    priority: high
+    expected_result: Re-used authorization code returns invalid_grant
+  - id: SEC-034
+    category: authentication_security
+    name: Redirect URI Manipulation Defense
+    description: Verify OAuth token exchange validates redirect_uri exact match
+    priority: critical
+    expected_result: Mismatched redirect_uri rejected
+  - id: SEC-035
+    category: authentication_security
+    name: Concurrent Login Sessions Behavior
+    description: Verify concurrent logins from multiple devices handled securely
+    priority: low
+    expected_result: Sessions distinct or limited
+  - id: SEC-036
+    category: authentication_security
+    name: Account Lockout Reset Duration
+    description: Verify lockout window resets after designated timeout
+    priority: medium
+    expected_result: Lockout cleared after timeout
+  - id: SEC-037
+    category: authentication_security
+    name: Password Reset User Enumeration Prevention
+    description: Verify password reset request for non-existent email returns generic success
+    priority: medium
+    expected_result: Generic success message returned
+  - id: SEC-038
+    category: authentication_security
+    name: Re-Authentication For Sensitive Actions
+    description: Verify deleting account or changing email requires password confirmation
+    priority: high
+    expected_result: Re-authentication prompt displayed
+  - id: SEC-039
+    category: authentication_security
+    name: Client Side Password History Prevention
+    description: Verify password history not cached in mobile memory
+    priority: low
+    expected_result: Password variable cleared after use
+  - id: SEC-040
+    category: authentication_security
+    name: Auth Failure Rate Alarm Trigger
+    description: Verify security monitoring triggers alert on high login error rate
+    priority: medium
+    expected_result: Security audit log event created
+
+  # Authorization & Access Control (SEC-041 to SEC-070)
+  - id: SEC-041
+    category: authorization_access_control
+    name: Firestore Security Rules Document Ownership
+    description: Verify Firestore security rules restrict user document read to owner UID
+    priority: critical
+    expected_result: Reading another user's document returns Permission Denied
+  - id: SEC-042
+    category: authorization_access_control
+    name: Firestore Security Rules Write Ownership
+    description: Verify Firestore security rules restrict user document write to owner UID
+    priority: critical
+    expected_result: Writing to another user's document returns Permission Denied
+  - id: SEC-043
+    category: authorization_access_control
+    name: Private Playlist Access Restriction
+    description: Verify user A cannot view private playlist belonging to user B
+    priority: critical
+    expected_result: Private playlist hidden or access denied
+  - id: SEC-044
+    category: authorization_access_control
+    name: Mood History Access Restriction
+    description: Verify user A cannot view mood history belonging to user B
+    priority: critical
+    expected_result: Access denied for non-owner
+  - id: SEC-045
+    category: authorization_access_control
+    name: Mood Journal Access Restriction
+    description: Verify user A cannot read journal entries belonging to user B
+    priority: critical
+    expected_result: Access denied for non-owner
+  - id: SEC-046
+    category: authorization_access_control
+    name: IDOR Profile Modification Defense
+    description: Verify attempting to edit profile with manipulated UID parameter fails
+    priority: critical
+    expected_result: Insecure Direct Object Reference blocked by server rules
+  - id: SEC-047
+    category: authorization_access_control
+    name: IDOR Playlist Modification Defense
+    description: Verify attempting to modify another user's playlist via API fails
+    priority: critical
+    expected_result: IDOR attempt blocked
+  - id: SEC-048
+    category: authorization_access_control
+    name: Role-Based Access Control Admin Endpoints
+    description: Verify standard user cannot invoke admin management endpoints
+    priority: high
+    expected_result: HTTP 403 Forbidden
+  - id: SEC-049
+    category: authorization_access_control
+    name: Privilege Escalation Attempt Via Profile Update
+    description: "Verify user cannot set role: admin in profile update payload"
+    priority: critical
+    expected_result: Role attribute filtered or restricted
+  - id: SEC-050
+    category: authorization_access_control
+    name: Public Playlist Read Permission
+    description: Verify public playlist is readable by authorized users
+    priority: medium
+    expected_result: Public playlist tracks returned
+  - id: SEC-051
+    category: authorization_access_control
+    name: Public Playlist Write Permission Restriction
+    description: Verify non-owner cannot modify tracks in public playlist
+    priority: high
+    expected_result: Non-owner write rejected
+  - id: SEC-052
+    category: authorization_access_control
+    name: Firestore Rule Default Deny All
+    description: Verify default Firestore rules fall back to deny all unmatched paths
+    priority: critical
+    expected_result: Default match / { allow read, write: if false; } enforced
+  - id: SEC-053
+    category: authorization_access_control
+    name: API Endpoint HTTP Method Privilege Restriction
+    description: Verify DELETE methods on catalog endpoints require elevated rights
+    priority: high
+    expected_result: HTTP 403 Forbidden
+  - id: SEC-054
+    category: authorization_access_control
+    name: Audius API Key Scope Restriction
+    description: Verify app_name query parameter uses read-only Audius access
+    priority: medium
+    expected_result: Read-only Audius queries executed
+  - id: SEC-055
+    category: authorization_access_control
+    name: Spotify Token Minimum Scope Restriction
+    description: Verify Spotify token requests only user-read-private and playback scopes
+    priority: high
+    expected_result: No write or playlist-modify permissions requested
+  - id: SEC-056
+    category: authorization_access_control
+    name: Multi-Tenant Data Isolation Firestore
+    description: Verify data strictly segregated under /users/{uid} hierarchy
+    priority: critical
+    expected_result: Multi-tenant boundary enforced
+  - id: SEC-057
+    category: authorization_access_control
+    name: Horizontal Privilege Escalation Matrix
+    description: Verify user A cannot perform actions on behalf of user B
+    priority: critical
+    expected_result: Cross-user actions rejected
+  - id: SEC-058
+    category: authorization_access_control
+    name: Vertical Privilege Escalation Matrix
+    description: Verify regular user cannot promote self to superuser
+    priority: critical
+    expected_result: Vertical escalation blocked
+  - id: SEC-059
+    category: authorization_access_control
+    name: API Token Permission Scope Validation
+    description: Verify backend checks scope claim before serving API resources
+    priority: high
+    expected_result: Insufficient scope returns HTTP 403
+  - id: SEC-060
+    category: authorization_access_control
+    name: Revoked User Access Denial
+    description: Verify disabled or deleted user account loses API access immediately
+    priority: critical
+    expected_result: Token validation fails for disabled user
+  - id: SEC-061
+    category: authorization_access_control
+    name: Anonymous User Data Restriction
+    description: Verify unauthenticated users cannot persist data to Firestore
+    priority: high
+    expected_result: Firestore write rejected for unauthenticated request
+  - id: SEC-062
+    category: authorization_access_control
+    name: CORS Origin Authorization Check
+    description: Verify sensitive APIs restrict origins to authorized domains
+    priority: medium
+    expected_result: Unauthorized Origin header rejected
+  - id: SEC-063
+    category: authorization_access_control
+    name: User Data Export Auth Requirement
+    description: Verify downloading personal data export requires active session
+    priority: high
+    expected_result: Export endpoint requires authentication
+  - id: SEC-064
+    category: authorization_access_control
+    name: Session Hijacking Defense IP Validation
+    description: Verify drastic IP/User-Agent shift flags security check
+    priority: low
+    expected_result: Anomaly flag triggered
+  - id: SEC-065
+    category: authorization_access_control
+    name: Rate Limit Authorization Bypass Attempt
+    description: Verify rotating headers does not bypass rate limiter
+    priority: medium
+    expected_result: Rate limit enforced on UID/IP
+  - id: SEC-066
+    category: authorization_access_control
+    name: GraphQL Field Level Authorization
+    description: Verify field level permissions if GraphQL endpoints used
+    priority: low
+    expected_result: Unauthorized fields omitted
+  - id: SEC-067
+    category: authorization_access_control
+    name: Batch Request Partial Access Authorization
+    description: Verify batch API request rejects unauthorized sub-items
+    priority: medium
+    expected_result: Partial error or authorization filtering
+  - id: SEC-068
+    category: authorization_access_control
+    name: Webhook Endpoint Signature Verification
+    description: Verify incoming webhooks validate secret HMAC signature
+    priority: high
+    expected_result: Unsigned webhooks rejected
+  - id: SEC-069
+    category: authorization_access_control
+    name: Storage Bucket Rules User Isolation
+    description: Verify Firebase Storage rules restrict user uploads to /users/{uid}/
+    priority: high
+    expected_result: Storage path permissions enforced
+  - id: SEC-070
+    category: authorization_access_control
+    name: Access Control Policy Audit
+    description: Verify automated static policy check passes
+    priority: medium
+    expected_result: Security rules pass audit
+
+  # Session Management (SEC-071 to SEC-100)
+  - id: SEC-071
+    category: session_management
+    name: Session Token Entropy 128-Bit
+    description: Verify session tokens contain at least 128 bits of entropy
+    priority: critical
+    expected_result: High-entropy cryptographically secure token string
+  - id: SEC-072
+    category: session_management
+    name: Session Expiration Timeout Enforcement
+    description: Verify idle session expires after 30 days or designated duration
+    priority: high
+    expected_result: Expired session forces re-authentication
+  - id: SEC-073
+    category: session_management
+    name: Logout Complete Token Revocation
+    description: Verify tapping Log Out revokes local and remote refresh tokens
+    priority: critical
+    expected_result: Revoked refresh token rejected on subsequent use
+  - id: SEC-074
+    category: session_management
+    name: SharedPreferences Encrypted Storage
+    description: Verify tokens written to SharedPreferences use MODE_PRIVATE
+    priority: critical
+    expected_result: File permissions set to -rw------- (app user UID only)
+  - id: SEC-075
+    category: session_management
+    name: In-Memory Token Handling
+    description: Verify access tokens held in memory are cleared on logout
+    priority: high
+    expected_result: Memory reference set to null
+  - id: SEC-076
+    category: session_management
+    name: Refresh Token Rotation
+    description: Verify Spotify refresh token rotation returns new refresh token on use
+    priority: medium
+    expected_result: Old refresh token invalidated upon rotation
+  - id: SEC-077
+    category: session_management
+    name: Session Fixation Defense On Login
+    description: Verify new session ID generated upon authentication
+    priority: high
+    expected_result: Pre-login session ID discarded
+  - id: SEC-078
+    category: session_management
+    name: Simultaneous Session Limit Check
+    description: Verify maximum concurrent session count per user
+    priority: low
+    expected_result: Active session count bounded
+  - id: SEC-079
+    category: session_management
+    name: Session Timeout Warning Trigger
+    description: Verify prompt before session expiration if applicable
+    priority: low
+    expected_result: Expiration handled gracefully
+  - id: SEC-080
+    category: session_management
+    name: Device Lock Session Security
+    description: Verify app state lock on device screen lock if configured
+    priority: low
+    expected_result: State locked
+  - id: SEC-081
+    category: session_management
+    name: Concurrent Token Refresh Throttling
+    description: Verify multiple parallel requests trigger only 1 refresh call
+    priority: medium
+    expected_result: Single refresh request executed
+  - id: SEC-082
+    category: session_management
+    name: Session Token Masking In Logs
+    description: Verify token values masked as 'Bearer *****' in HTTP debug logs
+    priority: critical
+    expected_result: Tokens never printed in clear text in logs
+  - id: SEC-083
+    category: session_management
+    name: Session Cookie Path Attribute
+    description: Verify session cookie Path attribute restricted to /
+    priority: low
+    expected_result: Cookie Path=/
+  - id: SEC-084
+    category: session_management
+    name: Session Cookie Domain Attribute
+    description: Verify session cookie Domain attribute restricted to host
+    priority: low
+    expected_result: Cookie Domain exact match
+  - id: SEC-085
+    category: session_management
+    name: Session Data Storage Android Auto-Backup Exclude
+    description: Verify backup_rules.xml excludes auth tokens from cloud backup
+    priority: high
+    expected_result: spotify_auth_prefs.xml excluded from device backup
+  - id: SEC-086
+    category: session_management
+    name: App Task Removal Session Security
+    description: Verify background tasks pause media playback on task removal
+    priority: medium
+    expected_result: Playback service pauses on task removal
+  - id: SEC-087
+    category: session_management
+    name: Spotify Token Expiration Auto-Refresh
+    description: Verify background refresh triggered before token expires
+    priority: high
+    expected_result: Token refreshed automatically when expired
+  - id: SEC-088
+    category: session_management
+    name: Invalid Refresh Token Fallback
+    description: Verify invalid refresh token resets state to NotConnected
+    priority: high
+    expected_result: Auth state set to NotConnected and user prompted to log in
+  - id: SEC-089
+    category: session_management
+    name: Multi-Threaded Session State Access
+    description: Verify StateFlow/mutableStateOf session updates are thread-safe
+    priority: medium
+    expected_result: Thread-safe session updates
+  - id: SEC-090
+    category: session_management
+    name: Memory Dump Token Protection
+    description: Verify sensitive strings cleared when GC runs
+    priority: low
+    expected_result: Token references dereferenced
+  - id: SEC-091
+    category: session_management
+    name: Cross-Site Scripting Session Theft Defense
+    description: Verify local storage not accessible to third party scripts
+    priority: critical
+    expected_result: Storage scoped strictly to app package
+  - id: SEC-092
+    category: session_management
+    name: Session Heartbeat Ping
+    description: Verify periodic 10-second listening ping updates active session timestamp
+    priority: low
+    expected_result: Session timestamp updated
+  - id: SEC-093
+    category: session_management
+    name: Session Idle Timeout Invalidation
+    description: Verify inactive session invalidated
+    priority: medium
+    expected_result: Inactive session cleared
+  - id: SEC-094
+    category: session_management
+    name: Auth Header Bearer Token Prefix Verification
+    description: Verify Authorization header formatted as 'Bearer <token>'
+    priority: high
+    expected_result: Header correctly formatted
+  - id: SEC-095
+    category: session_management
+    name: Session Termination On Account Lock
+    description: Verify locked account terminates active sessions immediately
+    priority: high
+    expected_result: Sessions terminated
+  - id: SEC-096
+    category: session_management
+    name: Session Replay Defense Timestamp
+    description: Verify API requests include timestamp to prevent replay attacks
+    priority: medium
+    expected_result: Replayed requests outside timestamp window rejected
+  - id: SEC-097
+    category: session_management
+    name: Session State Machine Consistency
+    description: Verify state transitions (NotConnected -> Connecting -> Connected)
+    priority: medium
+    expected_result: Valid state transitions strictly enforced
+  - id: SEC-098
+    category: session_management
+    name: Client Clock Skew Toleration
+    description: Verify token expiry calculation tolerates 60s clock skew
+    priority: low
+    expected_result: Token refresh triggered smoothly despite clock skew
+  - id: SEC-099
+    category: session_management
+    name: Session Audit Logging Event
+    description: Verify login and logout events recorded in security audit log
+    priority: low
+    expected_result: Audit log entries created
+  - id: SEC-100
+    category: session_management
+    name: Session Teardown On Uninstall
+    description: Verify app uninstall removes token preferences
+    priority: high
+    expected_result: Token preferences deleted
+
+  # Input Validation & Sanitization (SEC-101 to SEC-130)
+  - id: SEC-101
+    category: input_validation_sanitization
+    name: HTML Tag Sanitization In User Display Name
+    description: Verify HTML tags in user name input are encoded or stripped
+    priority: critical
+    expected_result: HTML tags rendered as plain text
+  - id: SEC-102
+    category: input_validation_sanitization
+    name: Script Tag Sanitization In Journal Text
+    description: Verify <script> tags in journal entry text are escaped
+    priority: critical
+    expected_result: Script tag rendered as literal text without execution
+  - id: SEC-103
+    category: input_validation_sanitization
+    name: SQL Injection Payload In Search Field
+    description: Verify SQL injection payload in search field processed safely
+    priority: critical
+    expected_result: Payload treated as plain search query string
+  - id: SEC-104
+    category: input_validation_sanitization
+    name: Path Traversal String In Playlist Name
+    description: Verify path traversal payload e.g. ../../etc/passwd handled safely
+    priority: critical
+    expected_result: Path traversal string sanitized and treated as plain text
+  - id: SEC-105
+    category: input_validation_sanitization
+    name: Command Injection Payload In Form Inputs
+    description: Verify shell command injection payload e.g. ; rm -rf / sanitized
+    priority: critical
+    expected_result: Command string treated as plain text
+  - id: SEC-106
+    category: input_validation_sanitization
+    name: Null Byte Injection In File Upload Name
+    description: Verify null byte character %00 in string inputs stripped
+    priority: high
+    expected_result: Null byte stripped or rejected
+  - id: SEC-107
+    category: input_validation_sanitization
+    name: Extremely Long String Input Stress (10,000 Chars)
+    description: Verify submitting 10,000 character string does not cause buffer overflow
+    priority: high
+    expected_result: String truncated or validated without application crash
+  - id: SEC-108
+    category: input_validation_sanitization
+    name: Unicode Normalization Form C Validation
+    description: Verify user text input normalized to Unicode NFC
+    priority: medium
+    expected_result: Canonical Unicode representation stored
+  - id: SEC-109
+    category: input_validation_sanitization
+    name: Control Character Stripping
+    description: Verify ASCII control characters 0x00-0x1F stripped from form inputs
+    priority: medium
+    expected_result: Control characters removed
+  - id: SEC-110
+    category: input_validation_sanitization
+    name: Email Address Length Limit 254 Chars
+    description: Verify email address input rejects strings exceeding 254 characters
+    priority: medium
+    expected_result: Validation error displayed for overlong email
+  - id: SEC-111
+    category: input_validation_sanitization
+    name: URL Query Parameter Encoding
+    description: Verify URI search query parameters URL encoded using Uri.encode
+    priority: high
+    expected_result: Special characters %20 %26 encoded cleanly
+  - id: SEC-112
+    category: input_validation_sanitization
+    name: JSON Injection Defense In Store State
+    description: Verify JSON string formatting escapes quotes and backslashes
+    priority: high
+    expected_result: Valid JSON generated without structure breaking
+  - id: SEC-113
+    category: input_validation_sanitization
+    name: Numeric Input Bounds Check Duration
+    description: Verify song duration numeric inputs bounded between 1 and 86400s
+    priority: low
+    expected_result: Out-of-bounds duration values rejected
+  - id: SEC-114
+    category: input_validation_sanitization
+    name: Floating Point Volume Bounds Check
+    description: Verify audio volume constrained strictly between 0.0f and 1.0f
+    priority: medium
+    expected_result: Volume clamped to [0.0, 1.0] range
+  - id: SEC-115
+    category: input_validation_sanitization
+    name: Array Index Bounds Check Playlists
+    description: Verify out-of-bounds playlist index access handled safely
+    priority: high
+    expected_result: IndexOutOfBoundsException prevented
+  - id: SEC-116
+    category: input_validation_sanitization
+    name: Multi-Byte UTF-8 Emoji Input
+    description: Verify 4-byte UTF-8 emoji strings stored and rendered cleanly
+    priority: medium
+    expected_result: Emojis preserved and rendered correctly
+  - id: SEC-117
+    category: input_validation_sanitization
+    name: XML External Entity (XXE) Injection Defense
+    description: Verify XML parser disables external entity resolution
+    priority: critical
+    expected_result: XXE payloads rejected
+  - id: SEC-118
+    category: input_validation_sanitization
+    name: LDAP Injection Payload Defense
+    description: Verify LDAP query injection payload handled safely
+    priority: low
+    expected_result: Plain text handling
+  - id: SEC-119
+    category: input_validation_sanitization
+    name: Header Injection Defense In HTTP Requests
+    description: Verify carriage return \r\n in header values stripped
+    priority: critical
+    expected_result: HTTP response splitting / header injection prevented
+  - id: SEC-120
+    category: input_validation_sanitization
+    name: RegEx Denial of Service (ReDoS) Defense
+    description: Verify search RegEx patterns avoid exponential backtracking
+    priority: high
+    expected_result: RegEx query completes in O(N) time
+  - id: SEC-121
+    category: input_validation_sanitization
+    name: File Path Traversal Local Audio Loader
+    description: Verify audio file loader validates cacheDir canonical path
+    priority: critical
+    expected_result: File loading restricted strictly to cacheDir
+  - id: SEC-122
+    category: input_validation_sanitization
+    name: Integer Overflow Defense Track ID
+    description: Verify large integer track IDs (> 2^31-1) parsed safely
+    priority: medium
+    expected_result: Large IDs parsed or rejected cleanly
+  - id: SEC-123
+    category: input_validation_sanitization
+    name: Form Input Trim Functionality
+    description: Verify trim() applied to user name and playlist titles
+    priority: low
+    expected_result: Leading/trailing spaces trimmed
+  - id: SEC-124
+    category: input_validation_sanitization
+    name: Search Query Max Character Limit 100
+    description: Verify search query input capped at 100 characters
+    priority: low
+    expected_result: Query string capped at 100 chars
+  - id: SEC-125
+    category: input_validation_sanitization
+    name: Journal Text Character Limit 5000
+    description: Verify journal text capped at 5000 characters
+    priority: low
+    expected_result: Journal text capped at 5000 chars
+  - id: SEC-126
+    category: input_validation_sanitization
+    name: Playlist Title Character Limit 60
+    description: Verify playlist title input capped at 60 characters
+    priority: low
+    expected_result: Title input capped at 60 chars
+  - id: SEC-127
+    category: input_validation_sanitization
+    name: Playlist Description Character Limit 200
+    description: Verify playlist description capped at 200 characters
+    priority: low
+    expected_result: Description input capped at 200 chars
+  - id: SEC-128
+    category: input_validation_sanitization
+    name: Invalid Content-Type Request Body Rejection
+    description: Verify backend rejects unexpected Content-Type header
+    priority: medium
+    expected_result: HTTP 415 Unsupported Media Type
+  - id: SEC-129
+    category: input_validation_sanitization
+    name: Malformed JSON Request Body Rejection
+    description: Verify backend rejects malformed JSON payload
+    priority: high
+    expected_result: HTTP 400 Bad Request
+  - id: SEC-130
+    category: input_validation_sanitization
+    name: Type Confusion In JSON Payload Defense
+    description: Verify array passed where string expected handles type error
+    priority: medium
+    expected_result: Type mismatch handled safely without crash
+
+  # XSS & SQLi Defensive Checks (SEC-131 to SEC-160)
+  - id: SEC-131
+    category: xss_sqli_defensive_checks
+    name: Reflected XSS In Search Results Defensive Check
+    description: Verify search query reflection in UI encodes HTML entities
+    priority: critical
+    expected_result: Query string <script>alert(1)</script> rendered as plain text
+  - id: SEC-132
+    category: xss_sqli_defensive_checks
+    name: Stored XSS In Playlist Title Defensive Check
+    description: Verify stored playlist title containing javascript: alert payload
+    priority: critical
+    expected_result: Title rendered as plain text
+  - id: SEC-133
+    category: xss_sqli_defensive_checks
+    name: Stored XSS In Journal Entry Defensive Check
+    description: Verify journal entry containing <img src=x onerror=alert(1)>
+    priority: critical
+    expected_result: Image onerror payload rendered harmlessly
+  - id: SEC-134
+    category: xss_sqli_defensive_checks
+    name: DOM-Based XSS In Route Navigation Check
+    description: Verify route URL hash parameters do not execute arbitrary JS
+    priority: critical
+    expected_result: Route parameters validated against whitelist
+  - id: SEC-135
+    category: xss_sqli_defensive_checks
+    name: Blind SQL Injection Search Defensive Check
+    description: Verify search payload ' AND SLEEP(5)-- does not introduce delay
+    priority: critical
+    expected_result: Search query executes in standard time without DB sleep
+  - id: SEC-136
+    category: xss_sqli_defensive_checks
+    name: UNION Based SQL Injection Search Check
+    description: Verify search payload ' UNION SELECT 1,2,3-- returns no extra data
+    priority: critical
+    expected_result: Plain search results returned
+  - id: SEC-137
+    category: xss_sqli_defensive_checks
+    name: Boolean Based SQL Injection Check
+    description: Verify search payload ' OR '1'='1' returns normal search matches
+    priority: critical
+    expected_result: Literal search results returned
+  - id: SEC-138
+    category: xss_sqli_defensive_checks
+    name: Firestore NoSQL Injection Defense
+    description: Verify passing object {$ne: null} in REST params fails
+    priority: critical
+    expected_result: Query operators sanitized
+  - id: SEC-139
+    category: xss_sqli_defensive_checks
+    name: Jetpack Compose Auto-Escaping Verification
+    description: Verify Compose Text composable auto-escapes string state
+    priority: critical
+    expected_result: Text composable renders all strings as plain text
+  - id: SEC-140
+    category: xss_sqli_defensive_checks
+    name: WebView JavaScript Interface Security
+    description: Verify WebViews (if used) disable addJavascriptInterface or restrict origin
+    priority: high
+    expected_result: JS bridge restricted
+  - id: SEC-141
+    category: xss_sqli_defensive_checks
+    name: SVG Vector File XSS Defense
+    description: Verify SVG vector drawables do not execute embedded scripts
+    priority: medium
+    expected_result: Vector drawables rendered statically
+  - id: SEC-142
+    category: xss_sqli_defensive_checks
+    name: Content Security Policy (CSP) Header Check
+    description: Verify web endpoints serve Content-Security-Policy header
+    priority: high
+    expected_result: CSP header present
+  - id: SEC-143
+    category: xss_sqli_defensive_checks
+    name: X-XSS-Protection Header Check
+    description: Verify web endpoints serve X-XSS-Protection header
+    priority: low
+    expected_result: X-XSS-Protection 1; mode=block
+  - id: SEC-144
+    category: xss_sqli_defensive_checks
+    name: Parameterized Database Queries Verification
+    description: Verify room/SQLite or server DB uses parameterized queries
+    priority: critical
+    expected_result: 100% prepared statements used
+  - id: SEC-145
+    category: xss_sqli_defensive_checks
+    name: HTML Entity Encoding Utility Check
+    description: Verify string encoder handles & < > " ' characters
+    priority: medium
+    expected_result: HTML special chars converted
+  - id: SEC-146
+    category: xss_sqli_defensive_checks
+    name: Attribute XSS Defense In Image URLs
+    description: Verify image artwork URI scheme validated as http, https, or android.resource
+    priority: high
+    expected_result: Insecure URI schemes e.g. javascript: rejected
+  - id: SEC-147
+    category: xss_sqli_defensive_checks
+    name: CSS Injection In Theme Styling Check
+    description: Verify theme mode string validated against whitelist ('Ambient', 'AMOLED')
+    priority: medium
+    expected_result: Arbitrary CSS injection blocked
+  - id: SEC-148
+    category: xss_sqli_defensive_checks
+    name: JSON LDAP Injection Defense Check
+    description: Verify LDAP characters escaped in user queries
+    priority: low
+    expected_result: Plain text handling
+  - id: SEC-149
+    category: xss_sqli_defensive_checks
+    name: Expression Language Injection Check
+    description: Verify template expression language evaluation disabled on user inputs
+    priority: high
+    expected_result: Expressions e.g. ${1+1} rendered literally
+  - id: SEC-150
+    category: xss_sqli_defensive_checks
+    name: Second Order SQL Injection Check
+    description: Verify user name stored in DB does not trigger SQLi when fetched later
+    priority: high
+    expected_result: Safe parameterized execution on second read
+  - id: SEC-151
+    category: xss_sqli_defensive_checks
+    name: Multi-Byte Character XSS Bypass Check
+    description: Verify UTF-7 / GBK multi-byte XSS payloads sanitized
+    priority: medium
+    expected_result: Multi-byte payloads sanitized
+  - id: SEC-152
+    category: xss_sqli_defensive_checks
+    name: Event Handler XSS In Attribute Check
+    description: Verify onclick / onload attributes in inputs neutralized
+    priority: high
+    expected_result: Event handlers neutralized
+  - id: SEC-153
+    category: xss_sqli_defensive_checks
+    name: ORM Injection Check
+    description: Verify ORM filter criteria sanitized
+    priority: high
+    expected_result: Criteria sanitized
+  - id: SEC-154
+    category: xss_sqli_defensive_checks
+    name: RegEx Injection Check In Search Filters
+    description: Verify user input in Pattern.compile escaped using Pattern.quote
+    priority: medium
+    expected_result: Pattern.quote applied
+  - id: SEC-155
+    category: xss_sqli_defensive_checks
+    name: Markdown XSS Injection Check
+    description: Verify Markdown parser disables raw HTML execution
+    priority: medium
+    expected_result: Raw HTML disabled in Markdown
+  - id: SEC-156
+    category: xss_sqli_defensive_checks
+    name: SQL Comment Injection Check
+    description: Verify SQL comments -- or /* */ sanitized
+    priority: medium
+    expected_result: Comments treated as text
+  - id: SEC-157
+    category: xss_sqli_defensive_checks
+    name: Stacked Queries SQL Injection Check
+    description: Verify multiple statement injection e.g. ; DROP TABLE users rejected
+    priority: critical
+    expected_result: Stacked queries rejected
+  - id: SEC-158
+    category: xss_sqli_defensive_checks
+    name: Iframe Injection Check
+    description: Verify <iframe> tags in text inputs stripped or escaped
+    priority: medium
+    expected_result: Iframes stripped/escaped
+  - id: SEC-159
+    category: xss_sqli_defensive_checks
+    name: Base64 Encoded XSS Payload Check
+    description: Verify data:text/html;base64 URIs rejected in artwork links
+    priority: high
+    expected_result: Data URIs rejected
+  - id: SEC-160
+    category: xss_sqli_defensive_checks
+    name: Static Code Analysis SAST Injection Check
+    description: Verify Semgrep/Bandit SAST scan finds 0 high SQLi/XSS risks
+    priority: critical
+    expected_result: Zero high severity SAST findings
+
+  # API Security & CORS (SEC-161 to SEC-190)
+  - id: SEC-161
+    category: api_security_cors
+    name: CORS Origin Whitelist Verification
+    description: Verify Access-Control-Allow-Origin header does not return wildcard '*' with credentials
+    priority: critical
+    expected_result: Specific authorized origin returned or wildcard without credentials
+  - id: SEC-162
+    category: api_security_cors
+    name: CORS Credentials Header Verification
+    description: Verify Access-Control-Allow-Credentials true only for trusted origins
+    priority: high
+    expected_result: Allow-Credentials restricted to trusted origins
+  - id: SEC-163
+    category: api_security_cors
+    name: CORS Allowed Methods Whitelist
+    description: Verify Access-Control-Allow-Methods restricts to GET, POST, PUT, DELETE, OPTIONS
+    priority: medium
+    expected_result: Allowed methods whitelisted
+  - id: SEC-164
+    category: api_security_cors
+    name: CORS Allowed Headers Whitelist
+    description: Verify Access-Control-Allow-Headers restricts to Content-Type, Authorization
+    priority: medium
+    expected_result: Allowed headers whitelisted
+  - id: SEC-165
+    category: api_security_cors
+    name: API Rate Limiting Threshold 100 Req/Min
+    description: Verify API enforces rate limit of 100 requests per minute per IP
+    priority: critical
+    expected_result: HTTP 429 Too Many Requests returned upon exceeding limit
+  - id: SEC-166
+    category: api_security_cors
+    name: API Rate Limit Header Response
+    description: Verify Retry-After header included in 429 responses
+    priority: medium
+    expected_result: Retry-After header present
+  - id: SEC-167
+    category: api_security_cors
+    name: API Key Leak In URL Parameters Defense
+    description: Verify API keys transmitted via headers instead of URL query parameters
+    priority: high
+    expected_result: Keys passed in Authorization or custom headers
+  - id: SEC-168
+    category: api_security_cors
+    name: API Response Data Over-Fetching Audit
+    description: Verify API endpoints omit internal server data or password hashes
+    priority: high
+    expected_result: Internal fields excluded from response JSON
+  - id: SEC-169
+    category: api_security_cors
+    name: Mass Assignment Vulnerability Defense
+    description: Verify DTOs restrict updateable properties on user objects
+    priority: critical
+    expected_result: Mass assignment of administrative fields rejected
+  - id: SEC-170
+    category: api_security_cors
+    name: Broken Object Level Authorization (BOLA) Check
+    description: Verify API checks resource ownership before returning objects
+    priority: critical
+    expected_result: Unauthorized object access returns HTTP 403
+  - id: SEC-171
+    category: api_security_cors
+    name: Broken Function Level Authorization Check
+    description: Verify administrative API functions restricted to admin roles
+    priority: critical
+    expected_result: Administrative function calls by regular users fail
+  - id: SEC-172
+    category: api_security_cors
+    name: API Request Content-Length Limit 1MB
+    description: Verify API gateway rejects payloads exceeding 1MB limit
+    priority: medium
+    expected_result: HTTP 413 Payload Too Large
+  - id: SEC-173
+    category: api_security_cors
+    name: API Idempotency Verification For PUT Requests
+    description: Verify repeating PUT request yields identical state
+    priority: low
+    expected_result: Idempotence verified
+  - id: SEC-174
+    category: api_security_cors
+    name: HTTPS Redirection Enforcement
+    description: Verify HTTP requests automatically redirect to HTTPS 301
+    priority: high
+    expected_result: HTTP 301/308 redirect to HTTPS
+  - id: SEC-175
+    category: api_security_cors
+    name: HSTS Preload Header Verification
+    description: Verify Strict-Transport-Security header present with includeSubDomains
+    priority: high
+    expected_result: Strict-Transport-Security header configured
+  - id: SEC-176
+    category: api_security_cors
+    name: Audius API TLS Certificate Validation
+    description: Verify OkHttpClient validates Audius API TLS certificates
+    priority: critical
+    expected_result: Invalid or self-signed certs rejected
+  - id: SEC-177
+    category: api_security_cors
+    name: Spotify API TLS Certificate Validation
+    description: Verify OkHttpClient validates Spotify API TLS certificates
+    priority: critical
+    expected_result: Invalid certs rejected
+  - id: SEC-178
+    category: api_security_cors
+    name: Firebase API TLS Certificate Validation
+    description: Verify Firebase client validates TLS certificates
+    priority: critical
+    expected_result: Invalid certs rejected
+  - id: SEC-179
+    category: api_security_cors
+    name: Custom Certificate Pinning Readiness
+    description: Verify network SecurityConfig supports certificate pinning
+    priority: medium
+    expected_result: Pinning configuration supported
+  - id: SEC-180
+    category: api_security_cors
+    name: API Deprecation Sunset Header Check
+    description: Verify API deprecation headers present on legacy routes
+    priority: low
+    expected_result: Sunset header checked
+  - id: SEC-181
+    category: api_security_cors
+    name: API Endpoint Enumeration Defense
+    description: Verify uniform 404 responses for non-existent API endpoints
+    priority: low
+    expected_result: Uniform 404 responses
+  - id: SEC-182
+    category: api_security_cors
+    name: GraphQL Introspection Query Disable
+    description: Verify GraphQL introspection disabled in production if applicable
+    priority: medium
+    expected_result: Introspection disabled or restricted
+  - id: SEC-183
+    category: api_security_cors
+    name: REST Method Whitelist Options Check
+    description: Verify OPTIONS preflight request responds accurately
+    priority: low
+    expected_result: Accurate OPTIONS response
+  - id: SEC-184
+    category: api_security_cors
+    name: API Request Timestamp Replay Window
+    description: Verify 5-minute replay window on timestamped requests
+    priority: medium
+    expected_result: Out-of-window requests rejected
+  - id: SEC-185
+    category: api_security_cors
+    name: API Error Message Abstraction
+    description: Verify stack traces omitted from 500 error responses
+    priority: high
+    expected_result: Clean error payload without stack trace
+  - id: SEC-186
+    category: api_security_cors
+    name: API Request UUID Correlation ID
+    description: Verify X-Request-ID header attached for request tracking
+    priority: low
+    expected_result: Correlation ID logged
+  - id: SEC-187
+    category: api_security_cors
+    name: Server User Agent Information Leak Check
+    description: Verify Server header does not expose detailed OS/framework version
+    priority: medium
+    expected_result: Generic Server header
+  - id: SEC-188
+    category: api_security_cors
+    name: X-Powered-By Header Suppression
+    description: Verify X-Powered-By header suppressed or removed
+    priority: medium
+    expected_result: X-Powered-By header absent
+  - id: SEC-189
+    category: api_security_cors
+    name: API Response JSON Schema Validation
+    description: Verify backend validates outgoing JSON against schema
+    priority: low
+    expected_result: Schema compliant JSON
+  - id: SEC-190
+    category: api_security_cors
+    name: API Security Test Suite Execution
+    description: Verify security test suite runs against target API
+    priority: high
+    expected_result: Security test suite passes
+
+  # Security Headers & Cookies (SEC-191 to SEC-220)
+  - id: SEC-191
+    category: security_headers_cookies
+    name: Strict-Transport-Security Header
+    description: Verify max-age=31536000; includeSubDomains; preload in HSTS
+    priority: high
+    expected_result: HSTS header present and valid
+  - id: SEC-192
+    category: security_headers_cookies
+    name: X-Content-Type-Options nosniff
+    description: Verify X-Content-Type-Options: nosniff header present
+    priority: high
+    expected_result: nosniff header present
+  - id: SEC-193
+    category: security_headers_cookies
+    name: X-Frame-Options DENY or SAMEORIGIN
+    description: Verify X-Frame-Options header present to prevent clickjacking
+    priority: high
+    expected_result: DENY or SAMEORIGIN header present
+  - id: SEC-194
+    category: security_headers_cookies
+    name: Content-Security-Policy Default-Src
+    description: Verify CSP header contains default-src 'self' directive
+    priority: high
+    expected_result: CSP header present and restrictive
+  - id: SEC-195
+    category: security_headers_cookies
+    name: Referrer-Policy strict-origin-when-cross-origin
+    description: Verify Referrer-Policy header present
+    priority: medium
+    expected_result: Referrer-Policy header present
+  - id: SEC-196
+    category: security_headers_cookies
+    name: Permissions-Policy Camera Microphone Disable
+    description: Verify Permissions-Policy header disables camera and microphone on web
+    priority: medium
+    expected_result: Permissions-Policy header present
+  - id: SEC-197
+    category: security_headers_cookies
+    name: Cookie HttpOnly Attribute
+    description: Verify session cookies set HttpOnly flag
+    priority: high
+    expected_result: HttpOnly present
+  - id: SEC-198
+    category: security_headers_cookies
+    name: Cookie Secure Attribute
+    description: Verify session cookies set Secure flag
+    priority: high
+    expected_result: Secure present
+  - id: SEC-199
+    category: security_headers_cookies
+    name: Cookie SameSite Attribute Lax/Strict
+    description: Verify session cookies set SameSite=Lax or Strict
+    priority: high
+    expected_result: SameSite present
+  - id: SEC-200
+    category: security_headers_cookies
+    name: Cookie Domain Scope Restriction
+    description: Verify cookie domain scope restricted strictly to current host
+    priority: medium
+    expected_result: Exact domain scope
+  - id: SEC-201
+    category: security_headers_cookies
+    name: Cookie Path Scope Restriction
+    description: Verify cookie path attribute set to /
+    priority: low
+    expected_result: Path=/
+  - id: SEC-202
+    category: security_headers_cookies
+    name: Cache-Control No-Store On Sensitive Endpoints
+    description: Verify Cache-Control: no-store on auth and profile endpoints
+    priority: high
+    expected_result: no-store header present
+  - id: SEC-203
+    category: security_headers_cookies
+    name: Pragma No-Cache Compatibility Header
+    description: Verify Pragma: no-cache header present for legacy proxy support
+    priority: low
+    expected_result: Pragma header present
+  - id: SEC-204
+    category: security_headers_cookies
+    name: X-Download-Options noopen
+    description: Verify X-Download-Options: noopen for IE compatibility
+    priority: low
+    expected_result: noopen header present
+  - id: SEC-205
+    category: security_headers_cookies
+    name: X-Permitted-Cross-Domain-Policies none
+    description: Verify X-Permitted-Cross-Domain-Policies: none
+    priority: low
+    expected_result: none header present
+  - id: SEC-206
+    category: security_headers_cookies
+    name: Cross-Origin-Embedder-Policy require-corp
+    description: Verify COEP header if cross-origin isolation enabled
+    priority: low
+    expected_result: Header checked
+  - id: SEC-207
+    category: security_headers_cookies
+    name: Cross-Origin-Opener-Policy same-origin
+    description: Verify COOP header present
+    priority: low
+    expected_result: Header checked
+  - id: SEC-208
+    category: security_headers_cookies
+    name: Cross-Origin-Resource-Policy same-site
+    description: Verify CORP header present
+    priority: low
+    expected_result: Header checked
+  - id: SEC-209
+    category: security_headers_cookies
+    name: Cookie Max-Age Expiration
+    description: Verify Max-Age attribute configured on persistent cookies
+    priority: medium
+    expected_result: Max-Age attribute set
+  - id: SEC-210
+    category: security_headers_cookies
+    name: Cookie Prefix __Host- Usage
+    description: Verify __Host- cookie prefix used for sensitive session cookies
+    priority: medium
+    expected_result: __Host- prefix applied
+  - id: SEC-211
+    category: security_headers_cookies
+    name: Cookie Prefix __Secure- Usage
+    description: Verify __Secure- cookie prefix used for secure flags
+    priority: medium
+    expected_result: __Secure- prefix applied
+  - id: SEC-212
+    category: security_headers_cookies
+    name: Clear-Site-Data Header On Logout
+    description: Verify Clear-Site-Data: "cache", "cookies", "storage" on logout
+    priority: medium
+    expected_result: Clear-Site-Data header sent on logout
+  - id: SEC-213
+    category: security_headers_cookies
+    name: ETag Conditional Header Security
+    description: Verify ETag header does not expose inode or server internal path
+    priority: low
+    expected_result: Safe hash ETag string
+  - id: SEC-214
+    category: security_headers_cookies
+    name: Access-Control-Expose-Headers Whitelist
+    description: Verify Access-Control-Expose-Headers restricts exposed response headers
+    priority: low
+    expected_result: Minimal exposed headers
+  - id: SEC-215
+    category: security_headers_cookies
+    name: Response Header Case Sensitivity Verification
+    description: Verify HTTP/2 or HTTP/1.1 header case compliance
+    priority: low
+    expected_result: Compliant header casing
+  - id: SEC-216
+    category: security_headers_cookies
+    name: Cookie Size Boundary Limit
+    description: Verify total cookie size < 4096 bytes
+    priority: low
+    expected_result: Cookie size within limit
+  - id: SEC-217
+    category: security_headers_cookies
+    name: Duplicate Header Suppression
+    description: Verify response contains no duplicate security headers
+    priority: low
+    expected_result: Single header instances
+  - id: SEC-218
+    category: security_headers_cookies
+    name: Security Header Audit Script Execution
+    description: Verify security header check script executes cleanly
+    priority: high
+    expected_result: Header check script passes
+  - id: SEC-219
+    category: security_headers_cookies
+    name: OWASP Secure Headers Benchmark
+    description: Verify headers meet OWASP Secure Headers Project recommendation
+    priority: high
+    expected_result: OWASP benchmark met
+  - id: SEC-220
+    category: security_headers_cookies
+    name: Security Header Test Artifact Export
+    description: Verify header audit report saved to artifact
+    priority: medium
+    expected_result: Report exported
+
+  # Dependency Vulnerabilities (SEC-221 to SEC-250)
+  - id: SEC-221
+    category: dependency_vulnerabilities
+    name: Gradle Dependency Vulnerability Scan
+    description: Verify Gradle dependencies against known CVE databases
+    priority: critical
+    expected_result: Zero CRITICAL or HIGH CVEs in Gradle classpath
+  - id: SEC-222
+    category: dependency_vulnerabilities
+    name: Python Pip Audit Dependency Check
+    description: Verify python requirements.txt via pip-audit tool
+    priority: critical
+    expected_result: Zero known vulnerabilities in Python packages
+  - id: SEC-223
+    category: dependency_vulnerabilities
+    name: NPM Audit Dependency Scan
+    description: Verify package.json dependencies via npm audit
+    priority: critical
+    expected_result: Zero HIGH or CRITICAL vulnerabilities in NPM tree
+  - id: SEC-224
+    category: dependency_vulnerabilities
+    name: Trivy Container & Filesystem Vulnerability Scan
+    description: Verify repository filesystem scan using Trivy vulnerability scanner
+    priority: critical
+    expected_result: Trivy scan completes with zero critical findings
+  - id: SEC-225
+    category: dependency_vulnerabilities
+    name: AndroidX Compose Library Version Security
+    description: Verify Compose BOM 2026.02.01 contains up-to-date patched libraries
+    priority: high
+    expected_result: Patched Compose libraries verified
+  - id: SEC-226
+    category: dependency_vulnerabilities
+    name: OkHttp Library Version Security
+    description: Verify OkHttp 4.12.0 contains fix for HTTP/2 CVEs
+    priority: high
+    expected_result: Patched OkHttp version verified
+  - id: SEC-227
+    category: dependency_vulnerabilities
+    name: Firebase SDK Version Security
+    description: Verify Firebase BOM 34.4.0 contains updated secure SDKs
+    priority: high
+    expected_result: Patched Firebase SDKs verified
+  - id: SEC-228
+    category: dependency_vulnerabilities
+    name: Media3 ExoPlayer Version Security
+    description: Verify Media3 1.11.1 contains audio parser security patches
+    priority: high
+    expected_result: Patched Media3 library verified
+  - id: SEC-229
+    category: dependency_vulnerabilities
+    name: Kotlin Compiler Version Security
+    description: Verify Kotlin 2.2.10 compiler version
+    priority: medium
+    expected_result: Secure Kotlin compiler version verified
+  - id: SEC-230
+    category: dependency_vulnerabilities
+    name: Android Core KTX Library Security
+    description: Verify androidx.core:core-ktx version
+    priority: medium
+    expected_result: Secure Core KTX verified
+  - id: SEC-231
+    category: dependency_vulnerabilities
+    name: Transitive Dependency Tree Audit
+    description: Verify transitive dependency tree for hidden vulnerable libraries
+    priority: high
+    expected_result: Zero transitive CRITICAL vulnerabilities
+  - id: SEC-232
+    category: dependency_vulnerabilities
+    name: Outdated Dependency Flagging
+    description: Identify dependencies > 2 major versions behind
+    priority: low
+    expected_result: Outdated dependencies flagged
+  - id: SEC-233
+    category: dependency_vulnerabilities
+    name: Dependency License Compliance Check
+    description: Verify open source licenses (Apache-2.0, MIT, BSD) compliance
+    priority: medium
+    expected_result: Compliant open source licenses
+  - id: SEC-234
+    category: dependency_vulnerabilities
+    name: Copyleft GPL License Restriction Audit
+    description: Verify no restrictive GPL/AGPL copyleft libraries in mobile client
+    priority: medium
+    expected_result: Zero GPL copyleft libraries in client binary
+  - id: SEC-235
+    category: dependency_vulnerabilities
+    name: Dependabot Configuration Verification
+    description: Verify dependabot.yml configured for automated security updates
+    priority: medium
+    expected_result: Dependabot configuration valid
+  - id: SEC-236
+    category: dependency_vulnerabilities
+    name: Typosquatting Package Name Check
+    description: Verify library names in build scripts against typosquatting list
+    priority: high
+    expected_result: All library artifacts match official repositories
+  - id: SEC-237
+    category: dependency_vulnerabilities
+    name: Maven Central Repository Verification
+    description: Verify all dependencies fetched exclusively over HTTPS from Maven Central / Google
+    priority: critical
+    expected_result: Unencrypted HTTP repository URLs absent
+  - id: SEC-238
+    category: dependency_vulnerabilities
+    name: Gradle Wrapper Checksum Verification
+    description: Verify gradle-wrapper.jar checksum matches official Gradle hash
+    priority: critical
+    expected_result: Valid Gradle wrapper checksum
+  - id: SEC-239
+    category: dependency_vulnerabilities
+    name: Deprecated Library Usage Audit
+    description: Identify deprecated libraries in build.gradle.kts
+    priority: low
+    expected_result: Deprecated libraries flagged
+  - id: SEC-240
+    category: dependency_vulnerabilities
+    name: Android SDK Platform Tools Security
+    description: Verify Android SDK platform-36.1 tools security baseline
+    priority: medium
+    expected_result: Platform tools verified
+  - id: SEC-241
+    category: dependency_vulnerabilities
+    name: GitHub Security Advisory (GHSA) Audit
+    description: Cross reference project dependencies with GHSA database
+    priority: high
+    expected_result: Zero unpatched GHSA advisories
+  - id: SEC-242
+    category: dependency_vulnerabilities
+    name: National Vulnerability Database (NVD) Audit
+    description: Cross reference project dependencies with NVD database
+    priority: high
+    expected_result: Zero unpatched NVD CVEs
+  - id: SEC-243
+    category: dependency_vulnerabilities
+    name: Automated Dependency Vulnerability Alert Workflow
+    description: Verify vulnerability workflow runs dependency scan
+    priority: high
+    expected_result: Workflow step executed
+  - id: SEC-244
+    category: dependency_vulnerabilities
+    name: Dependency Vulnerability SARIF Export
+    description: Verify Trivy/audit SARIF output generated for GitHub Security tab
+    priority: medium
+    expected_result: SARIF report exported
+  - id: SEC-245
+    category: dependency_vulnerabilities
+    name: Dependency Audit Failure Threshold
+    description: Verify workflow fails build on CRITICAL severity CVE
+    priority: critical
+    expected_result: Build fails if CRITICAL CVE detected
+  - id: SEC-246
+    category: dependency_vulnerabilities
+    name: Shadowed Class Conflict Audit
+    description: Verify no duplicate or shadowed classes in dependency JARs
+    priority: low
+    expected_result: Zero duplicate class collisions
+  - id: SEC-247
+    category: dependency_vulnerabilities
+    name: Native Library .so Vulnerability Scan
+    description: Verify bundled native libraries (.so) scanned for vulnerabilities
+    priority: medium
+    expected_result: Native libraries verified
+  - id: SEC-248
+    category: dependency_vulnerabilities
+    name: Unused Dependency Tree Pruning
+    description: Identify unused dependencies in build scripts
+    priority: low
+    expected_result: Unused dependencies flagged
+  - id: SEC-249
+    category: dependency_vulnerabilities
+    name: Dependency Hash Lock Verification
+    description: Verify lockfiles (gradle.lockfile) match resolved artifacts
+    priority: low
+    expected_result: Lockfile checksums match
+  - id: SEC-250
+    category: dependency_vulnerabilities
+    name: Dependency Audit Report Upload
+    description: Verify dependency audit reports saved to artifact
+    priority: medium
+    expected_result: Report artifact uploaded
+
+  # Secrets & Configuration Safety (SEC-251 to SEC-280)
+  - id: SEC-251
+    category: secrets_configuration_safety
+    name: Hardcoded Firebase Secret Key Scan
+    description: Verify source files contain no hardcoded Firebase admin service keys
+    priority: critical
+    expected_result: Zero admin secret keys in repository
+  - id: SEC-252
+    category: secrets_configuration_safety
+    name: Hardcoded Spotify Client Secret Scan
+    description: Verify repository contains zero Spotify Client Secret strings
+    priority: critical
+    expected_result: Zero Spotify Client Secret strings found
+  - id: SEC-253
+    category: secrets_configuration_safety
+    name: Git Secret Scanner Integration (Trufflehog / GitLeaks)
+    description: Verify commit history scan finds no hardcoded private keys or tokens
+    priority: critical
+    expected_result: Zero secret leaks in Git history
+  - id: SEC-254
+    category: secrets_configuration_safety
+    name: Local Properties Gitignore Verification
+    description: Verify local.properties is listed in root .gitignore
+    priority: critical
+    expected_result: local.properties present in .gitignore
+  - id: SEC-255
+    category: secrets_configuration_safety
+    name: Google Services JSON Confidentiality
+    description: Verify app/google-services.json is listed in .gitignore or sanitized
+    priority: high
+    expected_result: google-services.json ignored or sanitized
+  - id: SEC-256
+    category: secrets_configuration_safety
+    name: Keystore JKS File Absence In Repo
+    description: Verify release keystore .jks files are not committed to Git
+    priority: critical
+    expected_result: Zero .jks or .keystore files committed
+  - id: SEC-257
+    category: secrets_configuration_safety
+    name: Environment Variable Placeholder Check
+    description: Verify .env.example contains placeholder values only
+    priority: high
+    expected_result: Only empty or dummy placeholders in .env.example
+  - id: SEC-258
+    category: secrets_configuration_safety
+    name: GitHub Secrets In Action Workflows
+    description: Verify workflows reference credentials via ${{ secrets.NAME }}
+    priority: critical
+    expected_result: GitHub Secrets used for environment credentials
+  - id: SEC-259
+    category: secrets_configuration_safety
+    name: Log Masking In GitHub Actions Output
+    description: Verify secrets automatically masked with *** in workflow logs
+    priority: critical
+    expected_result: Secrets masked in workflow console output
+  - id: SEC-260
+    category: secrets_configuration_safety
+    name: Android BuildConfig Key Parameterization
+    description: Verify SPOTIFY_CLIENT_ID loaded via Gradle property or BuildConfig
+    priority: high
+    expected_result: Client ID loaded via BuildConfig
+  - id: SEC-261
+    category: secrets_configuration_safety
+    name: ProGuard R8 Code Obfuscation Rules
+    description: Verify R8 release optimization rules in build.gradle.kts
+    priority: medium
+    expected_result: R8 / ProGuard rules configured
+  - id: SEC-262
+    category: secrets_configuration_safety
+    name: Android Manifest Debuggable Flag
+    description: Verify android:debuggable="false" or omitted in production manifest
+    priority: critical
+    expected_result: Debuggable flag false in release build
+  - id: SEC-263
+    category: secrets_configuration_safety
+    name: Android Manifest AllowBackup Flag
+    description: Verify android:allowBackup configuration and dataExtractionRules
+    priority: medium
+    expected_result: Backup rules configured safely
+  - id: SEC-264
+    category: secrets_configuration_safety
+    name: Android Network Security Config Cleartext Traffic
+    description: Verify cleartextTrafficPermitted="false" enforced
+    priority: critical
+    expected_result: Unencrypted HTTP traffic blocked by default
+  - id: SEC-265
+    category: secrets_configuration_safety
+    name: Android Private File Permissions
+    description: Verify internal app files created with Context.MODE_PRIVATE
+    priority: high
+    expected_result: World-readable or world-writable files absent
+  - id: SEC-266
+    category: secrets_configuration_safety
+    name: SharedPreferences File Access Mode
+    description: Verify shared preferences created with MODE_PRIVATE
+    priority: high
+    expected_result: MODE_PRIVATE enforced
+  - id: SEC-267
+    category: secrets_configuration_safety
+    name: Temporary File Insecure Storage Audit
+    description: Verify temp WAV audio files stored in private cacheDir
+    priority: high
+    expected_result: Temp files stored in private app cache
+  - id: SEC-268
+    category: secrets_configuration_safety
+    name: External Storage Sensitive Data Audit
+    description: Verify no sensitive auth tokens stored on public external storage
+    priority: critical
+    expected_result: Zero tokens on external storage
+  - id: SEC-269
+    category: secrets_configuration_safety
+    name: Static Code SAST Bandit Scan
+    description: Verify Python scripts scanned with Bandit for security flaws
+    priority: high
+    expected_result: Bandit scan completes with 0 high severity issues
+  - id: SEC-270
+    category: secrets_configuration_safety
+    name: Static Code SAST Semgrep Scan
+    description: Verify repository scanned with Semgrep security rules
+    priority: high
+    expected_result: Semgrep scan completes with 0 high severity findings
+  - id: SEC-271
+    category: secrets_configuration_safety
+    name: Hardcoded IP Address Scan
+    description: Verify source files contain no hardcoded private or public IP addresses
+    priority: medium
+    expected_result: Zero raw IP address strings in source
+  - id: SEC-272
+    category: secrets_configuration_safety
+    name: AWS Credentials Pattern Scan
+    description: Verify source files contain no AWS_ACCESS_KEY_ID strings
+    priority: critical
+    expected_result: Zero AWS keys found
+  - id: SEC-273
+    category: secrets_configuration_safety
+    name: Private Key RSA PEM Scan
+    description: Verify repository contains no BEGIN RSA PRIVATE KEY blocks
+    priority: critical
+    expected_result: Zero RSA private keys found
+  - id: SEC-274
+    category: secrets_configuration_safety
+    name: SSH Private Key Scan
+    description: Verify repository contains no id_rsa or SSH private keys
+    priority: critical
+    expected_result: Zero SSH private keys found
+  - id: SEC-275
+    category: secrets_configuration_safety
+    name: Password String Variable Scan
+    description: Verify hardcoded password assignment strings absent
+    priority: high
+    expected_result: Zero hardcoded password assignments
+  - id: SEC-276
+    category: secrets_configuration_safety
+    name: Firebase Config Web API Key Scoping
+    description: Verify Firebase Web API key restricts requests to package com.moodtunes.app
+    priority: high
+    expected_result: Package restriction enabled in Firebase console
+  - id: SEC-277
+    category: secrets_configuration_safety
+    name: Android Component Exported Flag Audit
+    description: Verify all manifest activities and services explicitly define exported flag
+    priority: high
+    expected_result: Exported attributes explicit
+  - id: SEC-278
+    category: secrets_configuration_safety
+    name: Android Intent Filter Security Audit
+    description: Verify deep link intent filters validate host and scheme
+    priority: high
+    expected_result: Strict scheme/host matching on moodtunes-login://callback
+  - id: SEC-279
+    category: secrets_configuration_safety
+    name: Secrets Detection SAST SARIF Upload
+    description: Verify SAST secret scan results uploaded as SARIF artifact
+    priority: medium
+    expected_result: SARIF report uploaded
+  - id: SEC-280
+    category: secrets_configuration_safety
+    name: Secret Scan Failure Build Blocking
+    description: Verify build fails if any hardcoded secret detected
+    priority: critical
+    expected_result: Build fails on secret detection
+
+  # Error Disclosure & OWASP ZAP (SEC-281 to SEC-300)
+  - id: SEC-281
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP Baseline Security Scan Execution
+    description: Verify OWASP ZAP baseline passive scan against test endpoints
+    priority: critical
+    expected_result: OWASP ZAP baseline completes without high risk alerts
+  - id: SEC-282
+    category: error_disclosure_owasp_zap
+    name: Error Message Internal Stack Trace Leak Check
+    description: Verify 500 error responses omit Java/Kotlin exception stack traces
+    priority: high
+    expected_result: Clean error JSON without stack traces
+  - id: SEC-283
+    category: error_disclosure_owasp_zap
+    name: Error Message Framework Version Disclosure Check
+    description: Verify error pages do not expose Spring/Express/Ktor framework versions
+    priority: medium
+    expected_result: Framework version hidden
+  - id: SEC-284
+    category: error_disclosure_owasp_zap
+    name: Error Message Database System Disclosure Check
+    description: Verify DB error details e.g. PostgreSQL or Firestore errors masked
+    priority: high
+    expected_result: Database details masked
+  - id: SEC-285
+    category: error_disclosure_owasp_zap
+    name: Error Message File Path Disclosure Check
+    description: Verify error details omit internal server directory file paths
+    priority: medium
+    expected_result: File paths masked
+  - id: SEC-286
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP Passive Scan Anti-CSRF Token Check
+    description: Verify ZAP scan checks anti-CSRF token protection
+    priority: medium
+    expected_result: CSRF check completed
+  - id: SEC-287
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP Passive Scan Content Type Header Check
+    description: Verify ZAP scan checks missing Content-Type headers
+    priority: medium
+    expected_result: Content-Type check completed
+  - id: SEC-288
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP Passive Scan Cookie No SameSite Check
+    description: Verify ZAP scan checks missing SameSite attribute on cookies
+    priority: medium
+    expected_result: SameSite check completed
+  - id: SEC-289
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP Passive Scan Insecure Information Disclosure
+    description: Verify ZAP scan checks private IP or email disclosure in headers
+    priority: medium
+    expected_result: Info disclosure check completed
+  - id: SEC-290
+    category: error_disclosure_owasp_zap
+    name: Custom Error Page Fallback Check
+    description: Verify custom 404 and 500 error screens on web endpoints
+    priority: low
+    expected_result: Custom error layout rendered
+  - id: SEC-291
+    category: error_disclosure_owasp_zap
+    name: Exception Handling Try Catch Completeness
+    description: Verify async network calls wrapped in try/catch or runCatching blocks
+    priority: high
+    expected_result: Zero unhandled async crashes
+  - id: SEC-292
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP Configuration File zap-baseline.conf
+    description: Verify zap-baseline.conf rule overrides configured
+    priority: medium
+    expected_result: Config file present
+  - id: SEC-293
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP HTML Report Generation
+    description: Verify OWASP ZAP HTML report exported
+    priority: medium
+    expected_result: HTML report generated
+  - id: SEC-294
+    category: error_disclosure_owasp_zap
+    name: OWASP ZAP JSON Report Generation
+    description: Verify OWASP ZAP JSON report exported
+    priority: medium
+    expected_result: JSON report generated
+  - id: SEC-295
+    category: error_disclosure_owasp_zap
+    name: Non-Destructive Passive Scan Mode Enforced
+    description: Verify ZAP runs in baseline passive mode only (no active attacks)
+    priority: critical
+    expected_result: Passive baseline scan mode verified
+  - id: SEC-296
+    category: error_disclosure_owasp_zap
+    name: Security Test Report Artifact Upload
+    description: Verify security-test-results artifact uploaded
+    priority: medium
+    expected_result: Artifact uploaded
+  - id: SEC-297
+    category: error_disclosure_owasp_zap
+    name: Step Summary Security Findings Summary
+    description: Verify security findings summary table written to $GITHUB_STEP_SUMMARY
+    priority: medium
+    expected_result: Summary table posted
+  - id: SEC-298
+    category: error_disclosure_owasp_zap
+    name: Vulnerability Workflow Trigger Conditions
+    description: Verify vulnerability workflow runs on push, PR, schedule, and dispatch
+    priority: high
+    expected_result: Workflow triggers verified
+  - id: SEC-299
+    category: error_disclosure_owasp_zap
+    name: Fast PR Security Checks Vs Full Scan
+    description: Verify PR trigger runs fast audit, schedule trigger runs full scan
+    priority: high
+    expected_result: Fast PR execution verified
+  - id: SEC-300
+    category: error_disclosure_owasp_zap
+    name: Final Security Suite Status Report
+    description: Verify concise final status output for security workflow
+    priority: high
+    expected_result: Status summary printed

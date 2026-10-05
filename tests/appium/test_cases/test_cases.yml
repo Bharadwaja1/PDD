@@ -1,0 +1,1820 @@
+test_cases:
+  # Mobile App Lifecycle (APP-001 to APP-030)
+  - id: APP-001
+    category: mobile_app_lifecycle
+    name: Fresh App Installation
+    description: Verify initial APK installation on Android device
+    priority: critical
+    expected_result: Package com.moodtunes.app installed successfully
+  - id: APP-002
+    category: mobile_app_lifecycle
+    name: App Cold Launch
+    description: Verify launching application from fresh process state
+    priority: critical
+    expected_result: MainActivity launches and displays Splash screen
+  - id: APP-003
+    category: mobile_app_lifecycle
+    name: App Warm Launch
+    description: Verify launching application from cached memory state
+    priority: high
+    expected_result: App restores active screen instantly
+  - id: APP-004
+    category: mobile_app_lifecycle
+    name: App Background and Resume
+    description: Verify sending app to background and returning to foreground
+    priority: critical
+    expected_result: App state and current screen route preserved
+  - id: APP-005
+    category: mobile_app_lifecycle
+    name: Process Termination Recovery
+    description: Verify app recovery after Android OS process kill
+    priority: high
+    expected_result: Saved SharedPreferences restored on launch
+  - id: APP-006
+    category: mobile_app_lifecycle
+    name: App Upgrade Migration
+    description: Verify database and prefs migration on app update
+    priority: medium
+    expected_result: Existing user data preserved after upgrade
+  - id: APP-007
+    category: mobile_app_lifecycle
+    name: App Uninstall Cleanup
+    description: Verify removing app removes app private data directory
+    priority: low
+    expected_result: App uninstalled completely
+  - id: APP-008
+    category: mobile_app_lifecycle
+    name: Device Screen Timeout Handling
+    description: Verify app behavior when screen dims and unlocks
+    priority: medium
+    expected_result: Screen unlocks back to current app activity
+  - id: APP-009
+    category: mobile_app_lifecycle
+    name: Memory Pressure Handling
+    description: Verify app behavior under low system memory trim warning
+    priority: medium
+    expected_result: Non-essential image caches freed without crash
+  - id: APP-010
+    category: mobile_app_lifecycle
+    name: Orientation Change Portrait
+    description: Verify app layout in portrait orientation
+    priority: high
+    expected_result: Content laid out vertically
+  - id: APP-011
+    category: mobile_app_lifecycle
+    name: Orientation Change Landscape
+    description: Verify app layout adapts in landscape orientation
+    priority: medium
+    expected_result: Layout adjusts to landscape dimensions
+  - id: APP-012
+    category: mobile_app_lifecycle
+    name: Rapid Orientation Switch
+    description: Verify toggling orientation repeatedly does not cause crash
+    priority: low
+    expected_result: Activity handles configuration changes
+  - id: APP-013
+    category: mobile_app_lifecycle
+    name: Hardware Back Button App Minimization
+    description: Verify pressing back button on root screen sends app to background
+    priority: medium
+    expected_result: App backgrounded cleanly
+  - id: APP-014
+    category: mobile_app_lifecycle
+    name: Deep Link Intent Activation
+    description: Verify launching app via moodtunes-login://callback intent
+    priority: critical
+    expected_result: MainActivity handles deep link intent
+  - id: APP-015
+    category: mobile_app_lifecycle
+    name: Media3 Foreground Service Lifecycle
+    description: Verify PlaybackService survives activity destruction
+    priority: critical
+    expected_result: Audio playback service continues in foreground
+  - id: APP-016
+    category: mobile_app_lifecycle
+    name: Media3 Service Destruction
+    description: Verify PlaybackService stops when playback is paused and task removed
+    priority: medium
+    expected_result: Service stops and notification dismissed
+  - id: APP-017
+    category: mobile_app_lifecycle
+    name: Permission POST_NOTIFICATIONS Request
+    description: Verify notification permission dialog trigger on Android 13+
+    priority: high
+    expected_result: System permission prompt displayed
+  - id: APP-018
+    category: mobile_app_lifecycle
+    name: Permission POST_NOTIFICATIONS Grant
+    description: Verify granting notification permission enables media notification
+    priority: high
+    expected_result: Notifications preference enabled
+  - id: APP-019
+    category: mobile_app_lifecycle
+    name: Permission POST_NOTIFICATIONS Deny
+    description: Verify denying notification permission shows guidance message
+    priority: medium
+    expected_result: Guidance message displayed in settings
+  - id: APP-020
+    category: mobile_app_lifecycle
+    name: Network Disconnection Offline Mode
+    description: Verify app operates gracefully without internet connection
+    priority: high
+    expected_result: Local audio and offline state remain accessible
+  - id: APP-021
+    category: mobile_app_lifecycle
+    name: Network Reconnection Sync
+    description: Verify pending cloud sync triggers when internet restored
+    priority: medium
+    expected_result: Firebase sync executes on network recovery
+  - id: APP-022
+    category: mobile_app_lifecycle
+    name: App Crash Free Startup
+    description: Verify Logcat contains no unhandled exceptions on boot
+    priority: critical
+    expected_result: Zero fatal exceptions in Logcat
+  - id: APP-023
+    category: mobile_app_lifecycle
+    name: Multi-Window Split Screen Support
+    description: Verify app rendering in Android split screen mode
+    priority: low
+    expected_result: Layout resizes into split pane
+  - id: APP-024
+    category: mobile_app_lifecycle
+    name: Android System Dark Mode Sync
+    description: Verify app respects system dark theme setting
+    priority: low
+    expected_result: Dark color palette applied
+  - id: APP-025
+    category: mobile_app_lifecycle
+    name: Battery Saver Mode Compatibility
+    description: Verify animations reduce when system battery saver active
+    priority: low
+    expected_result: Animation frame rate optimized
+  - id: APP-026
+    category: mobile_app_lifecycle
+    name: High DPI Display Scaling
+    description: Verify UI scales correctly on high density (xxhdpi) screen
+    priority: low
+    expected_result: Sharp graphics and correct text sizing
+  - id: APP-027
+    category: mobile_app_lifecycle
+    name: Low DPI Display Scaling
+    description: Verify UI scales correctly on lower density (hdpi) screen
+    priority: low
+    expected_result: All touch targets remain accessible
+  - id: APP-028
+    category: mobile_app_lifecycle
+    name: App Launch Time Measurement
+    description: Verify cold launch time is under 2.5 seconds
+    priority: medium
+    expected_result: First frame rendered in < 2500ms
+  - id: APP-029
+    category: mobile_app_lifecycle
+    name: App Icon Launcher Verification
+    description: Verify moodtunes_launcher icon launches MainActivity
+    priority: low
+    expected_result: App opens from home screen launcher
+  - id: APP-030
+    category: mobile_app_lifecycle
+    name: Target SDK 36 Compatibility
+    description: Verify compatibility with Android 16 API level 36
+    priority: high
+    expected_result: App runs without API deprecation warnings
+
+  # Mobile Authentication (APP-031 to APP-060)
+  - id: APP-031
+    category: mobile_authentication
+    name: Mobile Login Email Field Typing
+    description: Verify typing email address using Android soft keyboard
+    priority: critical
+    expected_result: Text appears in email field
+  - id: APP-032
+    category: mobile_authentication
+    name: Mobile Login Password Field Typing
+    description: Verify typing password into masked password field
+    priority: critical
+    expected_result: Password masked with dots
+  - id: APP-033
+    category: mobile_authentication
+    name: Mobile Login Submit Action
+    description: Verify tapping Log In button submits credentials
+    priority: critical
+    expected_result: Firebase auth request initiated
+  - id: APP-034
+    category: mobile_authentication
+    name: Mobile Login Invalid Password Error
+    description: Verify error toast or alert on wrong password
+    priority: high
+    expected_result: Login failed error displayed
+  - id: APP-035
+    category: mobile_authentication
+    name: Mobile Signup Form Switch
+    description: Verify tapping Create Account switches to registration form
+    priority: high
+    expected_result: Full name and confirm password inputs displayed
+  - id: APP-036
+    category: mobile_authentication
+    name: Mobile Signup Password Toggle
+    description: Verify Show/Hide password toggle on mobile
+    priority: medium
+    expected_result: Password text unmasked
+  - id: APP-037
+    category: mobile_authentication
+    name: Mobile Signup Submit Flow
+    description: Verify creating new account on mobile
+    priority: critical
+    expected_result: User created and logged in
+  - id: APP-038
+    category: mobile_authentication
+    name: Mobile Remember Me Checkbox Tap
+    description: Verify tapping Remember Me checkbox toggles state
+    priority: medium
+    expected_result: Checkbox state updated
+  - id: APP-039
+    category: mobile_authentication
+    name: Mobile Password Reset Prompt
+    description: Verify tapping Forgot Password shows reset prompt
+    priority: high
+    expected_result: Reset email sent message
+  - id: APP-040
+    category: mobile_authentication
+    name: Mobile Onboarding Step 1 Swipe
+    description: Verify swiping or tapping continue on onboarding step 1
+    priority: medium
+    expected_result: Advances to step 2
+  - id: APP-041
+    category: mobile_authentication
+    name: Mobile Onboarding Step 2 Language Selection
+    description: Verify selecting Telugu in onboarding grid
+    priority: medium
+    expected_result: Telugu chip highlighted
+  - id: APP-042
+    category: mobile_authentication
+    name: Mobile Onboarding Step 3 Genre Selection
+    description: Verify selecting Folk and Mass genres
+    priority: medium
+    expected_result: Selected genres saved
+  - id: APP-043
+    category: mobile_authentication
+    name: Mobile Onboarding Step 4 Artist Selection
+    description: Verify searching and selecting MoodTunes Studio
+    priority: medium
+    expected_result: Artist preference saved
+  - id: APP-044
+    category: mobile_authentication
+    name: Mobile Onboarding Step 5 Wellness Goal
+    description: Verify selecting Reduce Stress goal
+    priority: medium
+    expected_result: Goal chip selected
+  - id: APP-045
+    category: mobile_authentication
+    name: Mobile Onboarding Finish Button
+    description: Verify tapping Start Listening completes onboarding
+    priority: high
+    expected_result: Opens Home page
+  - id: APP-046
+    category: mobile_authentication
+    name: Mobile Logout Confirmation
+    description: Verify tapping Log Out in Profile page logs out user
+    priority: critical
+    expected_result: Returned to Login screen
+  - id: APP-047
+    category: mobile_authentication
+    name: Mobile Keyboard Hide On Tap Outside
+    description: Verify tapping outside input hides soft keyboard
+    priority: low
+    expected_result: Soft keyboard dismissed
+  - id: APP-048
+    category: mobile_authentication
+    name: Mobile IME Action Next
+    description: Verify pressing Next on keyboard moves focus to password field
+    priority: low
+    expected_result: Focus shifts to password field
+  - id: APP-049
+    category: mobile_authentication
+    name: Mobile IME Action Done
+    description: Verify pressing Done on keyboard submits login
+    priority: low
+    expected_result: Form submitted
+  - id: APP-050
+    category: mobile_authentication
+    name: Mobile Auth Error Alert Dismiss
+    description: Verify tapping Got It dismisses error alert
+    priority: medium
+    expected_result: Alert modal closed
+  - id: APP-051
+    category: mobile_authentication
+    name: Mobile Signup Short Password Error
+    description: Verify 8 character length error on mobile
+    priority: medium
+    expected_result: Validation error displayed
+  - id: APP-052
+    category: mobile_authentication
+    name: Mobile Signup Mismatched Password Error
+    description: Verify password match error on mobile
+    priority: medium
+    expected_result: Validation error displayed
+  - id: APP-053
+    category: mobile_authentication
+    name: Mobile Auto Fill Email Support
+    description: Verify Android Autofill populates email field
+    priority: low
+    expected_result: Email field populated from Autofill
+  - id: APP-054
+    category: mobile_authentication
+    name: Mobile Auto Fill Password Support
+    description: Verify Android Autofill populates password field
+    priority: low
+    expected_result: Password field populated from Autofill
+  - id: APP-055
+    category: mobile_authentication
+    name: Mobile Firebase Offline Auth Alert
+    description: Verify error when logging in without network
+    priority: medium
+    expected_result: Network error message displayed
+  - id: APP-056
+    category: mobile_authentication
+    name: Mobile Spotify OAuth PKCE Flow Launch
+    description: Verify tapping Connect Spotify launches browser custom tab
+    priority: critical
+    expected_result: System browser opened to Spotify authorize URL
+  - id: APP-057
+    category: mobile_authentication
+    name: Mobile Spotify OAuth Callback Interception
+    description: Verify moodtunes-login://callback deep link returns to app
+    priority: critical
+    expected_result: App foregrounded and token exchange completes
+  - id: APP-058
+    category: mobile_authentication
+    name: Mobile Spotify Connected Status Render
+    description: Verify Spotify Connected banner shown in Profile
+    priority: high
+    expected_result: Green 'Spotify Connected' text displayed
+  - id: APP-059
+    category: mobile_authentication
+    name: Mobile Spotify Disconnect Action
+    description: Verify tapping Disconnect clears Spotify session
+    priority: high
+    expected_result: Spotify status reset to Not Connected
+  - id: APP-060
+    category: mobile_authentication
+    name: Mobile Spotify OAuth Error Alert
+    description: Verify error alert if Spotify authorization is canceled in browser
+    priority: medium
+    expected_result: Error message displayed
+
+  # Mobile Navigation (APP-061 to APP-090)
+  - id: APP-061
+    category: mobile_navigation
+    name: Navigation Dock Home Tap
+    description: Verify tapping Home dock icon opens Home screen
+    priority: critical
+    expected_result: Home screen displayed
+  - id: APP-062
+    category: mobile_navigation
+    name: Navigation Dock Liked Tap
+    description: Verify tapping Liked dock icon opens Liked screen
+    priority: high
+    expected_result: Liked Songs screen displayed
+  - id: APP-063
+    category: mobile_navigation
+    name: Navigation Dock Search Tap
+    description: Verify tapping Search dock icon opens Discover screen
+    priority: high
+    expected_result: Discover screen displayed
+  - id: APP-064
+    category: mobile_navigation
+    name: Navigation Dock History Tap
+    description: Verify tapping History dock icon opens History screen
+    priority: high
+    expected_result: History screen displayed
+  - id: APP-065
+    category: mobile_navigation
+    name: Header Profile Icon Tap
+    description: Verify tapping profile icon in header opens Profile screen
+    priority: high
+    expected_result: Profile screen displayed
+  - id: APP-066
+    category: mobile_navigation
+    name: Header Back Button Tap
+    description: Verify tapping back chevron returns to previous screen
+    priority: medium
+    expected_result: Previous screen displayed
+  - id: APP-067
+    category: mobile_navigation
+    name: Android Hardware Back Key Navigation
+    description: Verify pressing Android back button navigates back
+    priority: critical
+    expected_result: Previous screen popped from stack
+  - id: APP-068
+    category: mobile_navigation
+    name: MiniPlayer Bar Tap
+    description: Verify tapping MiniPlayer bar opens full Player screen
+    priority: high
+    expected_result: Player screen displayed
+  - id: APP-069
+    category: mobile_navigation
+    name: Open Wellness Page Tap
+    description: Verify navigating to Wellness section
+    priority: medium
+    expected_result: Wellness page displayed
+  - id: APP-070
+    category: mobile_navigation
+    name: Open Breathing Page Tap
+    description: Verify navigating to Breathing exercise
+    priority: medium
+    expected_result: Breathing page displayed
+  - id: APP-071
+    category: mobile_navigation
+    name: Open Journal Page Tap
+    description: Verify navigating to Mood Journal
+    priority: medium
+    expected_result: Journal page displayed
+  - id: APP-072
+    category: mobile_navigation
+    name: Open Library Page Tap
+    description: Verify navigating to Library
+    priority: high
+    expected_result: Library page displayed
+  - id: APP-073
+    category: mobile_navigation
+    name: Open Settings Page Tap
+    description: Verify navigating to Settings
+    priority: medium
+    expected_result: Settings page displayed
+  - id: APP-074
+    category: mobile_navigation
+    name: Open Playlist Detail Tap
+    description: Verify tapping playlist card opens Playlist detail screen
+    priority: high
+    expected_result: Playlist screen displayed
+  - id: APP-075
+    category: mobile_navigation
+    name: Open Mood Playlist Tap
+    description: Verify tapping mood card opens Mood Playlist screen
+    priority: high
+    expected_result: Mood Playlist screen displayed
+  - id: APP-076
+    category: mobile_navigation
+    name: Navigation Gesture Edge Back Swipe
+    description: Verify Android edge back swipe gesture pops screen
+    priority: medium
+    expected_result: Back gesture navigates back
+  - id: APP-077
+    category: mobile_navigation
+    name: Navigation Stack Depth Limit
+    description: Verify multi-level navigation does not cause stack overflow
+    priority: low
+    expected_result: Navigation stack handled cleanly
+  - id: APP-078
+    category: mobile_navigation
+    name: Tab Switching State Preservation
+    description: Verify switching tabs preserves scroll positions
+    priority: low
+    expected_result: Tab scroll state preserved
+  - id: APP-079
+    category: mobile_navigation
+    name: Header Brand Logo Tap
+    description: Verify tapping brand logo returns to Home
+    priority: low
+    expected_result: Home screen active
+  - id: APP-080
+    category: mobile_navigation
+    name: Notifications Route Tap
+    description: Verify opening updates/notifications route
+    priority: low
+    expected_result: Updates screen displayed
+  - id: APP-081
+    category: mobile_navigation
+    name: Active Tab Highlight Rendering
+    description: Verify Lime background highlight on active dock icon
+    priority: low
+    expected_result: Active tab visually highlighted
+  - id: APP-082
+    category: mobile_navigation
+    name: Navigation Dock Visibility on Keyboard Open
+    description: Verify navigation dock hides or adjusts when keyboard opens
+    priority: low
+    expected_result: Layout adjusts without overlap
+  - id: APP-083
+    category: mobile_navigation
+    name: Navigation Transition Animation
+    description: Verify Jetpack Compose transition animation between routes
+    priority: low
+    expected_result: Smooth crossfade animation
+  - id: APP-084
+    category: mobile_navigation
+    name: Back Handler Root Screen Behavior
+    description: Verify back button on Home prompts exit or background
+    priority: medium
+    expected_result: App backgrounded cleanly
+  - id: APP-085
+    category: mobile_navigation
+    name: Route Restored After Configuration Change
+    description: Verify current route maintained after screen rotation
+    priority: medium
+    expected_result: Screen route preserved
+  - id: APP-086
+    category: mobile_navigation
+    name: Unauthenticated Back Navigation Restriction
+    description: Verify back button on Login does not return to protected screen
+    priority: high
+    expected_result: Login remains on screen
+  - id: APP-087
+    category: mobile_navigation
+    name: Dialog Overlay Navigation Guard
+    description: Verify back button dismisses open dialog before navigating screen
+    priority: medium
+    expected_result: Dialog dismissed first
+  - id: APP-088
+    category: mobile_navigation
+    name: Navigation Dock Haptic Feedback
+    description: Verify tactile vibration feedback on dock tap if enabled
+    priority: low
+    expected_result: Haptic feedback triggered
+  - id: APP-089
+    category: mobile_navigation
+    name: Fullscreen Player Dismiss Swipe Down
+    description: Verify swiping down on Player screen returns to previous screen
+    priority: low
+    expected_result: Player screen dismissed
+  - id: APP-090
+    category: mobile_navigation
+    name: Navigation Bar Dark Color Sync
+    description: Verify system gesture bar matches dark theme color
+    priority: low
+    expected_result: Transparent/dark gesture bar
+
+  # Mobile Mood Experience (APP-091 to APP-120)
+  - id: APP-091
+    category: mobile_mood_experience
+    name: Tap Happy Mood Card
+    description: Verify tapping Happy mood card in mood grid
+    priority: critical
+    expected_result: Happy mood selected and playlist loaded
+  - id: APP-092
+    category: mobile_mood_experience
+    name: Tap Calm Mood Card
+    description: Verify tapping Calm mood card
+    priority: critical
+    expected_result: Calm mood selected
+  - id: APP-093
+    category: mobile_mood_experience
+    name: Tap Energetic Mood Card
+    description: Verify tapping Energetic mood card
+    priority: high
+    expected_result: Energetic mood selected
+  - id: APP-094
+    category: mobile_mood_experience
+    name: Tap Sad Mood Card
+    description: Verify tapping Sad mood card
+    priority: medium
+    expected_result: Sad mood selected
+  - id: APP-095
+    category: mobile_mood_experience
+    name: Tap Angry Mood Card
+    description: Verify tapping Angry mood card
+    priority: medium
+    expected_result: Angry mood selected
+  - id: APP-096
+    category: mobile_mood_experience
+    name: Tap Stressed Mood Card
+    description: Verify tapping Stressed mood card
+    priority: medium
+    expected_result: Stressed mood selected
+  - id: APP-097
+    category: mobile_mood_experience
+    name: Tap Tired Mood Card
+    description: Verify tapping Tired mood card
+    priority: medium
+    expected_result: Tired mood selected
+  - id: APP-098
+    category: mobile_mood_experience
+    name: Tap Neutral Mood Card
+    description: Verify tapping Neutral mood card
+    priority: medium
+    expected_result: Neutral mood selected
+  - id: APP-099
+    category: mobile_mood_experience
+    name: Mood Session Logging
+    description: Verify mood session start time logged in store
+    priority: high
+    expected_result: Session entry added to sessions list
+  - id: APP-100
+    category: mobile_mood_experience
+    name: End Session & Check In Button Tap
+    description: Verify tapping End Session opens check-in modal
+    priority: high
+    expected_result: Feedback dialog modal shown
+  - id: APP-101
+    category: mobile_mood_experience
+    name: Select Final Feeling Option
+    description: Verify selecting 'Better' in check-in feedback dialog
+    priority: medium
+    expected_result: 'Better' chip highlighted
+  - id: APP-102
+    category: mobile_mood_experience
+    name: Toggle Music Helpfulness Yes/No
+    description: Verify selecting Yes for 'Did this music help?'
+    priority: medium
+    expected_result: Yes chip selected
+  - id: APP-103
+    category: mobile_mood_experience
+    name: Save Check-In Button Tap
+    description: Verify tapping Save Check-In stores session and opens History
+    priority: high
+    expected_result: Session saved and History page shown
+  - id: APP-104
+    category: mobile_mood_experience
+    name: Change Song Reason Modal Open
+    description: Verify Change Song option in player opens reason modal
+    priority: medium
+    expected_result: Reasons modal displayed
+  - id: APP-105
+    category: mobile_mood_experience
+    name: Select Reason 'Not matching my mood'
+    description: Verify selecting reason excludes song and skips
+    priority: medium
+    expected_result: Next song plays
+  - id: APP-106
+    category: mobile_mood_experience
+    name: Select Reason 'Don’t like this song'
+    description: Verify selecting reason excludes song
+    priority: low
+    expected_result: Next song plays
+  - id: APP-107
+    category: mobile_mood_experience
+    name: Calm Mix Banner Tap
+    description: Verify tapping Calm Mix banner on Home selects Calm mood
+    priority: medium
+    expected_result: Calm mood playlist opened
+  - id: APP-108
+    category: mobile_mood_experience
+    name: Mood Color Accent Propagation
+    description: Verify mood color accent updates UI theme highlights
+    priority: low
+    expected_result: Buttons and progress bars accent colored
+  - id: APP-109
+    category: mobile_mood_experience
+    name: Mood Session Songs Tracking
+    description: Verify all tracks played during session listed in history detail
+    priority: low
+    expected_result: Track count matches played songs
+  - id: APP-110
+    category: mobile_mood_experience
+    name: History Page Check-ins Metric
+    description: Verify total check-ins count displayed in History
+    priority: low
+    expected_result: Correct check-ins total displayed
+  - id: APP-111
+    category: mobile_mood_experience
+    name: History Page Most Selected Mood Metric
+    description: Verify most selected mood stat computed correctly
+    priority: low
+    expected_result: Stat name matches frequent mood
+  - id: APP-112
+    category: mobile_mood_experience
+    name: Atmosphere Background Image Render
+    description: Verify mood music background image overlay
+    priority: low
+    expected_result: Background image rendered with opacity
+  - id: APP-113
+    category: mobile_mood_experience
+    name: Mood Grid Card Touch Animation
+    description: Verify press animation on mood grid cards
+    priority: low
+    expected_result: Ripple effect on card touch
+  - id: APP-114
+    category: mobile_mood_experience
+    name: Mood Playlist Track List Scroll
+    description: Verify smooth scrolling through mood playlist items
+    priority: medium
+    expected_result: List scrolls smoothly
+  - id: APP-115
+    category: mobile_mood_experience
+    name: Mood Playlist Open Player Link
+    description: Verify tapping 'Open player  ↗' link opens full player
+    priority: medium
+    expected_result: Player screen loaded
+  - id: APP-116
+    category: mobile_mood_experience
+    name: Session Finalization On App Background
+    description: Verify active session state preserved when app backgrounded
+    priority: medium
+    expected_result: Session remains active on resume
+  - id: APP-117
+    category: mobile_mood_experience
+    name: Check-in Saved Toast Notice
+    description: Verify confirmation message after saving check-in
+    priority: low
+    expected_result: Confirmation displayed
+  - id: APP-118
+    category: mobile_mood_experience
+    name: Mood Selection Haptic Feedback
+    description: Verify vibration on mood card tap
+    priority: low
+    expected_result: Haptic feedback felt
+  - id: APP-119
+    category: mobile_mood_experience
+    name: Mood Playlist Header Emoji Render
+    description: Verify mood face emoji rendered in header
+    priority: low
+    expected_result: Emoji character displayed sharply
+  - id: APP-120
+    category: mobile_mood_experience
+    name: Offline Mood Session Saving
+    description: Verify mood session saves to local prefs when offline
+    priority: high
+    expected_result: Session stored locally in SharedPreferences
+
+  # Mobile Audio Playback (APP-121 to APP-150)
+  - id: APP-121
+    category: mobile_audio_playback
+    name: Play Track Tap
+    description: Verify tapping song row starts audio playback
+    priority: critical
+    expected_result: Audio starts playing via Media3 ExoPlayer
+  - id: APP-122
+    category: mobile_audio_playback
+    name: Pause Audio Playback
+    description: Verify tapping pause halts audio stream
+    priority: critical
+    expected_result: Audio stream paused
+  - id: APP-123
+    category: mobile_audio_playback
+    name: Resume Audio Playback
+    description: Verify tapping play resumes audio stream
+    priority: critical
+    expected_result: Audio stream resumes from position
+  - id: APP-124
+    category: mobile_audio_playback
+    name: Skip Next Button Tap
+    description: Verify tapping skip next plays subsequent queue item
+    priority: high
+    expected_result: Next track begins playing
+  - id: APP-125
+    category: mobile_audio_playback
+    name: Skip Previous Button Tap
+    description: Verify tapping skip previous plays preceding queue item
+    priority: high
+    expected_result: Previous track begins playing
+  - id: APP-126
+    category: mobile_audio_playback
+    name: Seek Bar Touch Drag
+    description: Verify dragging seek bar updates playback timestamp
+    priority: medium
+    expected_result: Audio seeks to new position
+  - id: APP-127
+    category: mobile_audio_playback
+    name: Volume Slider Touch Drag
+    description: Verify dragging volume slider adjusts ExoPlayer volume
+    priority: medium
+    expected_result: Audio output volume level changes
+  - id: APP-128
+    category: mobile_audio_playback
+    name: Mute Toggle Tap
+    description: Verify tapping speaker icon mutes audio
+    priority: low
+    expected_result: Audio output muted
+  - id: APP-129
+    category: mobile_audio_playback
+    name: Shuffle Toggle Tap
+    description: Verify tapping shuffle icon enables randomized playback
+    priority: medium
+    expected_result: Queue order randomized
+  - id: APP-130
+    category: mobile_audio_playback
+    name: Repeat Toggle Tap
+    description: Verify tapping repeat icon enables track repeat
+    priority: medium
+    expected_result: Track repeats on end
+  - id: APP-131
+    category: mobile_audio_playback
+    name: Media3 Notification Metadata Verification
+    description: Verify system notification displays song title, artist, and cover art
+    priority: high
+    expected_result: System media notification renders track details
+  - id: APP-132
+    category: mobile_audio_playback
+    name: Media3 Notification Play Action
+    description: Verify tapping play on system notification resumes playback
+    priority: high
+    expected_result: Playback resumes
+  - id: APP-133
+    category: mobile_audio_playback
+    name: Media3 Notification Pause Action
+    description: Verify tapping pause on system notification pauses playback
+    priority: high
+    expected_result: Playback pauses
+  - id: APP-134
+    category: mobile_audio_playback
+    name: Media3 Notification Skip Actions
+    description: Verify skip buttons on system notification work
+    priority: medium
+    expected_result: Next/prev track plays
+  - id: APP-135
+    category: mobile_audio_playback
+    name: Lock Screen Media Controls
+    description: Verify lock screen displays active media controls
+    priority: medium
+    expected_result: Lock screen media player widget active
+  - id: APP-136
+    category: mobile_audio_playback
+    name: Audio Becoming Noisy Receiver
+    description: Verify unplugging headphones pauses audio
+    priority: high
+    expected_result: Playback pauses on headphone disconnect
+  - id: APP-137
+    category: mobile_audio_playback
+    name: Bluetooth Media Key Play/Pause
+    description: Verify Bluetooth headset play/pause button controls playback
+    priority: medium
+    expected_result: Bluetooth key toggles play/pause
+  - id: APP-138
+    category: mobile_audio_playback
+    name: Headset Skip Next Key
+    description: Verify Bluetooth headset next button skips track
+    priority: medium
+    expected_result: Next track plays
+  - id: APP-139
+    category: mobile_audio_playback
+    name: Headset Skip Prev Key
+    description: Verify Bluetooth headset prev button skips track
+    priority: medium
+    expected_result: Previous track plays
+  - id: APP-140
+    category: mobile_audio_playback
+    name: Phone Call Interrupt Resume
+    description: Verify audio pauses on incoming call and can resume after call ends
+    priority: high
+    expected_result: Audio pauses during call
+  - id: APP-141
+    category: mobile_audio_playback
+    name: Track Completion Auto-Advance
+    description: Verify reaching track end auto-advances to next queue item
+    priority: high
+    expected_result: Next track plays automatically
+  - id: APP-142
+    category: mobile_audio_playback
+    name: Synthesized Demo Audio Generation
+    description: Verify DemoAudio synthesizes PCM WAV file locally in cacheDir
+    priority: medium
+    expected_result: Local WAV file generated and played
+  - id: APP-143
+    category: mobile_audio_playback
+    name: Bundled Audio Resource Playback
+    description: Verify playing track with audioResId loads raw resource
+    priority: high
+    expected_result: Raw audio resource played
+  - id: APP-144
+    category: mobile_audio_playback
+    name: Waveform Visualizer Animation
+    description: Verify canvas waveform animates in sync with playing state
+    priority: low
+    expected_result: Waveform animation active
+  - id: APP-145
+    category: mobile_audio_playback
+    name: MiniPlayer Sync with Main Player
+    description: Verify MiniPlayer updates immediately when track changes in main player
+    priority: high
+    expected_result: MiniPlayer metadata matches main player
+  - id: APP-146
+    category: mobile_audio_playback
+    name: Open Up Next Queue Tap
+    description: Verify tapping queue button on player opens Up Next list
+    priority: medium
+    expected_result: Up Next queue list displayed
+  - id: APP-147
+    category: mobile_audio_playback
+    name: Like Song Tap in Player
+    description: Verify tapping heart button in player likes current song
+    priority: high
+    expected_result: Song hearted and added to liked songs
+  - id: APP-148
+    category: mobile_audio_playback
+    name: Add To Playlist Button Tap
+    description: Verify tapping Add to Playlist button in player opens modal
+    priority: medium
+    expected_result: Playlist selection modal displayed
+  - id: APP-149
+    category: mobile_audio_playback
+    name: Playback Buffer Loading State
+    description: Verify progress indicator shown while buffering audio stream
+    priority: low
+    expected_result: Buffering indicator displayed during load
+  - id: APP-150
+    category: mobile_audio_playback
+    name: Audio Attributes Usage Media
+    description: Verify ExoPlayer configured with C.USAGE_MEDIA audio attributes
+    priority: medium
+    expected_result: Correct Android audio stream channel used
+
+  # Mobile Gestures & Scrolling (APP-151 to APP-180)
+  - id: APP-151
+    category: mobile_gestures_scrolling
+    name: Vertical Scroll Home Page
+    description: Verify vertical fling scroll on Home page content
+    priority: high
+    expected_result: Page scrolls down smoothly
+  - id: APP-152
+    category: mobile_gestures_scrolling
+    name: Vertical Scroll Discover Page
+    description: Verify vertical fling scroll on Discover page
+    priority: high
+    expected_result: Search results scroll smoothly
+  - id: APP-153
+    category: mobile_gestures_scrolling
+    name: Vertical Scroll History Page
+    description: Verify vertical fling scroll on History page
+    priority: medium
+    expected_result: History list scrolls smoothly
+  - id: APP-154
+    category: mobile_gestures_scrolling
+    name: Vertical Scroll Library Page
+    description: Verify vertical fling scroll on Library page
+    priority: medium
+    expected_result: Library items scroll smoothly
+  - id: APP-155
+    category: mobile_gestures_scrolling
+    name: Horizontal Swipe Music Shelf
+    description: Verify horizontal drag scroll on Music Shelf tracks
+    priority: high
+    expected_result: Shelf scrolls horizontally
+  - id: APP-156
+    category: mobile_gestures_scrolling
+    name: Horizontal Swipe Library Filter Chips
+    description: Verify horizontal drag scroll on Library filter chips row
+    priority: medium
+    expected_result: Filter chips scroll horizontally
+  - id: APP-157
+    category: mobile_gestures_scrolling
+    name: Horizontal Swipe Search Filter Chips
+    description: Verify horizontal drag scroll on Search filter chips row
+    priority: medium
+    expected_result: Search chips scroll horizontally
+  - id: APP-158
+    category: mobile_gestures_scrolling
+    name: Swipe To Dismiss Toast Notification
+    description: Verify swipe gesture on error toast notification banner
+    priority: low
+    expected_result: Toast dismissed
+  - id: APP-159
+    category: mobile_gestures_scrolling
+    name: Pull To Refresh Home Feed
+    description: Verify pull-to-refresh gesture on Home page
+    priority: low
+    expected_result: Feed refreshed
+  - id: APP-160
+    category: mobile_gestures_scrolling
+    name: Drag Seek Bar Thumb
+    description: Verify touch drag gesture on seek bar thumb control
+    priority: medium
+    expected_result: Seek thumb follows finger drag
+  - id: APP-161
+    category: mobile_gestures_scrolling
+    name: Drag Volume Bar Thumb
+    description: Verify touch drag gesture on volume bar thumb control
+    priority: medium
+    expected_result: Volume thumb follows finger drag
+  - id: APP-162
+    category: mobile_gestures_scrolling
+    name: Long Press Song Row Action
+    description: Verify long press on song row triggers quick options
+    priority: low
+    expected_result: Context options shown or track selected
+  - id: APP-163
+    category: mobile_gestures_scrolling
+    name: Touch Target Ripple Feedback
+    description: Verify Material ripple animation on button touch
+    priority: low
+    expected_result: Visual ripple feedback on tap
+  - id: APP-164
+    category: mobile_gestures_scrolling
+    name: Scroll To Top Button
+    description: Verify scrolling down displays scroll-to-top floating button if present
+    priority: low
+    expected_result: Page scrolls to top when tapped
+  - id: APP-165
+    category: mobile_gestures_scrolling
+    name: Fast Fling Scroll Inertia
+    description: Verify smooth inertia deceleration on fast fling gesture
+    priority: low
+    expected_result: Inertia scroll decelerates naturally
+  - id: APP-166
+    category: mobile_gestures_scrolling
+    name: Modal Bottom Sheet Drag To Dismiss
+    description: Verify dragging down on bottom sheet dismisses modal
+    priority: low
+    expected_result: Bottom sheet dismissed
+  - id: APP-167
+    category: mobile_gestures_scrolling
+    name: Pinch To Zoom Restriction
+    description: Verify pinch-to-zoom is disabled on standard UI containers
+    priority: low
+    expected_result: Layout scale fixed
+  - id: APP-168
+    category: mobile_gestures_scrolling
+    name: Multi-Touch Gesture Rejection
+    description: Verify multi-touch simultaneous button taps handle single action
+    priority: low
+    expected_result: Single button event processed
+  - id: APP-169
+    category: mobile_gestures_scrolling
+    name: Horizontal Swipe On Onboarding Steps
+    description: Verify horizontal swipe moves between onboarding steps
+    priority: medium
+    expected_result: Onboarding step advances
+  - id: APP-170
+    category: mobile_gestures_scrolling
+    name: Touch Down Feedback Response
+    description: Verify immediate visual response on touch down event
+    priority: low
+    expected_result: Instant press state visual
+  - id: APP-171
+    category: mobile_gestures_scrolling
+    name: Scroll Event Memory Leak Check
+    description: Verify repeated scrolling does not accumulate uncollected objects
+    priority: low
+    expected_result: Stable memory usage during scroll
+  - id: APP-172
+    category: mobile_gestures_scrolling
+    name: List Overscroll Glow Effect
+    description: Verify Android stretch overscroll effect at edge of scroll container
+    priority: low
+    expected_result: Stretch effect visible at list boundaries
+  - id: APP-173
+    category: mobile_gestures_scrolling
+    name: Drag Scroll In Breathing Page
+    description: Verify page scrolling in Breathing view
+    priority: low
+    expected_result: Page content scrolls cleanly
+  - id: APP-174
+    category: mobile_gestures_scrolling
+    name: Drag Scroll In Journal Page
+    description: Verify scrolling through long journal entry text
+    priority: low
+    expected_result: Text area scrolls internally
+  - id: APP-175
+    category: mobile_gestures_scrolling
+    name: Drag Scroll In Profile Settings
+    description: Verify vertical scroll on Settings page
+    priority: low
+    expected_result: Settings list scrolls cleanly
+  - id: APP-176
+    category: mobile_gestures_scrolling
+    name: Touch Drag Range Constrained To Screen Bounds
+    description: Verify drag gestures are bounded by screen edges
+    priority: low
+    expected_result: Drag elements stay within viewport
+  - id: APP-177
+    category: mobile_gestures_scrolling
+    name: Swipe Left On Track For Quick Queue
+    description: Verify swipe gesture shortcut on track row
+    priority: low
+    expected_result: Track added or action triggered
+  - id: APP-178
+    category: mobile_gestures_scrolling
+    name: Double Tap Heart Icon Like Action
+    description: Verify double tapping cover art triggers like action
+    priority: low
+    expected_result: Track liked
+  - id: APP-179
+    category: mobile_gestures_scrolling
+    name: Touch Drag Cancel On Out Of Bounds
+    description: Verify dragging finger off button before release cancels click
+    priority: low
+    expected_result: Button click event canceled
+  - id: APP-180
+    category: mobile_gestures_scrolling
+    name: Scroll Performance 60FPS Verification
+    description: Verify no dropped frames during list fling
+    priority: medium
+    expected_result: 60FPS smooth rendering maintained
+
+  # Mobile Search & Discover (APP-181 to APP-210)
+  - id: APP-181
+    category: mobile_search_discover
+    name: Mobile Search Input Query
+    description: Verify typing search term 'Vennela' on mobile
+    priority: critical
+    expected_result: Search results list matching songs
+  - id: APP-182
+    category: mobile_search_discover
+    name: Mobile Search Clear Button
+    description: Verify tapping clear button in search bar empties input
+    priority: medium
+    expected_result: Input cleared
+  - id: APP-183
+    category: mobile_search_discover
+    name: Mobile Search Tab 'Songs' Filter
+    description: Verify tapping Songs filter chip
+    priority: medium
+    expected_result: Results filtered to songs
+  - id: APP-184
+    category: mobile_search_discover
+    name: Mobile Search Tab 'Artists' Filter
+    description: Verify tapping Artists filter chip
+    priority: medium
+    expected_result: Results filtered to artists
+  - id: APP-185
+    category: mobile_search_discover
+    name: Mobile Search Tab 'Albums' Filter
+    description: Verify tapping Albums filter chip
+    priority: medium
+    expected_result: Results filtered to albums
+  - id: APP-186
+    category: mobile_search_discover
+    name: Mobile Search Tab 'Playlists' Filter
+    description: Verify tapping Playlists filter chip
+    priority: medium
+    expected_result: Results filtered to playlists
+  - id: APP-187
+    category: mobile_search_discover
+    name: Mobile Recent Search Chip Tap
+    description: Verify tapping recent search term chip
+    priority: low
+    expected_result: Search input populated with term
+  - id: APP-188
+    category: mobile_search_discover
+    name: Mobile Trending Tag Tap
+    description: Verify tapping 'Telugu' trending tag
+    priority: medium
+    expected_result: Search for Telugu executed
+  - id: APP-189
+    category: mobile_search_discover
+    name: Mobile Music Shelf Card Tap
+    description: Verify tapping music shelf card on mobile
+    priority: high
+    expected_result: Song plays and Player page opens
+  - id: APP-190
+    category: mobile_search_discover
+    name: Mobile Save Search Action
+    description: Verify tapping Save Search button
+    priority: low
+    expected_result: Query added to recent searches
+  - id: APP-191
+    category: mobile_search_discover
+    name: Mobile Audius API Remote Search
+    description: Verify searching Audius online catalog
+    priority: medium
+    expected_result: Audius tracks returned
+  - id: APP-192
+    category: mobile_search_discover
+    name: Mobile Spotify API Track Search
+    description: Verify Spotify catalog search query handling
+    priority: medium
+    expected_result: Spotify track results handled
+  - id: APP-193
+    category: mobile_search_discover
+    name: Mobile Empty Search Results View
+    description: Verify empty state card when search returns no matches
+    priority: low
+    expected_result: Empty state card displayed
+  - id: APP-194
+    category: mobile_search_discover
+    name: Mobile Genre Choice Chip Tap
+    description: Verify selecting Electronic genre chip
+    priority: low
+    expected_result: Electronic tracks displayed
+  - id: APP-195
+    category: mobile_search_discover
+    name: Mobile Search Keyboard Submit
+    description: Verify pressing search key on soft keyboard
+    priority: medium
+    expected_result: Search query submitted
+  - id: APP-196
+    category: mobile_search_discover
+    name: Mobile Search Results Song Row Play
+    description: Verify tapping song row in search results starts playback
+    priority: high
+    expected_result: Selected track plays
+  - id: APP-197
+    category: mobile_search_discover
+    name: Mobile Search Results Song Heart Tap
+    description: Verify tapping heart on search result row likes track
+    priority: medium
+    expected_result: Track liked
+  - id: APP-198
+    category: mobile_search_discover
+    name: Mobile Recent Searches History Wrap
+    description: Verify recent searches list layout on mobile screen
+    priority: low
+    expected_result: Chips wrap cleanly onto multiple lines
+  - id: APP-199
+    category: mobile_search_discover
+    name: Mobile Search Query Minimum Length
+    description: Verify 1-character search query execution
+    priority: low
+    expected_result: Matching tracks listed
+  - id: APP-200
+    category: mobile_search_discover
+    name: Mobile Search Soft Keyboard Push Content
+    description: Verify search list shifts upward when keyboard appears
+    priority: low
+    expected_result: Search list remains scrollable above keyboard
+  - id: APP-201
+    category: mobile_search_discover
+    name: Mobile Discover Page Header Render
+    description: Verify header 'Follow your curiosity' on Discover page
+    priority: low
+    expected_result: Header rendered
+  - id: APP-202
+    category: mobile_search_discover
+    name: Mobile Mood Mixes Section Tap
+    description: Verify tapping mood mix card in Discover page
+    priority: medium
+    expected_result: Mood playlist screen displayed
+  - id: APP-203
+    category: mobile_search_discover
+    name: Mobile New Releases Shelf
+    description: Verify New Releases horizontal shelf in Discover page
+    priority: low
+    expected_result: New releases tracks rendered
+  - id: APP-204
+    category: mobile_search_discover
+    name: Mobile Recommended Shelf
+    description: Verify Recommended shelf rendered based on user language
+    priority: low
+    expected_result: Recommended tracks rendered
+  - id: APP-205
+    category: mobile_search_discover
+    name: Mobile Search Voice Input Intent
+    description: Verify voice search button launches system speech recognizer if present
+    priority: low
+    expected_result: Speech recognizer intent opened
+  - id: APP-206
+    category: mobile_search_discover
+    name: Mobile Search Query Persistence
+    description: Verify query text preserved during screen rotation
+    priority: low
+    expected_result: Search query text retained
+  - id: APP-207
+    category: mobile_search_discover
+    name: Mobile Play Studio Collection Tap
+    description: Verify Play studio collection button in artist search
+    priority: medium
+    expected_result: Studio collection queue loaded
+  - id: APP-208
+    category: mobile_search_discover
+    name: Mobile Search Result Album Tap
+    description: Verify tapping album result opens album track list
+    priority: medium
+    expected_result: Album tracks displayed
+  - id: APP-209
+    category: mobile_search_discover
+    name: Mobile Search Debounce Optimization
+    description: Verify typing search text debounces rapid keystrokes
+    priority: low
+    expected_result: Single search request fired after typing pause
+  - id: APP-210
+    category: mobile_search_discover
+    name: Mobile Search Special Unicode Search
+    description: Verify searching Telugu script text e.g. 'వెన్నెల'
+    priority: medium
+    expected_result: Matching Telugu track returned
+
+  # Mobile Playlists & Library (APP-211 to APP-240)
+  - id: APP-211
+    category: mobile_playlists_library
+    name: Mobile Create Playlist Tap
+    description: Verify tapping + Create Playlist button in Library
+    priority: critical
+    expected_result: Create playlist modal displayed
+  - id: APP-212
+    category: mobile_playlists_library
+    name: Mobile Create Playlist Input Name
+    description: Verify typing playlist name on mobile keyboard
+    priority: critical
+    expected_result: Name populated in field
+  - id: APP-213
+    category: mobile_playlists_library
+    name: Mobile Create Playlist Submit
+    description: Verify tapping Create button creates playlist
+    priority: critical
+    expected_result: Playlist card added to Library
+  - id: APP-214
+    category: mobile_playlists_library
+    name: Mobile Library Tab Playlists Tap
+    description: Verify Playlists tab active in Library
+    priority: high
+    expected_result: Playlists list displayed
+  - id: APP-215
+    category: mobile_playlists_library
+    name: Mobile Library Tab Liked Songs Tap
+    description: Verify Liked Songs tab active in Library
+    priority: high
+    expected_result: Hearted tracks displayed
+  - id: APP-216
+    category: mobile_playlists_library
+    name: Mobile Library Tab Recent Tap
+    description: Verify Recent tab active in Library
+    priority: medium
+    expected_result: Recent history tracks displayed
+  - id: APP-217
+    category: mobile_playlists_library
+    name: Mobile Library Tab Albums Tap
+    description: Verify Albums tab active in Library
+    priority: medium
+    expected_result: Albums collection displayed
+  - id: APP-218
+    category: mobile_playlists_library
+    name: Mobile Open Playlist Detail Tap
+    description: Verify tapping playlist card opens detail view
+    priority: high
+    expected_result: Playlist detail screen loaded
+  - id: APP-219
+    category: mobile_playlists_library
+    name: Mobile Playlist Add Track From Catalog
+    description: Verify adding track to playlist on mobile
+    priority: high
+    expected_result: Track added to playlist
+  - id: APP-220
+    category: mobile_playlists_library
+    name: Mobile Play All Liked Songs Tap
+    description: Verify tapping play icon on Liked Songs page
+    priority: high
+    expected_result: Liked songs queue plays
+  - id: APP-221
+    category: mobile_playlists_library
+    name: Mobile Liked Songs Unlike Tap
+    description: Verify tapping heart icon unlikes song
+    priority: high
+    expected_result: Song removed from Liked list
+  - id: APP-222
+    category: mobile_playlists_library
+    name: Mobile Playlist Card Details Render
+    description: Verify playlist title and track count on card
+    priority: low
+    expected_result: Correct name and track count displayed
+  - id: APP-223
+    category: mobile_playlists_library
+    name: Mobile Create Playlist Private Toggle
+    description: Verify tapping Private playlist checkbox
+    priority: low
+    expected_result: Checkbox toggled
+  - id: APP-224
+    category: mobile_playlists_library
+    name: Mobile Create Playlist Cancel Tap
+    description: Verify tapping Cancel closes modal without saving
+    priority: low
+    expected_result: Modal closed
+  - id: APP-225
+    category: mobile_playlists_library
+    name: Mobile Add To Playlist Modal Launch
+    description: Verify opening Add To Playlist modal from song options
+    priority: medium
+    expected_result: Playlist choice modal shown
+  - id: APP-226
+    category: mobile_playlists_library
+    name: Mobile Playlist Delete Action
+    description: Verify deleting user playlist
+    priority: medium
+    expected_result: Playlist removed from Library
+  - id: APP-227
+    category: mobile_playlists_library
+    name: Mobile Playlist Reorder Songs
+    description: Verify drag-and-drop reordering tracks in playlist if supported
+    priority: low
+    expected_result: Track order updated
+  - id: APP-228
+    category: mobile_playlists_library
+    name: Mobile Library Empty State Render
+    description: Verify empty state card when Library has no items
+    priority: low
+    expected_result: Empty state message shown
+  - id: APP-229
+    category: mobile_playlists_library
+    name: Mobile Playlist Description Input
+    description: Verify typing optional playlist description
+    priority: low
+    expected_result: Description saved with playlist
+  - id: APP-230
+    category: mobile_playlists_library
+    name: Mobile Playlist Cover Art Generator
+    description: Verify playlist cover art generated from tracks
+    priority: low
+    expected_result: Cover artwork rendered
+  - id: APP-231
+    category: mobile_playlists_library
+    name: Mobile Add To Playlist Toast Confirmation
+    description: Verify toast message when song added to playlist
+    priority: low
+    expected_result: Confirmation displayed
+  - id: APP-232
+    category: mobile_playlists_library
+    name: Mobile Library Tab Horizontal Scroll
+    description: Verify horizontal drag on library tab chips
+    priority: low
+    expected_result: Tab row scrolls smoothly
+  - id: APP-233
+    category: mobile_playlists_library
+    name: Mobile Playlist Share Intent
+    description: Verify share button triggers Android share sheet if public
+    priority: low
+    expected_result: Android share sheet opened
+  - id: APP-234
+    category: mobile_playlists_library
+    name: Mobile Duplicate Playlist Name Guard
+    description: Verify error when creating duplicate playlist name
+    priority: medium
+    expected_result: Create button disabled
+  - id: APP-235
+    category: mobile_playlists_library
+    name: Mobile Playlists Local Storage Persistence
+    description: Verify playlists persist in SharedPreferences
+    priority: high
+    expected_result: Playlists reloaded on app launch
+  - id: APP-236
+    category: mobile_playlists_library
+    name: Mobile Liked Songs Count Banner
+    description: Verify total saved tracks banner count on Liked page
+    priority: low
+    expected_result: Correct count displayed
+  - id: APP-237
+    category: mobile_playlists_library
+    name: Mobile Search Within Playlist
+    description: Verify search field inside playlist screen
+    priority: medium
+    expected_result: Filtered track list displayed
+  - id: APP-238
+    category: mobile_playlists_library
+    name: Mobile Playlist Track Remove Button
+    description: Verify removing track from playlist screen
+    priority: medium
+    expected_result: Track removed from playlist
+  - id: APP-239
+    category: mobile_playlists_library
+    name: Mobile Home Page Playlists Preview
+    description: Verify user playlists preview cards on Home page
+    priority: low
+    expected_result: Playlist preview cards visible
+  - id: APP-240
+    category: mobile_playlists_library
+    name: Mobile Library Header Render
+    description: Verify 'Keep your favorites close' header in Library
+    priority: low
+    expected_result: Header text rendered
+
+  # Mobile Wellness & Journal (APP-241 to APP-270)
+  - id: APP-241
+    category: mobile_wellness_journal
+    name: Mobile Start Breathing Tap
+    description: Verify tapping Start Breathing on mobile
+    priority: critical
+    expected_result: Breathing page loaded
+  - id: APP-242
+    category: mobile_wellness_journal
+    name: Mobile Breathing Circle Animation
+    description: Verify scale animation on breathing circle
+    priority: medium
+    expected_result: Circle expands and contracts
+  - id: APP-243
+    category: mobile_wellness_journal
+    name: Mobile Pause Breathing Tap
+    description: Verify tapping Pause halts breathing exercise
+    priority: medium
+    expected_result: Timer pauses
+  - id: APP-244
+    category: mobile_wellness_journal
+    name: Mobile Resume Breathing Tap
+    description: Verify tapping Resume restarts breathing exercise
+    priority: medium
+    expected_result: Timer resumes
+  - id: APP-245
+    category: mobile_wellness_journal
+    name: Mobile End Breathing Tap
+    description: Verify tapping End Session logs journal entry
+    priority: high
+    expected_result: Journal entry logged and Wellness page loaded
+  - id: APP-246
+    category: mobile_wellness_journal
+    name: Mobile Open Journal Tap
+    description: Verify tapping Write Journal card
+    priority: high
+    expected_result: Journal screen loaded
+  - id: APP-247
+    category: mobile_wellness_journal
+    name: Mobile Journal Mood Select Tap
+    description: Verify selecting mood chip in Journal
+    priority: medium
+    expected_result: Mood chip selected
+  - id: APP-248
+    category: mobile_wellness_journal
+    name: Mobile Journal Text Typing
+    description: Verify typing reflection entry in text box
+    priority: high
+    expected_result: Text populated in box
+  - id: APP-249
+    category: mobile_wellness_journal
+    name: Mobile Save Journal Tap
+    description: Verify tapping Save Entry
+    priority: critical
+    expected_result: Entry saved and 'Entry saved ✓' displayed
+  - id: APP-250
+    category: mobile_wellness_journal
+    name: Mobile History Page Journal List
+    description: Verify saved journal entries listed in History page
+    priority: high
+    expected_result: Journal entries rendered with date and mood
+  - id: APP-251
+    category: mobile_wellness_journal
+    name: Mobile Wellness Category Meditation
+    description: Verify Meditation category tap
+    priority: medium
+    expected_result: Calm mood playlist loaded
+  - id: APP-252
+    category: mobile_wellness_journal
+    name: Mobile Wellness Category Relaxation
+    description: Verify Relaxation category tap
+    priority: medium
+    expected_result: Calm mood playlist loaded
+  - id: APP-253
+    category: mobile_wellness_journal
+    name: Mobile Wellness Category Focus
+    description: Verify Focus category tap
+    priority: medium
+    expected_result: Calm mood playlist loaded
+  - id: APP-254
+    category: mobile_wellness_journal
+    name: Mobile Wellness Category Sleep
+    description: Verify Sleep category tap
+    priority: medium
+    expected_result: Tired mood playlist loaded
+  - id: APP-255
+    category: mobile_wellness_journal
+    name: Mobile Wellness Disclaimer Render
+    description: Verify disclaimer rendered on Wellness screen
+    priority: low
+    expected_result: Disclaimer visible
+  - id: APP-256
+    category: mobile_wellness_journal
+    name: Mobile Journal Blank Text Guard
+    description: Verify Save Entry disabled when text is blank
+    priority: medium
+    expected_result: Save button disabled
+  - id: APP-257
+    category: mobile_wellness_journal
+    name: Mobile Read My Journal Link
+    description: Verify tapping 'Read my journal  →' link
+    priority: medium
+    expected_result: History page displayed
+  - id: APP-258
+    category: mobile_wellness_journal
+    name: Mobile History Stat Check-ins Render
+    description: Verify Check-ins total stat box
+    priority: low
+    expected_result: Stat box rendered
+  - id: APP-259
+    category: mobile_wellness_journal
+    name: Mobile History Stat Listening Time
+    description: Verify Listening minutes stat box
+    priority: low
+    expected_result: Stat box rendered
+  - id: APP-260
+    category: mobile_wellness_journal
+    name: Mobile History Stat Most Selected Mood
+    description: Verify Most Selected Mood stat box
+    priority: low
+    expected_result: Stat box rendered
+  - id: APP-261
+    category: mobile_wellness_journal
+    name: Mobile Journal Local Storage Persistence
+    description: Verify journal entries persist across app launches
+    priority: high
+    expected_result: Journal entries restored
+  - id: APP-262
+    category: mobile_wellness_journal
+    name: Mobile Breathing Clock mm:ss Format
+    description: Verify elapsed breathing time formatted as mm:ss
+    priority: low
+    expected_result: Valid clock string
+  - id: APP-263
+    category: mobile_wellness_journal
+    name: Mobile Wellness Page Header Render
+    description: Verify 'A softer kind of rhythm' header text
+    priority: low
+    expected_result: Header rendered
+  - id: APP-264
+    category: mobile_wellness_journal
+    name: Mobile Breathing Page Header Render
+    description: Verify 'A moment of stillness' header text
+    priority: low
+    expected_result: Header rendered
+  - id: APP-265
+    category: mobile_wellness_journal
+    name: Mobile Journal Page Header Render
+    description: Verify 'Your words, your space' header text
+    priority: low
+    expected_result: Header rendered
+  - id: APP-266
+    category: mobile_wellness_journal
+    name: Mobile History Page Header Render
+    description: Verify 'Your emotional soundtrack' header text
+    priority: low
+    expected_result: Header rendered
+  - id: APP-267
+    category: mobile_wellness_journal
+    name: Mobile Journal Multi-Paragraph Input
+    description: Verify typing multi-paragraph text entry
+    priority: low
+    expected_result: Newlines preserved
+  - id: APP-268
+    category: mobile_wellness_journal
+    name: Mobile Journal Emoji Input Support
+    description: Verify inserting emojis into journal text
+    priority: low
+    expected_result: Emojis rendered
+  - id: APP-269
+    category: mobile_wellness_journal
+    name: Mobile History Empty Journal Card
+    description: Verify empty state card when journal empty
+    priority: low
+    expected_result: Empty state card shown
+  - id: APP-270
+    category: mobile_wellness_journal
+    name: Mobile History Empty Check-ins Card
+    description: Verify empty state card when check-ins empty
+    priority: low
+    expected_result: Empty state card shown
+
+  # Mobile System & Device Integration (APP-271 to APP-300)
+  - id: APP-271
+    category: mobile_system_device
+    name: Profile Edit Name Tap
+    description: Verify tapping Edit Profile in Profile screen
+    priority: high
+    expected_result: Edit form displayed
+  - id: APP-272
+    category: mobile_system_device
+    name: Profile Save Name Action
+    description: Verify saving updated display name
+    priority: high
+    expected_result: Name updated in UI
+  - id: APP-273
+    category: mobile_system_device
+    name: Settings Theme Mode Toggle Tap
+    description: Verify toggling theme between Ambient and AMOLED
+    priority: high
+    expected_result: Dark AMOLED palette applied
+  - id: APP-274
+    category: mobile_system_device
+    name: Settings Player Notifications Toggle
+    description: Verify toggling Player Notifications switch
+    priority: medium
+    expected_result: Switch toggled
+  - id: APP-275
+    category: mobile_system_device
+    name: Settings Reduce Motion Toggle
+    description: Verify toggling Reduce Motion switch
+    priority: medium
+    expected_result: Switch toggled
+  - id: APP-276
+    category: mobile_system_device
+    name: Settings Contact Support Tap
+    description: Verify tapping Contact Support
+    priority: low
+    expected_result: Mail application triggered
+  - id: APP-277
+    category: mobile_system_device
+    name: Settings Preferred Languages Selection
+    description: Verify updating preferred languages in Settings
+    priority: medium
+    expected_result: Selected languages saved
+  - id: APP-278
+    category: mobile_system_device
+    name: Settings Favorite Genres Selection
+    description: Verify updating favorite genres in Settings
+    priority: medium
+    expected_result: Selected genres saved
+  - id: APP-279
+    category: mobile_system_device
+    name: Settings Volume Slider Drag
+    description: Verify adjusting volume slider in Settings
+    priority: medium
+    expected_result: Global volume updated
+  - id: APP-280
+    category: mobile_system_device
+    name: Settings Repeat Track Toggle
+    description: Verify toggling Repeat current track switch
+    priority: low
+    expected_result: Repeat state updated
+  - id: APP-281
+    category: mobile_system_device
+    name: Settings Save Preferences Button
+    description: Verify tapping Save Preferences
+    priority: high
+    expected_result: Preferences saved and Profile loaded
+  - id: APP-282
+    category: mobile_system_device
+    name: Settings Logout Button Tap
+    description: Verify tapping Log Out in Settings
+    priority: critical
+    expected_result: User logged out
+  - id: APP-283
+    category: mobile_system_device
+    name: SharedPreferences File Access Check
+    description: Verify app preferences written to moodtunes.xml
+    priority: high
+    expected_result: Prefs file created in app data
+  - id: APP-284
+    category: mobile_system_device
+    name: Firebase Firestore Local Cache Access
+    description: Verify Firestore persistence cache enabled
+    priority: medium
+    expected_result: Firestore offline cache active
+  - id: APP-285
+    category: mobile_system_device
+    name: Logcat Debug Log Suppression
+    description: Verify sensitive passwords or keys not printed to Logcat
+    priority: critical
+    expected_result: No plain passwords in Logcat
+  - id: APP-286
+    category: mobile_system_device
+    name: Android 13+ Notification Permission Prompt
+    description: Verify POST_NOTIFICATIONS permission requested on Android 13
+    priority: high
+    expected_result: Permission dialog shown
+  - id: APP-287
+    category: mobile_system_device
+    name: Foreground Service Media Playback Type
+    description: Verify foregroundServiceType="mediaPlayback" in Manifest
+    priority: critical
+    expected_result: Foreground service type verified
+  - id: APP-288
+    category: mobile_system_device
+    name: Android Manifest Exported Activity
+    description: Verify MainActivity exported=true for intent launcher
+    priority: high
+    expected_result: Activity exported flag verified
+  - id: APP-289
+    category: mobile_system_device
+    name: Android Manifest Exported Service
+    description: Verify PlaybackService exported=true for MediaSessionService
+    priority: high
+    expected_result: Service exported flag verified
+  - id: APP-290
+    category: mobile_system_device
+    name: Hardware Acceleration Enable
+    description: Verify hardwareAccelerated=true active for Compose UI
+    priority: medium
+    expected_result: Hardware rendering active
+  - id: APP-291
+    category: mobile_system_device
+    name: Application BackUp Rules
+    description: Verify dataExtractionRules and backup_rules in Manifest
+    priority: low
+    expected_result: Backup rules configured
+  - id: APP-292
+    category: mobile_system_device
+    name: Application Icon Launcher Assets
+    description: Verify mipmap moodtunes_launcher icon assets exist
+    priority: low
+    expected_result: Launcher icons present
+  - id: APP-293
+    category: mobile_system_device
+    name: Application Theme Style
+    description: Verify Theme.App style applied to MainActivity
+    priority: low
+    expected_result: Theme style active
+  - id: APP-294
+    category: mobile_system_device
+    name: Adjust Resize Soft Input Mode
+    description: Verify windowSoftInputMode="adjustResize" on MainActivity
+    priority: medium
+    expected_result: Input mode resizes layout
+  - id: APP-295
+    category: mobile_system_device
+    name: Audio Focus Controller Request
+    description: Verify ExoPlayer requests AUDIOFOCUS_GAIN
+    priority: high
+    expected_result: Audio focus granted
+  - id: APP-296
+    category: mobile_system_device
+    name: Media Session Token Creation
+    description: Verify SessionToken created for PlaybackService
+    priority: high
+    expected_result: MediaSession token generated
+  - id: APP-297
+    category: mobile_system_device
+    name: Media Controller Async Future
+    description: Verify MediaController buildAsync resolves successfully
+    priority: high
+    expected_result: MediaController instance bound
+  - id: APP-298
+    category: mobile_system_device
+    name: System Edge To Edge Window Insets
+    description: Verify enableEdgeToEdge status and navigation bars configuration
+    priority: medium
+    expected_result: Transparent status/navigation bars
+  - id: APP-299
+    category: mobile_system_device
+    name: System Font Scale Accessibility
+    description: Verify UI layout accommodates 1.5x Android system font scale
+    priority: medium
+    expected_result: Text scales without clipping
+  - id: APP-300
+    category: mobile_system_device
+    name: App Build Target API 36 Compliance
+    description: Verify clean execution on Android SDK 36 emulator
+    priority: critical
+    expected_result: Zero system error dialogs or ANRs

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "728418975336",
+    "project_id": "frist-app-d0cd5",
+    "storage_bucket": "frist-app-d0cd5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728418975336:android:88b4a11a5ad5d25ea385dd",
+        "android_client_info": {
+          "package_name": "com.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "728418975336-u7d0rcnjobtq7s2j8qlapnkb305v3qff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkVAwwqQ-pZ17WutaUNKf78dhksdTTGD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "728418975336-u7d0rcnjobtq7s2j8qlapnkb305v3qff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728418975336:android:da00e0b6b47ef2b2a385dd",
+        "android_client_info": {
+          "package_name": "com.moodtunes.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "728418975336-u7d0rcnjobtq7s2j8qlapnkb305v3qff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkVAwwqQ-pZ17WutaUNKf78dhksdTTGD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "728418975336-u7d0rcnjobtq7s2j8qlapnkb305v3qff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
