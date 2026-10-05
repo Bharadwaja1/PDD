@@ -313,7 +313,7 @@ test_cases:
     name: Firestore Rule Default Deny All
     description: Verify default Firestore rules fall back to deny all unmatched paths
     priority: critical
-    expected_result: Default match / { allow read, write: if false; } enforced
+    expected_result: "Default match / { allow read, write: if false; } enforced"
   - id: SEC-053
     category: authorization_access_control
     name: API Endpoint HTTP Method Privilege Restriction
@@ -797,7 +797,7 @@ test_cases:
   - id: SEC-132
     category: xss_sqli_defensive_checks
     name: Stored XSS In Playlist Title Defensive Check
-    description: Verify stored playlist title containing javascript: alert payload
+    description: "Verify stored playlist title containing javascript: alert payload"
     priority: critical
     expected_result: Title rendered as plain text
   - id: SEC-133
@@ -833,7 +833,7 @@ test_cases:
   - id: SEC-138
     category: xss_sqli_defensive_checks
     name: Firestore NoSQL Injection Defense
-    description: Verify passing object {$ne: null} in REST params fails
+    description: "Verify passing object {$ne: null} in REST params fails"
     priority: critical
     expected_result: Query operators sanitized
   - id: SEC-139
@@ -883,7 +883,7 @@ test_cases:
     name: Attribute XSS Defense In Image URLs
     description: Verify image artwork URI scheme validated as http, https, or android.resource
     priority: high
-    expected_result: Insecure URI schemes e.g. javascript: rejected
+    expected_result: "Insecure URI schemes e.g. javascript: rejected"
   - id: SEC-147
     category: xss_sqli_defensive_checks
     name: CSS Injection In Theme Styling Check
@@ -1161,7 +1161,7 @@ test_cases:
   - id: SEC-192
     category: security_headers_cookies
     name: X-Content-Type-Options nosniff
-    description: Verify X-Content-Type-Options: nosniff header present
+    description: "Verify X-Content-Type-Options: nosniff header present"
     priority: high
     expected_result: nosniff header present
   - id: SEC-193
@@ -1221,25 +1221,25 @@ test_cases:
   - id: SEC-202
     category: security_headers_cookies
     name: Cache-Control No-Store On Sensitive Endpoints
-    description: Verify Cache-Control: no-store on auth and profile endpoints
+    description: "Verify Cache-Control: no-store on auth and profile endpoints"
     priority: high
     expected_result: no-store header present
   - id: SEC-203
     category: security_headers_cookies
     name: Pragma No-Cache Compatibility Header
-    description: Verify Pragma: no-cache header present for legacy proxy support
+    description: "Verify Pragma: no-cache header present for legacy proxy support"
     priority: low
     expected_result: Pragma header present
   - id: SEC-204
     category: security_headers_cookies
     name: X-Download-Options noopen
-    description: Verify X-Download-Options: noopen for IE compatibility
+    description: "Verify X-Download-Options: noopen for IE compatibility"
     priority: low
     expected_result: noopen header present
   - id: SEC-205
     category: security_headers_cookies
     name: X-Permitted-Cross-Domain-Policies none
-    description: Verify X-Permitted-Cross-Domain-Policies: none
+    description: "Verify X-Permitted-Cross-Domain-Policies: none"
     priority: low
     expected_result: none header present
   - id: SEC-206
@@ -1281,7 +1281,7 @@ test_cases:
   - id: SEC-212
     category: security_headers_cookies
     name: Clear-Site-Data Header On Logout
-    description: Verify Clear-Site-Data: "cache", "cookies", "storage" on logout
+    description: 'Verify Clear-Site-Data: "cache", "cookies", "storage" on logout'
     priority: medium
     expected_result: Clear-Site-Data header sent on logout
   - id: SEC-213
