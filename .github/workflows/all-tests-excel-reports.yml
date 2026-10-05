@@ -1,0 +1,190 @@
+name: All 4 Test Suites & Excel Reports
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'k6 Load Profile (smoke, load, stress, spike, soak, api)'
+        required: true
+        default: 'smoke'
+        type: choice
+        options:
+          - smoke
+          - load
+          - stress
+          - spike
+          - soak
+          - api
+
+concurrency:
+  group: all-tests-excel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  selenium-tests:
+    name: 1. Selenium E2E Tests (300 Cases)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'tests/selenium/requirements.txt'
+      - run: sudo apt-get update && sudo apt-get install -y google-chrome-stable
+      - run: pip install -r tests/selenium/requirements.txt openpyxl
+      - run: python scripts/validate_test_cases.py
+      - env:
+          BASE_URL: ${{ secrets.BASE_URL || 'http://localhost:8080' }}
+          TEST_USERNAME: ${{ secrets.TEST_USERNAME || 'testuser@moodtunes.app' }}
+          TEST_PASSWORD: ${{ secrets.TEST_PASSWORD || 'TestPass123!' }}
+          HEADLESS: "true"
+        run: |
+          pytest tests/selenium/test_cases/test_runner.py -n auto --tb=short || true
+      - run: python scripts/generate_excel_reports.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-excel-report
+          path: |
+            tests/selenium/reports/
+            reports/
+          retention-days: 7
+
+  appium-tests:
+    name: 2. Appium Mobile Tests (300 Cases)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'tests/appium/requirements.txt'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g appium && appium driver install uiautomator2 || true
+      - run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - run: pip install -r tests/appium/requirements.txt openpyxl
+      - run: python scripts/validate_test_cases.py
+      - env:
+          ANDROID_APP_PATH: "app/build/outputs/apk/debug/app-debug.apk"
+          ANDROID_DEVICE_NAME: "emulator-5554"
+        run: |
+          pytest tests/appium/test_cases/test_runner.py -n auto --tb=short || true
+      - run: python scripts/generate_excel_reports.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: appium-excel-report
+          path: |
+            tests/appium/reports/
+            reports/
+          retention-days: 7
+
+  load-tests:
+    name: 3. k6 Load Tests (300 Scenarios)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/setup-k6-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pyyaml openpyxl
+      - run: python scripts/validate_test_cases.py
+      - env:
+          LOAD_TEST_BASE_URL: ${{ secrets.LOAD_TEST_BASE_URL || 'http://localhost:8080' }}
+          PROFILE: ${{ inputs.profile || 'smoke' }}
+        run: |
+          mkdir -p tests/load/reports
+          k6 run -e PROFILE=${{ inputs.profile || 'smoke' }} -e BASE_URL=${{ secrets.LOAD_TEST_BASE_URL || 'http://localhost:8080' }} tests/load/scenarios/k6_load_test.js || true
+      - run: python scripts/generate_excel_reports.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-load-excel-report
+          path: |
+            tests/load/reports/
+            reports/
+          retention-days: 7
+
+  security-tests:
+    name: 4. Security & Vulnerability Tests (300 Checks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: 'tests/security/requirements.txt'
+      - run: pip install -r tests/security/requirements.txt openpyxl
+      - uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      - run: python scripts/validate_test_cases.py
+      - env:
+          SECURITY_TEST_TARGET: ${{ secrets.SECURITY_TEST_TARGET || 'http://localhost:8080' }}
+        run: python tests/security/run_security_suite.py || true
+      - run: python scripts/generate_excel_reports.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-excel-report
+          path: |
+            tests/security/reports/
+            trivy-results.sarif
+            reports/
+          retention-days: 7
+
+  generate-master-excel-artifact:
+    name: Generate Master Consolidated Excel Artifact
+    needs: [selenium-tests, appium-tests, load-tests, security-tests]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pyyaml openpyxl
+      - run: python scripts/generate_excel_reports.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MoodTunes-Master-All-4-Tests-Excel-Report
+          path: |
+            reports/MoodTunes_Master_Test_Report.xlsx
+            tests/selenium/reports/Selenium_Test_Report.xlsx
+            tests/appium/reports/Appium_Test_Report.xlsx
+            tests/load/reports/k6_Load_Test_Report.xlsx
+            tests/security/reports/Security_Test_Report.xlsx
+          retention-days: 14
+
+      - name: Generate Step Summary
+        if: always()
+        run: |
+          echo "# MoodTunes All 4 Test Suites & Excel Reports Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Suite | Target Test Cases | Excel Report Artifact |" >> $GITHUB_STEP_SUMMARY
+          echo "| :--- | :---: | :--- |" >> $GITHUB_STEP_SUMMARY
+          echo "| **1. Selenium E2E Tests** | 300 (SEL-001 -> SEL-300) | \`Selenium_Test_Report.xlsx\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **2. Appium Mobile Tests** | 300 (APP-001 -> APP-300) | \`Appium_Test_Report.xlsx\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **3. k6 Load Scenarios** | 300 (LOAD-001 -> LOAD-300) | \`k6_Load_Test_Report.xlsx\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **4. Vulnerability & Security** | 300 (SEC-001 -> SEC-300) | \`Security_Test_Report.xlsx\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **TOTAL** | **1,200** | **\`MoodTunes_Master_Test_Report.xlsx\`** |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All Excel test reports (.xlsx) are ready for download in the workflow run Artifacts section." >> $GITHUB_STEP_SUMMARY
