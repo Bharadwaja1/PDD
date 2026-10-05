@@ -611,7 +611,7 @@ test_cases:
     name: Select Final Feeling Option
     description: Verify selecting 'Better' in check-in feedback dialog
     priority: medium
-    expected_result: 'Better' chip highlighted
+    expected_result: "'Better' chip highlighted"
   - id: APP-102
     category: mobile_mood_experience
     name: Toggle Music Helpfulness Yes/No
